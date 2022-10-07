@@ -85,11 +85,18 @@ public class Startup implements CommandLineRunner {
 **基于spring管理的事务**：
 
 ```java
-@Transactional
-public void some() {
-  baki.insert("test.tx", Args.of("a", 1));
-  int i = 1 / 0;
-  baki.insert("test.tx", Args.of("a", 2));
+@Service
+public class MyService{
+  	
+  	@Autowired
+  	Baki baki;
+  
+    @Transactional
+    public void some() {
+      baki.insert("test.tx", Args.of("a", 1));
+      int i = 1 / 0;	// 抛出异常回滚
+      baki.insert("test.tx", Args.of("a", 2));
+    }
 }
 ```
 
