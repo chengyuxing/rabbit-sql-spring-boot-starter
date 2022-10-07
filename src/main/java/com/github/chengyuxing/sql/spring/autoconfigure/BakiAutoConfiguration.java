@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import java.nio.charset.Charset;
 
 @Configuration
-@ConditionalOnClass(SpringManagedBaki.class)
+@ConditionalOnClass(Baki.class)
 @ConditionalOnSingleCandidate(DataSource.class)
 @EnableConfigurationProperties({BakiProperties.class, XQLFileManagerProperties.class})
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
@@ -67,6 +67,7 @@ public class BakiAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public Baki baki() {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         baki.setDebugFullSql(bakiProperties.isDebugFullSql());
