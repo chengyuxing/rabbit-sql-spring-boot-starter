@@ -1,4 +1,4 @@
-package com.github.chengyuxing.autoconfigure;
+package com.github.chengyuxing.spring.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.chengyuxing.autoconfigure.BakiAutoConfiguration
+com.github.chengyuxing.spring.autoconfigure.BakiAutoConfiguration

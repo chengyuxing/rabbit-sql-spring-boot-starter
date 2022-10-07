@@ -1,4 +1,4 @@
-package com.github.chengyuxing.autoconfigure;
+package com.github.chengyuxing.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.BakiDao;
 import org.springframework.jdbc.datasource.DataSourceUtils;
