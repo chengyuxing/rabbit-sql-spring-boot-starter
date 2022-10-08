@@ -1,6 +1,6 @@
 # rabbit-sql-spring-boot-starter
 
-基于`spring-boot 2.7.4`版制作的rabbit-sql库自动装配starter，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效。
+基于 **rabbit-sql v6.3.6** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效。
 
 关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql/tree/rabbit-sql-6)。
 
