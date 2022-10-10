@@ -22,7 +22,7 @@ public class XQLFileManagerProperties {
      * 格式为：
      * <blockquote>
      * <pre>constants: {db:"test"}</pre>
-     * <pre>sql: {@code select ${db}.user from table;}</pre>
+     * <pre>sql: select ${db}.user from table;</pre>
      * <pre>result: select test.user from table.</pre>
      * </blockquote>
      */
@@ -45,16 +45,16 @@ public class XQLFileManagerProperties {
     private String charset = "UTF-8";
     /**
      * 每个文件的sql片段块解析分隔符，每一段完整的sql根据此设置来进行区分，
-     * 默认是单个分号（{@code ;}）遵循标准sql文件多段sql分隔符。<br>但是有一种情况，如果sql文件内有<b>psql</b>：{@code create function...} 或 {@code create procedure...}等，
+     * 默认是单个分号（;）遵循标准sql文件多段sql分隔符。<br>但是有一种情况，如果sql文件内有<b>psql</b>：create function... 或 create procedure...等，
      * 内部会包含多段sql多个分号，为防止解析异常，单独设置自定义的分隔符：
      * <ul>
-     *     <li>例如（{@code ;;}）双分号，也是标准sql所支持的, <b>并且支持仅扫描已命名的sql</b>；</li>
+     *     <li>例如（;;）双分号，也是标准sql所支持的, <b>并且支持仅扫描已命名的sql</b>；</li>
      *     <li>也可以设置为null或空白，那么整个SQL文件多段SQL都应按照此方式分隔。</li>
      * </ul>
      */
     private String delimiter = ";";
     /**
-     * 命名参数前缀，主要处理动态sql {@code for} 表达式中形如：{@code ${:name}} 这样的情况
+     * 命名参数前缀，主要处理动态sql for 表达式中形如：${:name} 这样的情况
      */
     private char namedParamPrefix = ':';
 

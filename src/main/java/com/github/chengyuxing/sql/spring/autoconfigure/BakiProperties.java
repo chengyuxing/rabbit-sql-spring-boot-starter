@@ -14,7 +14,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "baki")
 public class BakiProperties {
     /**
-     * 分页帮助类，如果默认数据库的实现不满足可配置此项，[{@code DatabaseMetaData#getDatabaseProductName()数据库名} ，分页类]
+     * 分页帮助类，如果默认数据库的实现不满足可配置此项，[DatabaseMetaData#getDatabaseProductName()数据库名} ，分页类]
      */
     private Map<String, Class<? extends PageHelper>> pageHelpers = new HashMap<>();
     /**
