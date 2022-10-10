@@ -53,10 +53,6 @@ public class XQLFileManagerProperties {
      * </ul>
      */
     private String delimiter = ";";
-    /**
-     * 命名参数前缀，主要处理动态sql for 表达式中形如：${:name} 这样的情况
-     */
-    private char namedParamPrefix = ':';
 
     public Map<String, String> getFiles() {
         return files;
@@ -112,13 +108,5 @@ public class XQLFileManagerProperties {
 
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
-    }
-
-    public char getNamedParamPrefix() {
-        return namedParamPrefix;
-    }
-
-    public void setNamedParamPrefix(char namedParamPrefix) {
-        this.namedParamPrefix = namedParamPrefix;
     }
 }

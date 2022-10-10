@@ -54,8 +54,8 @@ public class BakiAutoConfiguration {
             if (StringUtils.hasLength(properties.getDelimiter())) {
                 xqlFileManager.setDelimiter(properties.getDelimiter());
             }
-            if (properties.getNamedParamPrefix() != ' ') {
-                xqlFileManager.setNamedParamPrefix(properties.getNamedParamPrefix());
+            if (bakiProperties.getNamedParamPrefix() != ' ') {
+                xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
             }
             xqlFileManager.setCheckModified(properties.isCheckModified());
             xqlFileManager.setCheckPeriod(properties.getCheckPeriod());
