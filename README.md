@@ -10,7 +10,7 @@
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
 </dependency>
 ```
 
