@@ -6,7 +6,7 @@
 
 :warning: 请勿使用rabbit内置的`Tx`事务，事务已完全由spring全局事务替代。
 
-关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql/tree/rabbit-sql-6)。
+关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql/tree/rabbit-sql-7)。
 
 ## maven dependency (jdk1.8)
 
@@ -14,7 +14,7 @@
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
