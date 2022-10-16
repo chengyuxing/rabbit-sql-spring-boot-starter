@@ -78,8 +78,8 @@ public class Startup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(baki.queryMaps("select now()"));
-        try (Stream<DataRow> s = baki.query("&a.region", Args.of("id", 5))) {
+        System.out.println(baki.query("select now()").maps());
+        try (Stream<DataRow> s = baki.query("&a.region").arg("id", 5).stream()) {
             s.forEach(System.out::println);
         }
     }
@@ -89,17 +89,18 @@ public class Startup implements CommandLineRunner {
 **基于spring管理的事务**：
 
 ```java
+
 @Service
-public class MyService{
-  	
-  	@Autowired
-  	Baki baki;
-  
+public class MyService {
+
+    @Autowired
+    Baki baki;
+
     @Transactional
     public void some() {
-      baki.insert("test.tx", Args.of("a", 1));
-      int i = 1 / 0;	// 抛出异常回滚
-      baki.insert("test.tx", Args.of("a", 2));
+        baki.insert("test.tx").save(Args.of("a", 1));
+        int i = 1 / 0;    // 抛出异常回滚
+        baki.insert("test.tx").save(Args.of("a", 2));
     }
 }
 ```
