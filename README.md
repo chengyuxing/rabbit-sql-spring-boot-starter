@@ -31,7 +31,7 @@ spring:
     password:
 ```
 
-即可使用**依赖注入**`Baki`进行一些列操作：
+即可使用**依赖注入**`Baki`进行一些操作：
 
 ```java
 @Autowired
