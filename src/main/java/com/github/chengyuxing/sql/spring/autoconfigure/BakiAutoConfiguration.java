@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -36,8 +37,8 @@ public class BakiAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
-        if (!ObjectUtils.isEmpty(bakiProperties.getXqlFileManager())) {
-            XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+        if (!ObjectUtils.isEmpty(properties) && !properties.getFiles().isEmpty()) {
             XQLFileManager xqlFileManager = new XQLFileManager();
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
@@ -59,8 +60,8 @@ public class BakiAutoConfiguration {
             }
             xqlFileManager.setCheckModified(properties.isCheckModified());
             xqlFileManager.setCheckPeriod(properties.getCheckPeriod());
+            xqlFileManager.setHighlightSql(bakiProperties.isHighlightSql());
             xqlFileManager.init();
-            log.info("XQL File Manager initialized (xqlFileManager)");
             return xqlFileManager;
         }
         return null;
@@ -73,10 +74,11 @@ public class BakiAutoConfiguration {
         baki.setDebugFullSql(bakiProperties.isDebugFullSql());
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
         baki.setStrictDynamicSqlArg(bakiProperties.isStrictDynamicSqlArg());
+        baki.setHighlightSql(bakiProperties.isHighlightSql());
         XQLFileManager xqlFileManager = xqlFileManager();
         if (!ObjectUtils.isEmpty(xqlFileManager)) {
             baki.setXqlFileManager(xqlFileManager());
-            log.debug("baki external sql file support configured. ");
+            log.debug("Baki external sql file support configured. ");
         }
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());

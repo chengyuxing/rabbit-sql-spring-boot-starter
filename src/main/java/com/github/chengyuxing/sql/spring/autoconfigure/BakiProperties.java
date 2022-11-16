@@ -37,6 +37,10 @@ public class BakiProperties {
      * 是否打印拼接完整的SQL，否则只打印原始SQL与参数
      */
     private boolean debugFullSql = false;
+    /**
+     * debug模式下是否打印语法高亮sql，默认非高亮
+     */
+    private boolean highlightSql = false;
 
     public Map<String, Class<? extends PageHelper>> getPageHelpers() {
         return pageHelpers;
@@ -84,5 +88,13 @@ public class BakiProperties {
 
     public void setDebugFullSql(boolean debugFullSql) {
         this.debugFullSql = debugFullSql;
+    }
+
+    public boolean isHighlightSql() {
+        return highlightSql;
+    }
+
+    public void setHighlightSql(boolean highlightSql) {
+        this.highlightSql = highlightSql;
     }
 }
