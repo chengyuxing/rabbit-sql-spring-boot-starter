@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
+import com.github.chengyuxing.common.script.IPipe;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import org.slf4j.Logger;
@@ -17,6 +18,8 @@ import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -46,7 +49,15 @@ public class BakiAutoConfiguration {
                 xqlFileManager.setConstants(properties.getConstants());
             }
             if (!ObjectUtils.isEmpty(properties.getPipes())) {
-                xqlFileManager.setPipes(properties.getPipes());
+                Map<String, IPipe<?>> pipeInstances = new HashMap<>();
+                try {
+                    for (@SuppressWarnings("rawtypes") Map.Entry<String, Class<? extends IPipe>> e : properties.getPipes().entrySet()) {
+                        pipeInstances.put(e.getKey(), e.getValue().newInstance());
+                    }
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new IllegalStateException("create pipe instance error: ", e);
+                }
+                xqlFileManager.setPipeInstances(pipeInstances);
             }
             if (StringUtils.hasText(properties.getCharset())) {
                 xqlFileManager.setCharset(Charset.forName(properties.getCharset()));

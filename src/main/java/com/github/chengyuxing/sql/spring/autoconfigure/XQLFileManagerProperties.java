@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
+import com.github.chengyuxing.common.script.IPipe;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
@@ -28,9 +29,10 @@ public class XQLFileManagerProperties {
      */
     private Map<String, String> constants = new HashMap<>();
     /**
-     * 配置动态sql脚本自定义管道字典 [管道名，IPipe实现类全名]
+     * 配置动态sql脚本自定义管道字典 [管道名，IPipe实现类]
      */
-    private Map<String, String> pipes = new HashMap<>();
+    @SuppressWarnings("rawtypes")
+    private Map<String, Class<? extends IPipe>> pipes = new HashMap<>();
     /**
      * 文件检查周期（单位：秒）
      */
@@ -70,14 +72,6 @@ public class XQLFileManagerProperties {
         this.constants = constants;
     }
 
-    public Map<String, String> getPipes() {
-        return pipes;
-    }
-
-    public void setPipes(Map<String, String> pipes) {
-        this.pipes = pipes;
-    }
-
     public int getCheckPeriod() {
         return checkPeriod;
     }
@@ -108,5 +102,15 @@ public class XQLFileManagerProperties {
 
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Map<String, Class<? extends IPipe>> getPipes() {
+        return pipes;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public void setPipes(Map<String, Class<? extends IPipe>> pipes) {
+        this.pipes = pipes;
     }
 }
