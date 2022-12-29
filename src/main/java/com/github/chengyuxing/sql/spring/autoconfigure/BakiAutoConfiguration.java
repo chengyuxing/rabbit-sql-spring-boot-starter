@@ -5,6 +5,7 @@ import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -30,10 +32,12 @@ public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     private final DataSource dataSource;
     private final BakiProperties bakiProperties;
+    private final PlatformTransactionManager transactionManager;
 
-    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties) {
+    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties, @Autowired(required = false) PlatformTransactionManager transactionManager) {
         this.dataSource = dataSource;
         this.bakiProperties = bakiProperties;
+        this.transactionManager = transactionManager;
     }
 
     @Bean
@@ -98,5 +102,11 @@ public class BakiAutoConfiguration {
         }
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SimpleTx simpleTx() {
+        return new SimpleTx(transactionManager);
     }
 }
