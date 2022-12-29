@@ -1,10 +1,9 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.exceptions.TransactionException;
-import com.github.chengyuxing.sql.transaction.Definition;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.function.Supplier;
@@ -16,24 +15,24 @@ public class SimpleTx {
         this.transactionManager = transactionManager;
     }
 
-    public <T> T using(Supplier<T> supplier, Definition definition) {
+    public <T> T using(Supplier<T> supplier, TransactionDefinition definition) {
         TransactionStatus status = begin(definition);
         T result;
         try {
             result = supplier.get();
-            transactionManager.commit(status);
+            commit(status);
             return result;
         } catch (Exception e) {
-            transactionManager.rollback(status);
+            rollback(status);
             throw new TransactionException("transaction will rollback cause: ", e);
         }
     }
 
     public <T> T using(Supplier<T> supplier) {
-        return using(supplier, Definition.defaultDefinition());
+        return using(supplier, new DefaultTransactionDefinition());
     }
 
-    public void using(Runnable runnable, Definition definition) {
+    public void using(Runnable runnable, TransactionDefinition definition) {
         using(() -> {
             runnable.run();
             return 1;
@@ -41,19 +40,15 @@ public class SimpleTx {
     }
 
     public void using(Runnable runnable) {
-        using(runnable, Definition.defaultDefinition());
+        using(runnable, new DefaultTransactionDefinition());
     }
 
-    public TransactionStatus begin(Definition definition) {
-        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
-        defaultTransactionDefinition.setIsolationLevel(definition.getLevel());
-        defaultTransactionDefinition.setName(definition.getName());
-        defaultTransactionDefinition.setReadOnly(definition.isReadOnly());
-        return transactionManager.getTransaction(defaultTransactionDefinition);
+    public TransactionStatus begin(TransactionDefinition definition) {
+        return transactionManager.getTransaction(definition);
     }
 
     public TransactionStatus begin() {
-        return begin(Definition.defaultDefinition());
+        return begin(new DefaultTransactionDefinition());
     }
 
     public void commit(TransactionStatus status) {
