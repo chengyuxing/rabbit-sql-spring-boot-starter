@@ -7,7 +7,7 @@
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
     <name>rabbit-sql-spring-boot-starter</name>
-    <version>2.1.9</version>
+    <version>2.1.10</version>
     <packaging>jar</packaging>
     <url>https://github.com/chengyuxing/rabbit-sql-spring-boot-starter</url>
     <description>a rabbit-sql for spring boot framework starter lib.</description>
@@ -15,7 +15,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <rabbit.sql.version>7.0.17</rabbit.sql.version>
+        <rabbit.sql.version>7.0.18</rabbit.sql.version>
     </properties>
 
     <parent>
