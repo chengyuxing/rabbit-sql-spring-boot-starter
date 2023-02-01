@@ -12,13 +12,6 @@
 
 基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `SimpleTx` （对spring事务的简易封装）来使用事务。
 
-```mermaid
-graph LR;
-A --> B;
-```
-
-
-
 - 支持application.yml配置项自动完成提示；
 - 兼容spring jdbc事务；
 - 兼容mybatis、spring-data-jpa等同时进行事务处理；
