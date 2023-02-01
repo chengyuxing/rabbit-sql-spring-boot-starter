@@ -1,8 +1,20 @@
 # rabbit-sql-spring-boot-starter
 
-基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，
+## 前言
 
-默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动使用spring提供的事务管理器。
+**没有任何一个框架能独立漂亮解决任何问题**，配合才是最好的解决方案，这不是用来替换ORM等任何jdbc框架，而是作为辅助，与ORM框架相互配合，复杂sql交给rabbit-sql来进行管理。
+
+### 再次声明
+
+**这不是用来替换ORM等任何jdbc框架**，和ORM框架完全不冲突，这只是一个工具，一个库！！！
+
+## 介绍
+
+基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `SimpleTx` （对spring事务的简易封装）来使用事务。
+
+- 支持application.yml配置项自动完成提示；
+- 兼容spring jdbc事务；
+- 兼容mybatis、spring-data-jpa等同时进行事务处理；
 
 :warning: 请勿使用rabbit内置的`Tx`事务，事务已完全由spring全局事务替代。
 
@@ -50,9 +62,6 @@ baki:
     files:
       a: xql/one.sql
       b: xql/two.sql
-    constants:
-      db: test
-  debug-full-sql: true
 ```
 
 配置了`xql-file-manager`属性的情况下，还可以单独注入`XQLFileManager`独立使用，如：
@@ -73,12 +82,9 @@ public class Startup implements CommandLineRunner {
 
     @Autowired
     Baki baki;
-    @Autowired
-    XQLFileManager xqlFileManager;
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(baki.query("select now()").maps());
         try (Stream<DataRow> s = baki.query("&a.region").arg("id", 5).stream()) {
             s.forEach(System.out::println);
         }
