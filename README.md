@@ -1,26 +1,22 @@
 # rabbit-sql-spring-boot-starter
 
-## 前言
+Language: English | [简体中文](README.chs.md)
 
-**没有任何一个框架能独立漂亮解决任何问题**，配合才是最好的解决方案，这不是用来替换ORM等任何jdbc框架，而是作为辅助，与ORM框架相互配合，复杂sql交给rabbit-sql来进行管理。
+## Introducing
 
-### 再次声明
+**It's not instead of any ORM framework**, no conflict with ORM framework, just a lib.
 
-**这不是用来替换ORM等任何jdbc框架**，和ORM框架完全不冲突，这只是一个工具，一个库！！！
+Spring-boot auto configure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `SimpleTx` (simple wrapper for spring transaction) to use transaction.
 
-## 介绍
+- support `application.yml` auto complete;
+- compatible with spring jdbc transaction;
+- compatible with mybatis, spring-data-jpa and so on to use transaction together;
 
-基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `SimpleTx` （对spring事务的简易封装）来使用事务。
+:warning: don't use rabbit-sql's built-in `Tx`, use spring transaction instead.
 
-- 支持application.yml配置项自动完成提示；
-- 兼容spring jdbc事务；
-- 兼容mybatis、spring-data-jpa等同时进行事务处理；
+get more usage about **rabbit-sql** from [document](https://github.com/chengyuxing/rabbit-sql)。
 
-:warning: 请勿使用rabbit内置的`Tx`事务，事务已完全由spring全局事务替代。
-
-关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql)。
-
-## maven dependency (jdk1.8)
+## Maven dependency (jdk1.8)
 
 ```xml
 <dependency>
@@ -30,9 +26,9 @@
 </dependency>
 ```
 
-## 配置说明
+## Configuration
 
-`application.yml` 必要配置：
+`application.yml` (`spring.datasource` is require):
 
 ```yaml
 spring:
@@ -43,16 +39,16 @@ spring:
     password:
 ```
 
-即可使用**依赖注入**`Baki`进行一些操作：
+Inject `Baki` ready to use:
 
 ```java
 @Autowired
 Baki baki;
 ```
 
-### 自定义配置
+### Custom configuration
 
-通过IntelliJ IDEA编辑`application.yml`输入**baki**可提示所有配置项，一个简单的例子如下：
+begin with input **baki** to edit `application.yml`, a simple example look like:
 
 `application.yml`
 
@@ -64,14 +60,14 @@ baki:
       b: xql/two.sql
 ```
 
-配置了`xql-file-manager`属性的情况下，还可以单独注入`XQLFileManager`独立使用，如：
+if `xql-file-manager` configured, you can inject `XQLFileManager`  to use without Baki:
 
 ```java
 @Autowired
 XQLFileManager xqlFileManager;
 ```
 
-**简单使用**：
+**simple usage**:
 
 ```java
 @SpringBootApplication
@@ -92,7 +88,7 @@ public class Startup implements CommandLineRunner {
 }
 ```
 
-**基于spring管理的事务**：
+**work with spring transaction**:
 
 ```java
 
@@ -105,7 +101,7 @@ public class MyService {
     @Transactional
     public void some() {
         baki.insert("test.tx").save(Args.of("a", 1));
-        int i = 1 / 0;    // 抛出异常回滚
+        int i = 1 / 0;    // will be rollback
         baki.insert("test.tx").save(Args.of("a", 2));
     }
 }
