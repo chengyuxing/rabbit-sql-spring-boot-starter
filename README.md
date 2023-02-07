@@ -6,7 +6,7 @@ Language: English | [简体中文](README.chs.md)
 
 **It's not instead of any ORM framework**, no conflict with ORM framework, just a lib.
 
-Spring-boot auto configure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `SimpleTx` (simple wrapper for spring transaction) to use transaction.
+Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `SimpleTx` (simple wrapper for spring transaction) to use transaction.
 
 - support `application.yml` auto complete;
 - compatible with spring jdbc transaction;

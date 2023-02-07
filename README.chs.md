@@ -1,5 +1,7 @@
 # rabbit-sql-spring-boot-starter
 
+语言: [English](README.md) | 简体中文
+
 ## 前言
 
 **没有任何一个框架能独立漂亮解决任何问题**，配合才是最好的解决方案，这不是用来替换ORM等任何jdbc框架，而是作为辅助，与ORM框架相互配合，复杂sql交给rabbit-sql来进行管理。
