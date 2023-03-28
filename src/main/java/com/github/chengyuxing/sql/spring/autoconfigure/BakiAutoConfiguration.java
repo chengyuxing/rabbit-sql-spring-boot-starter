@@ -44,7 +44,7 @@ public class BakiAutoConfiguration {
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        if (!ObjectUtils.isEmpty(properties) && !properties.getFiles().isEmpty()) {
+        if (!ObjectUtils.isEmpty(properties)) {
             XQLFileManager xqlFileManager = new XQLFileManager();
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
