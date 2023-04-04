@@ -4,7 +4,9 @@ import com.github.chengyuxing.common.script.IPipe;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 支持扩展脚本解析动态SQL的文件管理器
@@ -14,9 +16,13 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "baki.xql-file-manager")
 public class XQLFileManagerProperties {
     /**
-     * 命名的sql文件 [别名，文件名]
+     * 命名的sql文件 [别名，文件路径名]
      */
     private Map<String, String> files = new HashMap<>();
+    /**
+     * sql文件路径名，默认sql文件名就是别名（不包含后缀）
+     */
+    private Set<String> filenames = new HashSet<>();
     /**
      * 设置全局常量集合<br>
      * 初始化扫描sql时，如果sql文件中没有找到匹配的字符串模版，则从全局常量中寻找
@@ -112,5 +118,13 @@ public class XQLFileManagerProperties {
     @SuppressWarnings("rawtypes")
     public void setPipes(Map<String, Class<? extends IPipe>> pipes) {
         this.pipes = pipes;
+    }
+
+    public Set<String> getFilenames() {
+        return filenames;
+    }
+
+    public void setFilenames(Set<String> filenames) {
+        this.filenames = filenames;
     }
 }

@@ -49,6 +49,9 @@ public class BakiAutoConfiguration {
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
             }
+            if (!ObjectUtils.isEmpty(properties.getFilenames())) {
+                xqlFileManager.setFileNames(properties.getFilenames());
+            }
             if (!ObjectUtils.isEmpty(properties.getConstants())) {
                 xqlFileManager.setConstants(properties.getConstants());
             }
