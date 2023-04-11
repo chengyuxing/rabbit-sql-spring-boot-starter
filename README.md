@@ -22,7 +22,7 @@ get more usage about **rabbit-sql** from [document](https://github.com/chengyuxi
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.1.16</version>
+    <version>2.1.17</version>
 </dependency>
 ```
 

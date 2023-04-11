@@ -44,13 +44,13 @@ public class BakiAutoConfiguration {
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+        XQLFileManager xqlFileManager = new XQLFileManager();
         if (!ObjectUtils.isEmpty(properties)) {
-            XQLFileManager xqlFileManager = new XQLFileManager();
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
             }
             if (!ObjectUtils.isEmpty(properties.getFilenames())) {
-                xqlFileManager.setFileNames(properties.getFilenames());
+                xqlFileManager.setFilenames(properties.getFilenames());
             }
             if (!ObjectUtils.isEmpty(properties.getConstants())) {
                 xqlFileManager.setConstants(properties.getConstants());
@@ -78,10 +78,9 @@ public class BakiAutoConfiguration {
             xqlFileManager.setCheckModified(properties.isCheckModified());
             xqlFileManager.setCheckPeriod(properties.getCheckPeriod());
             xqlFileManager.setHighlightSql(bakiProperties.isHighlightSql());
-            xqlFileManager.init();
-            return xqlFileManager;
         }
-        return null;
+        xqlFileManager.init();
+        return xqlFileManager;
     }
 
     @Bean
@@ -92,11 +91,7 @@ public class BakiAutoConfiguration {
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
         baki.setStrictDynamicSqlArg(bakiProperties.isStrictDynamicSqlArg());
         baki.setHighlightSql(bakiProperties.isHighlightSql());
-        XQLFileManager xqlFileManager = xqlFileManager();
-        if (!ObjectUtils.isEmpty(xqlFileManager)) {
-            baki.setXqlFileManager(xqlFileManager());
-            log.debug("Baki external sql file support configured. ");
-        }
+        baki.setXqlFileManager(xqlFileManager());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
         }
