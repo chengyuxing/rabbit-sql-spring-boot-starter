@@ -32,7 +32,7 @@ Plugin market: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sq
 
 ## Configuration
 
-`application.yml` (`spring.datasource` is require):
+`application.yml` (`spring.datasource` is required):
 
 ```yaml
 spring:
