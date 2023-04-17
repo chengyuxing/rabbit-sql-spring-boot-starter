@@ -32,6 +32,10 @@
 </dependency>
 ```
 
+## IDEA 插件支持
+
+插件商店搜索：[Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)。
+
 ## 配置说明
 
 `application.yml` 必要配置：

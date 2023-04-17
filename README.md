@@ -26,6 +26,10 @@ get more usage about **rabbit-sql** from [document](https://github.com/chengyuxi
 </dependency>
 ```
 
+## IDEA plugin support
+
+Plugin market: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql).
+
 ## Configuration
 
 `application.yml` (`spring.datasource` is require):
