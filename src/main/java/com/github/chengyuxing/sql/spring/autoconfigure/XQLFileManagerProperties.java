@@ -16,6 +16,10 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "baki.xql-file-manager")
 public class XQLFileManagerProperties {
     /**
+     * 初始化参数properties文件路径
+     */
+    private String propertiesLocation;
+    /**
      * 命名的sql文件 [别名，文件路径名]
      */
     private Map<String, String> files = new HashMap<>();
@@ -126,5 +130,13 @@ public class XQLFileManagerProperties {
 
     public void setFilenames(Set<String> filenames) {
         this.filenames = filenames;
+    }
+
+    public String getPropertiesLocation() {
+        return propertiesLocation;
+    }
+
+    public void setPropertiesLocation(String propertiesLocation) {
+        this.propertiesLocation = propertiesLocation;
     }
 }

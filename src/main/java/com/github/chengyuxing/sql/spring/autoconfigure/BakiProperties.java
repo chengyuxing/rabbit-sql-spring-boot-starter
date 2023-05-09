@@ -1,6 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelper;
+import com.github.chengyuxing.sql.page.PageHelperProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
@@ -14,9 +15,9 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "baki")
 public class BakiProperties {
     /**
-     * 分页帮助类，如果默认数据库的实现不满足可配置此项，[DatabaseMetaData#getDatabaseProductName()数据库名} ，分页类]
+     * 设置自定义的全局分页帮助提供程序
      */
-    private Map<String, Class<? extends PageHelper>> pageHelpers = new HashMap<>();
+    private PageHelperProvider globalPageHelperProvider;
     /**
      * 支持扩展脚本解析动态SQL的文件管理器
      */
@@ -41,14 +42,6 @@ public class BakiProperties {
      * debug模式下是否打印语法高亮sql，默认非高亮
      */
     private boolean highlightSql = false;
-
-    public Map<String, Class<? extends PageHelper>> getPageHelpers() {
-        return pageHelpers;
-    }
-
-    public void setPageHelpers(Map<String, Class<? extends PageHelper>> pageHelpers) {
-        this.pageHelpers = pageHelpers;
-    }
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -96,5 +89,13 @@ public class BakiProperties {
 
     public void setHighlightSql(boolean highlightSql) {
         this.highlightSql = highlightSql;
+    }
+
+    public PageHelperProvider getGlobalPageHelperProvider() {
+        return globalPageHelperProvider;
+    }
+
+    public void setGlobalPageHelperProvider(PageHelperProvider globalPageHelperProvider) {
+        this.globalPageHelperProvider = globalPageHelperProvider;
     }
 }

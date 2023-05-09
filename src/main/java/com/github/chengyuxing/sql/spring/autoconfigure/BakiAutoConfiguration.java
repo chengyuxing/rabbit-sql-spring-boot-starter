@@ -44,7 +44,12 @@ public class BakiAutoConfiguration {
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        XQLFileManager xqlFileManager = new XQLFileManager();
+        XQLFileManager xqlFileManager;
+        if (properties.getPropertiesLocation() != null) {
+            xqlFileManager = new XQLFileManager(properties.getPropertiesLocation());
+        } else {
+            xqlFileManager = new XQLFileManager();
+        }
         if (!ObjectUtils.isEmpty(properties)) {
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
@@ -95,8 +100,8 @@ public class BakiAutoConfiguration {
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
         }
-        if (!ObjectUtils.isEmpty(bakiProperties.getPageHelpers())) {
-            baki.setPageHelpers(bakiProperties.getPageHelpers());
+        if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
+            baki.setGlobalPageHelperProvider(bakiProperties.getGlobalPageHelperProvider());
         }
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;
