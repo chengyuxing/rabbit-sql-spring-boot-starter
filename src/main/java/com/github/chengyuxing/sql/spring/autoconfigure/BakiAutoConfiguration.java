@@ -1,8 +1,10 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.common.script.IPipe;
+import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
+import com.github.chengyuxing.sql.page.PageHelperProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,9 +67,10 @@ public class BakiAutoConfiguration {
                 Map<String, IPipe<?>> pipeInstances = new HashMap<>();
                 try {
                     for (@SuppressWarnings("rawtypes") Map.Entry<String, Class<? extends IPipe>> e : properties.getPipes().entrySet()) {
-                        pipeInstances.put(e.getKey(), e.getValue().newInstance());
+                        pipeInstances.put(e.getKey(), ReflectUtil.getInstance(e.getValue()));
                     }
-                } catch (InstantiationException | IllegalAccessException e) {
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                         NoSuchMethodException e) {
                     throw new IllegalStateException("create pipe instance error: ", e);
                 }
                 xqlFileManager.setPipeInstances(pipeInstances);
@@ -90,7 +94,7 @@ public class BakiAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Baki baki() {
+    public Baki baki() throws RuntimeException {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         baki.setDebugFullSql(bakiProperties.isDebugFullSql());
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
@@ -101,7 +105,13 @@ public class BakiAutoConfiguration {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
-            baki.setGlobalPageHelperProvider(bakiProperties.getGlobalPageHelperProvider());
+            try {
+                PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());
+                baki.setGlobalPageHelperProvider(pageHelperProvider);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new IllegalStateException("configure globalPageHelperProvider error: ", e);
+            }
         }
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;

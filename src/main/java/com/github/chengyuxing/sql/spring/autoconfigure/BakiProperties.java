@@ -15,13 +15,13 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "baki")
 public class BakiProperties {
     /**
-     * 设置自定义的全局分页帮助提供程序
-     */
-    private PageHelperProvider globalPageHelperProvider;
-    /**
      * 支持扩展脚本解析动态SQL的文件管理器
      */
     private XQLFileManagerProperties xqlFileManager;
+    /**
+     * 自定义的全局分页帮助提供程序
+     */
+    private Class<? extends PageHelperProvider> globalPageHelperProvider;
     /**
      * 全局命名参数前缀，默认为 : 号
      */
@@ -91,11 +91,11 @@ public class BakiProperties {
         this.highlightSql = highlightSql;
     }
 
-    public PageHelperProvider getGlobalPageHelperProvider() {
+    public Class<? extends PageHelperProvider> getGlobalPageHelperProvider() {
         return globalPageHelperProvider;
     }
 
-    public void setGlobalPageHelperProvider(PageHelperProvider globalPageHelperProvider) {
+    public void setGlobalPageHelperProvider(Class<? extends PageHelperProvider> globalPageHelperProvider) {
         this.globalPageHelperProvider = globalPageHelperProvider;
     }
 }
