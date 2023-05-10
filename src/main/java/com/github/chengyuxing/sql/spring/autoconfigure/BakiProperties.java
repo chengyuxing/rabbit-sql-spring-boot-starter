@@ -1,11 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
-import com.github.chengyuxing.sql.page.PageHelper;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Baki配置项
