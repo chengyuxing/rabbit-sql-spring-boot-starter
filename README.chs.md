@@ -24,11 +24,13 @@
 
 ## maven dependency (jdk1.8)
 
+Maven 中央仓库
+
 ```xml
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.2.11</version>
+    <version>2.2.12</version>
 </dependency>
 ```
 
