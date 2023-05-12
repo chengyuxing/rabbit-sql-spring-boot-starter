@@ -5,9 +5,11 @@ import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
+import com.github.chengyuxing.sql.spring.autoconfigure.common.CmdOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -36,18 +38,35 @@ public class BakiAutoConfiguration {
     private final DataSource dataSource;
     private final BakiProperties bakiProperties;
     private final PlatformTransactionManager transactionManager;
+    private final ApplicationArguments applicationArguments;
 
-    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties, @Autowired(required = false) PlatformTransactionManager transactionManager) {
+    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties, @Autowired(required = false) PlatformTransactionManager transactionManager, ApplicationArguments applicationArguments) {
         this.dataSource = dataSource;
         this.bakiProperties = bakiProperties;
         this.transactionManager = transactionManager;
+        this.applicationArguments = applicationArguments;
     }
 
     @Bean
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        XQLFileManager xqlFileManager = new XQLFileManager();
+
+        XQLFileManager xqlFileManager;
+        // support custom xql-file-manager.properties location by command-line
+        // e.g:
+        // local file system
+        // file:/usr/local/xql.config.oracle.properties
+        // classpath
+        // some/xql.config.oracle.properties
+        if (applicationArguments.containsOption(CmdOption.XQL_CONFIG_LOCATION_NAME)) {
+            xqlFileManager = new XQLFileManager(applicationArguments.getOptionValues(CmdOption.XQL_CONFIG_LOCATION_NAME).get(0));
+            xqlFileManager.init();
+            return xqlFileManager;
+        }
+
+        xqlFileManager = new XQLFileManager();
+
         if (!ObjectUtils.isEmpty(properties)) {
             if (!ObjectUtils.isEmpty(properties.getPropertiesLocation())) {
                 xqlFileManager = new XQLFileManager(properties.getPropertiesLocation());
