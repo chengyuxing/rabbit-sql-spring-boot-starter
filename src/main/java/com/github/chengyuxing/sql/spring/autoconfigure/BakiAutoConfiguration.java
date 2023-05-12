@@ -65,9 +65,11 @@ public class BakiAutoConfiguration {
             return xqlFileManager;
         }
 
+        // init read the default xql-file-manager.properties if exists.
         xqlFileManager = new XQLFileManager();
-
+        // override default setting if application.yml 'baki.xql-file-manager' configured.
         if (!ObjectUtils.isEmpty(properties)) {
+            // override default xql-file-manager.properties if custom location configured.
             if (!ObjectUtils.isEmpty(properties.getPropertiesLocation())) {
                 xqlFileManager = new XQLFileManager(properties.getPropertiesLocation());
             }
