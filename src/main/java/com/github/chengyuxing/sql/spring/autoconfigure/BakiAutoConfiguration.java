@@ -5,7 +5,6 @@ import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
-import com.github.chengyuxing.sql.spring.autoconfigure.common.CmdOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,7 @@ import java.util.Map;
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
 public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
+    public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
     private final DataSource dataSource;
     private final BakiProperties bakiProperties;
     private final PlatformTransactionManager transactionManager;
@@ -50,8 +50,6 @@ public class BakiAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
-        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-
         XQLFileManager xqlFileManager;
         // support custom xql-file-manager.properties location by command-line
         // e.g:
@@ -59,12 +57,13 @@ public class BakiAutoConfiguration {
         // file:/usr/local/xql.config.oracle.properties
         // classpath
         // some/xql.config.oracle.properties
-        if (applicationArguments.containsOption(CmdOption.XQL_CONFIG_LOCATION_NAME)) {
-            xqlFileManager = new XQLFileManager(applicationArguments.getOptionValues(CmdOption.XQL_CONFIG_LOCATION_NAME).get(0));
+        if (applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
+            xqlFileManager = new XQLFileManager(applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0));
             xqlFileManager.init();
             return xqlFileManager;
         }
 
+        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
         // init read the default xql-file-manager.properties if exists.
         xqlFileManager = new XQLFileManager();
         // override default setting if application.yml 'baki.xql-file-manager' configured.
@@ -115,6 +114,9 @@ public class BakiAutoConfiguration {
     @ConditionalOnMissingBean
     public Baki baki() throws RuntimeException {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
+        if (ObjectUtils.isEmpty(bakiProperties)) {
+            return baki;
+        }
         baki.setDebugFullSql(bakiProperties.isDebugFullSql());
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
         baki.setStrictDynamicSqlArg(bakiProperties.isStrictDynamicSqlArg());
