@@ -54,9 +54,9 @@ public class BakiAutoConfiguration {
         // support custom xql-file-manager.properties location by command-line
         // e.g:
         // local file system
-        // file:/usr/local/xql.config.oracle.properties
+        // file:/usr/local/xql.config.oracle.yml
         // classpath
-        // some/xql.config.oracle.properties
+        // some/xql.config.oracle.yml
         if (applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
             xqlFileManager = new XQLFileManager(applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0));
             xqlFileManager.init();
@@ -64,13 +64,13 @@ public class BakiAutoConfiguration {
         }
 
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        // init read the default xql-file-manager.properties if exists.
+        // init read the default xql-file-manager.yml if exists.
         xqlFileManager = new XQLFileManager();
         // override default setting if application.yml 'baki.xql-file-manager' configured.
         if (!ObjectUtils.isEmpty(properties)) {
-            // override default xql-file-manager.properties if custom location configured.
-            if (!ObjectUtils.isEmpty(properties.getPropertiesLocation())) {
-                xqlFileManager = new XQLFileManager(properties.getPropertiesLocation());
+            // override default xql-file-manager.yml if custom location configured.
+            if (!ObjectUtils.isEmpty(properties.getConfigLocation())) {
+                xqlFileManager = new XQLFileManager(properties.getConfigLocation());
             }
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
