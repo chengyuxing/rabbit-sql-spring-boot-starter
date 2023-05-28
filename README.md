@@ -24,7 +24,7 @@ Maven central
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.2.17</version>
+    <version>2.2.18</version>
 </dependency>
 ```
 
