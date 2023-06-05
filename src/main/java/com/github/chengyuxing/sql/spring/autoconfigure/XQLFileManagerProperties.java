@@ -25,7 +25,10 @@ public class XQLFileManagerProperties {
     private Map<String, String> files = new HashMap<>();
     /**
      * sql文件路径名，默认sql文件名就是别名（不包含后缀）
+     *
+     * @deprecated 已弃用
      */
+    @Deprecated
     private Set<String> filenames = new HashSet<>();
     /**
      * 设置全局常量集合<br>
@@ -124,10 +127,12 @@ public class XQLFileManagerProperties {
         this.pipes = pipes;
     }
 
+    @Deprecated
     public Set<String> getFilenames() {
         return filenames;
     }
 
+    @Deprecated
     public void setFilenames(Set<String> filenames) {
         this.filenames = filenames;
     }
