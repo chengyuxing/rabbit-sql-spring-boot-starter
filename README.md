@@ -66,6 +66,12 @@ baki:
       b: xql/two.sql
 ```
 
+### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
+
+1. Remove the `sql-file-manager` property from `application.yml` ;
+2. Create `xql-file-manager.yml` in resource root `.../src/main/resources` ;
+3. Configure [properties](https://github.com/chengyuxing/rabbit-sql#constructor).
+
 if `xql-file-manager` configured, you can inject `XQLFileManager`  to use without Baki:
 
 ```java

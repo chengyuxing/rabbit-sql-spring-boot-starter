@@ -72,6 +72,12 @@ baki:
       b: xql/two.sql
 ```
 
+### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作
+
+1. 移除 `application.yml` 中的属性 `xql-file-manager`；
+2. 在资源根目录 `.../src/main/resources` 下建立文件 `xql-file-manager.yml`；
+3. 配置[属性](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#构造函数)。
+
 配置了`xql-file-manager`属性的情况下，还可以单独注入`XQLFileManager`独立使用，如：
 
 ```java
