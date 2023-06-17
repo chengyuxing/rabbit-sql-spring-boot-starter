@@ -34,7 +34,7 @@ Maven central
 
 ## IDEA plugin support
 
-Plugin market: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql).
+Plugin marketplace: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) and [documentation](https://github.com/chengyuxing/rabbit-sql-plugin#readme).
 
 ## Configuration
 
@@ -73,8 +73,9 @@ baki:
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
 
 1. Remove the `sql-file-manager` property from `application.yml` ;
-2. Create `xql-file-manager.yml` in resource root `.../src/main/resources` ;
-3. Configure [properties](https://github.com/chengyuxing/rabbit-sql#constructor).
+2. Sql file extension must renamed to `xql` ;
+3. Create `xql-file-manager.yml` in resource root `.../src/main/resources` ;
+4. Configure [properties](https://github.com/chengyuxing/rabbit-sql#constructor).
 
 if `xql-file-manager` configured, you can inject `XQLFileManager`  to use without Baki:
 

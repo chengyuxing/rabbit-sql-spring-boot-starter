@@ -40,7 +40,7 @@ Maven 中央仓库
 
 ## IDEA 插件支持
 
-插件商店搜索：[Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)。
+插件商店搜索 [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)，帮助文档：[Rabbit sql plugin](https://github.com/chengyuxing/rabbit-sql-plugin/blob/main/README.chs.md)。
 
 ## 配置说明
 
@@ -79,8 +79,9 @@ baki:
 ### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作
 
 1. 移除 `application.yml` 中的属性 `xql-file-manager`；
-2. 在资源根目录 `.../src/main/resources` 下建立文件 `xql-file-manager.yml`；
-3. 配置[属性](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#构造函数)。
+2. 将原有的 sql 文件后缀改为 `.xql`；
+3. 在资源根目录 `.../src/main/resources` 下建立文件 `xql-file-manager.yml`；
+4. 配置[属性](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#构造函数)。
 
 配置了`xql-file-manager`属性的情况下，还可以单独注入`XQLFileManager`独立使用，如：
 
