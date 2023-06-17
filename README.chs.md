@@ -1,5 +1,9 @@
 # rabbit-sql-spring-boot-starter
 
+[![License][badge:license]][license]
+[![Maven][badge:maven]][maven-repository]
+[![Version][badge:version]][versions]
+
 语言: [English](README.md) | 简体中文
 
 ## 前言
@@ -125,3 +129,10 @@ public class MyService {
 }
 ```
 
+[badge:maven]:https://img.shields.io/maven-central/v/com.github.chengyuxing/rabbit-sql-spring-boot-starter
+[badge:license]: https://img.shields.io/github/license/chengyuxing/rabbit-sql-spring-boot-starter
+[badge:version]:https://img.shields.io/jetbrains/plugin/v/21403
+
+[license]:https://github.com/chengyuxing/rabbit-sql-spring-boot-starter/blob/main/LICENSE
+[maven-repository]:https://central.sonatype.com/artifact/com.github.chengyuxing/rabbit-sql-spring-boot-starter/2.3.0?smo=true
+[versions]:https://plugins.jetbrains.com/plugin/21403-rabbit-sql/versions
