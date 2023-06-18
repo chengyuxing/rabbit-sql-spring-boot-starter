@@ -72,8 +72,8 @@ Baki baki;
 baki:
   xql-file-manager:
     files:
-      a: xql/one.sql
-      b: xql/two.sql
+      a: mydir/one.sql
+      b: mydir/two.sql
 ```
 
 ### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作

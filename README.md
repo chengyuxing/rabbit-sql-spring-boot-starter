@@ -66,13 +66,13 @@ begin with input **baki** to edit `application.yml`, a simple example look like:
 baki:
   xql-file-manager:
     files:
-      a: xql/one.sql
-      b: xql/two.sql
+      a: mydir/one.sql
+      b: mydir/two.sql
 ```
 
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
 
-1. Remove the `sql-file-manager` property from `application.yml` ;
+1. Remove the `xql-file-manager` property from `application.yml` ;
 2. Sql file extension must renamed to `xql` ;
 3. Create `xql-file-manager.yml` in resource root `.../src/main/resources` ;
 4. Configure [properties](https://github.com/chengyuxing/rabbit-sql#constructor).
