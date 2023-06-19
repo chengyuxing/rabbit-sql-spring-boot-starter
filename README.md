@@ -28,7 +28,7 @@ Maven central
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.1</version>
 </dependency>
 ```
 
@@ -129,5 +129,5 @@ public class MyService {
 [badge:version]:https://img.shields.io/jetbrains/plugin/v/21403
 
 [license]:https://github.com/chengyuxing/rabbit-sql-spring-boot-starter/blob/main/LICENSE
-[maven-repository]:https://central.sonatype.com/artifact/com.github.chengyuxing/rabbit-sql-spring-boot-starter/2.3.0?smo=true
+[maven-repository]:https://central.sonatype.com/artifact/com.github.chengyuxing/rabbit-sql-spring-boot-starter
 [versions]:https://plugins.jetbrains.com/plugin/21403-rabbit-sql/versions
