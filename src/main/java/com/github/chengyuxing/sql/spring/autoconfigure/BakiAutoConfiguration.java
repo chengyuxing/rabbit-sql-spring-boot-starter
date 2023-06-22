@@ -5,6 +5,7 @@ import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
+import com.github.chengyuxing.sql.support.SqlInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +130,15 @@ public class BakiAutoConfiguration {
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
                 throw new IllegalStateException("configure globalPageHelperProvider error: ", e);
+            }
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getSqlInterceptor())) {
+            try {
+                SqlInterceptor sqlInterceptor = ReflectUtil.getInstance(bakiProperties.getSqlInterceptor());
+                baki.setSqlInterceptor(sqlInterceptor);
+            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new IllegalStateException("configure sqlInterceptor error: ", e);
             }
         }
         log.info("Baki initialized (Transaction managed by Spring)");

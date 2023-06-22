@@ -1,6 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelperProvider;
+import com.github.chengyuxing.sql.support.SqlInterceptor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -18,6 +19,10 @@ public class BakiProperties {
      * 自定义的全局分页帮助提供程序
      */
     private Class<? extends PageHelperProvider> globalPageHelperProvider;
+    /**
+     * SQL拦截器
+     */
+    private Class<? extends SqlInterceptor> sqlInterceptor;
     /**
      * 全局命名参数前缀，默认为 : 号
      */
@@ -93,5 +98,13 @@ public class BakiProperties {
 
     public void setGlobalPageHelperProvider(Class<? extends PageHelperProvider> globalPageHelperProvider) {
         this.globalPageHelperProvider = globalPageHelperProvider;
+    }
+
+    public Class<? extends SqlInterceptor> getSqlInterceptor() {
+        return sqlInterceptor;
+    }
+
+    public void setSqlInterceptor(Class<? extends SqlInterceptor> sqlInterceptor) {
+        this.sqlInterceptor = sqlInterceptor;
     }
 }
