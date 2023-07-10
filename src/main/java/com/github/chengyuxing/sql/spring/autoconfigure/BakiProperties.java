@@ -43,6 +43,7 @@ public class BakiProperties {
     /**
      * debug模式下是否打印语法高亮sql，默认非高亮
      */
+    @Deprecated
     private boolean highlightSql = false;
 
     public XQLFileManagerProperties getXqlFileManager() {
@@ -87,10 +88,12 @@ public class BakiProperties {
         this.debugFullSql = debugFullSql;
     }
 
+    @Deprecated
     public boolean isHighlightSql() {
         return highlightSql;
     }
 
+    @Deprecated
     public void setHighlightSql(boolean highlightSql) {
         this.highlightSql = highlightSql;
     }

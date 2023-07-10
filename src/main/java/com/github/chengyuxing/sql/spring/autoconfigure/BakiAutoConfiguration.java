@@ -100,7 +100,6 @@ public class BakiAutoConfiguration {
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
             }
-            xqlFileManager.setHighlightSql(bakiProperties.isHighlightSql());
         }
         xqlFileManager.init();
         return xqlFileManager;
@@ -115,7 +114,6 @@ public class BakiAutoConfiguration {
         }
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
         baki.setStrictDynamicSqlArg(bakiProperties.isStrictDynamicSqlArg());
-        baki.setHighlightSql(bakiProperties.isHighlightSql());
         baki.setXqlFileManager(xqlFileManager());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
