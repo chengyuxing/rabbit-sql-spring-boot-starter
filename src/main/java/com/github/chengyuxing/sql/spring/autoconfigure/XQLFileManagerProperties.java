@@ -41,10 +41,12 @@ public class XQLFileManagerProperties {
     /**
      * 文件检查周期（单位：秒）
      */
+    @Deprecated
     private int checkPeriod = 30; //seconds
     /**
      * 检查sql文件是否更新
      */
+    @Deprecated
     private boolean checkModified = false;
     /**
      * 解析sql文件使用的编码格式，默认为UTF-8
@@ -77,18 +79,22 @@ public class XQLFileManagerProperties {
         this.constants = constants;
     }
 
+    @Deprecated
     public int getCheckPeriod() {
         return checkPeriod;
     }
 
+    @Deprecated
     public void setCheckPeriod(int checkPeriod) {
         this.checkPeriod = checkPeriod;
     }
 
+    @Deprecated
     public boolean isCheckModified() {
         return checkModified;
     }
 
+    @Deprecated
     public void setCheckModified(boolean checkModified) {
         this.checkModified = checkModified;
     }
