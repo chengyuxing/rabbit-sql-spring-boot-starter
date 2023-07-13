@@ -35,16 +35,6 @@ public class BakiProperties {
      * 是否检查预编译sql对应的参数类型，取决于jdbc驱动厂商是否支持
      */
     private boolean checkParameterType = true;
-    /**
-     * 是否打印拼接完整的SQL，否则只打印原始SQL与参数
-     */
-    @Deprecated
-    private boolean debugFullSql = false;
-    /**
-     * debug模式下是否打印语法高亮sql，默认非高亮
-     */
-    @Deprecated
-    private boolean highlightSql = false;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -76,26 +66,6 @@ public class BakiProperties {
 
     public void setCheckParameterType(boolean checkParameterType) {
         this.checkParameterType = checkParameterType;
-    }
-
-    @Deprecated
-    public boolean isDebugFullSql() {
-        return debugFullSql;
-    }
-
-    @Deprecated
-    public void setDebugFullSql(boolean debugFullSql) {
-        this.debugFullSql = debugFullSql;
-    }
-
-    @Deprecated
-    public boolean isHighlightSql() {
-        return highlightSql;
-    }
-
-    @Deprecated
-    public void setHighlightSql(boolean highlightSql) {
-        this.highlightSql = highlightSql;
     }
 
     public Class<? extends PageHelperProvider> getGlobalPageHelperProvider() {
