@@ -28,10 +28,6 @@ public class BakiProperties {
      */
     private char namedParamPrefix = ':';
     /**
-     * 动态sql的参数是否为严格模式
-     */
-    private boolean strictDynamicSqlArg = true;
-    /**
      * 是否检查预编译sql对应的参数类型，取决于jdbc驱动厂商是否支持
      */
     private boolean checkParameterType = true;
@@ -50,14 +46,6 @@ public class BakiProperties {
 
     public void setNamedParamPrefix(char namedParamPrefix) {
         this.namedParamPrefix = namedParamPrefix;
-    }
-
-    public boolean isStrictDynamicSqlArg() {
-        return strictDynamicSqlArg;
-    }
-
-    public void setStrictDynamicSqlArg(boolean strictDynamicSqlArg) {
-        this.strictDynamicSqlArg = strictDynamicSqlArg;
     }
 
     public boolean isCheckParameterType() {

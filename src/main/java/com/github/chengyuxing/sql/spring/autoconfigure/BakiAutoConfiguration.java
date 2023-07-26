@@ -113,7 +113,6 @@ public class BakiAutoConfiguration {
             return baki;
         }
         baki.setCheckParameterType(bakiProperties.isCheckParameterType());
-        baki.setStrictDynamicSqlArg(bakiProperties.isStrictDynamicSqlArg());
         baki.setXqlFileManager(xqlFileManager());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
