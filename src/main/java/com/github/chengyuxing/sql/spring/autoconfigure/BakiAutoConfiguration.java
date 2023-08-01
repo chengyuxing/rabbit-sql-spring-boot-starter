@@ -112,7 +112,6 @@ public class BakiAutoConfiguration {
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
         }
-        baki.setCheckParameterType(bakiProperties.isCheckParameterType());
         baki.setXqlFileManager(xqlFileManager());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());

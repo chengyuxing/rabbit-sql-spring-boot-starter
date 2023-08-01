@@ -29,7 +29,10 @@ public class BakiProperties {
     private char namedParamPrefix = ':';
     /**
      * 是否检查预编译sql对应的参数类型，取决于jdbc驱动厂商是否支持
+     *
+     * @deprecated
      */
+    @Deprecated
     private boolean checkParameterType = true;
 
     public XQLFileManagerProperties getXqlFileManager() {
