@@ -24,16 +24,13 @@ public class BakiProperties {
      */
     private Class<? extends SqlInterceptor> sqlInterceptor;
     /**
+     * 批量执行大小
+     */
+    private int batchSize = 1000;
+    /**
      * 全局命名参数前缀，默认为 : 号
      */
     private char namedParamPrefix = ':';
-    /**
-     * 是否检查预编译sql对应的参数类型，取决于jdbc驱动厂商是否支持
-     *
-     * @deprecated
-     */
-    @Deprecated
-    private boolean checkParameterType = true;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -51,14 +48,6 @@ public class BakiProperties {
         this.namedParamPrefix = namedParamPrefix;
     }
 
-    public boolean isCheckParameterType() {
-        return checkParameterType;
-    }
-
-    public void setCheckParameterType(boolean checkParameterType) {
-        this.checkParameterType = checkParameterType;
-    }
-
     public Class<? extends PageHelperProvider> getGlobalPageHelperProvider() {
         return globalPageHelperProvider;
     }
@@ -73,5 +62,13 @@ public class BakiProperties {
 
     public void setSqlInterceptor(Class<? extends SqlInterceptor> sqlInterceptor) {
         this.sqlInterceptor = sqlInterceptor;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
     }
 }

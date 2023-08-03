@@ -113,6 +113,7 @@ public class BakiAutoConfiguration {
             return baki;
         }
         baki.setXqlFileManager(xqlFileManager());
+        baki.setBatchSize(bakiProperties.getBatchSize());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(baki.getNamedParamPrefix());
         }
