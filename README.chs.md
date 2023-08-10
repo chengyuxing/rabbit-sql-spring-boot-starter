@@ -34,7 +34,7 @@ Maven 中央仓库
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.6.0</version>
+    <version>2.6.1</version>
 </dependency>
 ```
 
@@ -50,9 +50,7 @@ Maven 中央仓库
 spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/postgres
-    driver-class-name: org.postgresql.Driver
     username: chengyuxing
-    password:
 ```
 
 即可使用**依赖注入**`Baki`进行一些操作：
@@ -83,14 +81,7 @@ baki:
 3. 在资源根目录 `.../src/main/resources` 下建立文件 `xql-file-manager.yml`；
 4. 配置[属性](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#构造函数)。
 
-配置了`xql-file-manager`属性的情况下，还可以单独注入`XQLFileManager`独立使用，如：
-
-```java
-@Autowired
-XQLFileManager xqlFileManager;
-```
-
-**简单使用**：
+### 简单使用
 
 ```java
 @SpringBootApplication

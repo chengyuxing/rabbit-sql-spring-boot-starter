@@ -32,7 +32,7 @@ public class XQLFileManagerProperties {
      * <pre>result: select test.user from table.</pre>
      * </blockquote>
      */
-    private Map<String, String> constants = new HashMap<>();
+    private Map<String, Object> constants = new HashMap<>();
     /**
      * 配置动态sql脚本自定义管道字典 [管道名，IPipe实现类]
      */
@@ -61,11 +61,11 @@ public class XQLFileManagerProperties {
         this.files = files;
     }
 
-    public Map<String, String> getConstants() {
+    public Map<String, Object> getConstants() {
         return constants;
     }
 
-    public void setConstants(Map<String, String> constants) {
+    public void setConstants(Map<String, Object> constants) {
         this.constants = constants;
     }
 

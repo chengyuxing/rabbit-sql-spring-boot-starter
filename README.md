@@ -28,7 +28,7 @@ Maven central
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.6.0</version>
+    <version>2.6.1</version>
 </dependency>
 ```
 
@@ -44,9 +44,7 @@ Plugin marketplace: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabb
 spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/postgres
-    driver-class-name: org.postgresql.Driver
     username: chengyuxing
-    password:
 ```
 
 Inject `Baki` ready to use:
@@ -73,18 +71,11 @@ baki:
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
 
 1. Remove the `xql-file-manager` property from `application.yml` ;
-2. Sql file extension must renamed to `xql` ;
+2. Sql file extension must rename to `xql` ;
 3. Create `xql-file-manager.yml` in resource root `.../src/main/resources` ;
 4. Configure [properties](https://github.com/chengyuxing/rabbit-sql#constructor).
 
-if `xql-file-manager` configured, you can inject `XQLFileManager`  to use without Baki:
-
-```java
-@Autowired
-XQLFileManager xqlFileManager;
-```
-
-**simple usage**:
+### simple usage
 
 ```java
 @SpringBootApplication
