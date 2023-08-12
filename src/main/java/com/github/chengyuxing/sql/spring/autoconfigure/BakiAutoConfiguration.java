@@ -141,7 +141,7 @@ public class BakiAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public SimpleTx simpleTx() {
-        return new SimpleTx(transactionManager);
+    public Tx tx() {
+        return new Tx(transactionManager);
     }
 }

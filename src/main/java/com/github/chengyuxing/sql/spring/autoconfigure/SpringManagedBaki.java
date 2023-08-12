@@ -10,11 +10,6 @@ import java.sql.Connection;
  * spring管理事务的Baki
  */
 public class SpringManagedBaki extends BakiDao {
-    /**
-     * 构造函数
-     *
-     * @param dataSource 数据源
-     */
     public SpringManagedBaki(DataSource dataSource) {
         super(dataSource);
     }

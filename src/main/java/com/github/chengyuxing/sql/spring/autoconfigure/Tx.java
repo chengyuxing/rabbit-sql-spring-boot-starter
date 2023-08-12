@@ -8,10 +8,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.function.Supplier;
 
-public class SimpleTx {
+public class Tx {
     final PlatformTransactionManager transactionManager;
 
-    public SimpleTx(PlatformTransactionManager transactionManager) {
+    public Tx(PlatformTransactionManager transactionManager) {
         this.transactionManager = transactionManager;
     }
 

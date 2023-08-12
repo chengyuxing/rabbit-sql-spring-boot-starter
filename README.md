@@ -10,13 +10,13 @@ Language: English | [简体中文](README.chs.md)
 
 **It's not instead of any ORM framework**, no conflict with ORM framework, just a lib.
 
-Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `SimpleTx` (simple wrapper for spring transaction) to use transaction.
+Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `com.github.chengyuxing.sql.spring.autoconfigure.Tx` (simple wrapper for spring transaction) to use transaction.
 
 - support `application.yml` auto complete;
 - compatible with spring jdbc transaction;
 - compatible with mybatis, spring-data-jpa and so on to use transaction together;
 
-:warning: don't use rabbit-sql's built-in `Tx`, use spring transaction instead.
+:warning: don't use **rabbit-sql's** built-in `Tx`, use spring transaction instead.
 
 get more usage about **rabbit-sql** from [document](https://github.com/chengyuxing/rabbit-sql)。
 
@@ -28,7 +28,7 @@ Maven central
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.6.2</version>
+    <version>2.6.3</version>
 </dependency>
 ```
 
