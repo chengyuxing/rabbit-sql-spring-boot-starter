@@ -31,6 +31,10 @@ public class BakiProperties {
      * 全局命名参数前缀，默认为 : 号
      */
     private char namedParamPrefix = ':';
+    /**
+     * 在获取sql时如果xql文件有变更则重新加载xql文件管理器
+     */
+    private boolean reloadXqlOnGet = false;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -70,5 +74,13 @@ public class BakiProperties {
 
     public void setBatchSize(int batchSize) {
         this.batchSize = batchSize;
+    }
+
+    public boolean isReloadXqlOnGet() {
+        return reloadXqlOnGet;
+    }
+
+    public void setReloadXqlOnGet(boolean reloadXqlOnGet) {
+        this.reloadXqlOnGet = reloadXqlOnGet;
     }
 }

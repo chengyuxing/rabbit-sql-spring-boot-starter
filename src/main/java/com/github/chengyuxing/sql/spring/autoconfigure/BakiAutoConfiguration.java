@@ -115,8 +115,9 @@ public class BakiAutoConfiguration {
         baki.setXqlFileManager(xqlFileManager());
         baki.setBatchSize(bakiProperties.getBatchSize());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
-            baki.setNamedParamPrefix(baki.getNamedParamPrefix());
+            baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
+        baki.setReloadXqlOnGet(bakiProperties.isReloadXqlOnGet());
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {
                 PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());
