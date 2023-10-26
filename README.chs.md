@@ -24,6 +24,9 @@
 
 :warning: 请勿使用**rabbit-sql**内置的`Tx`事务，事务已完全由spring全局事务替代。
 
+- ~~com.github.chengyuxing.sql.transaction.Tx~~ ❌
+- com.github.chengyuxing.sql.spring.autoconfigure.Tx ✅
+
 关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql)。
 
 ## maven dependency (jdk1.8)
@@ -34,7 +37,7 @@ Maven 中央仓库
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.7.3</version>
+    <version>2.7.4</version>
 </dependency>
 ```
 
