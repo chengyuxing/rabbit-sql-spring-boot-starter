@@ -18,6 +18,9 @@ Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed tr
 
 :warning: don't use **rabbit-sql's** built-in `Tx`, use spring transaction instead.
 
+- ~~com.github.chengyuxing.sql.transaction.Tx~~ ❌
+- com.github.chengyuxing.sql.spring.autoconfigure.Tx ✅
+
 get more usage about **rabbit-sql** from [document](https://github.com/chengyuxing/rabbit-sql)。
 
 ## Maven dependency (jdk1.8)
@@ -28,7 +31,7 @@ Maven central
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.7.4</version>
+    <version>2.7.6</version>
 </dependency>
 ```
 
