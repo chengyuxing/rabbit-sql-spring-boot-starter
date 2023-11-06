@@ -6,6 +6,7 @@ import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
 import com.github.chengyuxing.sql.support.SqlInterceptor;
+import com.github.chengyuxing.sql.support.StatementValueHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,10 @@ public class BakiAutoConfiguration {
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
         }
-        baki.setXqlFileManager(xqlFileManager());
+        XQLFileManager xqlFileManager = xqlFileManager();
+        xqlFileManager.setDatabaseId(baki.databaseId());
+        baki.setXqlFileManager(xqlFileManager);
+
         baki.setBatchSize(bakiProperties.getBatchSize());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
@@ -134,6 +138,15 @@ public class BakiAutoConfiguration {
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
                 throw new IllegalStateException("configure sqlInterceptor error: ", e);
+            }
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getStatementValueHandler())) {
+            try {
+                StatementValueHandler statementValueHandler = ReflectUtil.getInstance(bakiProperties.getStatementValueHandler());
+                baki.setStatementValueHandler(statementValueHandler);
+            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new IllegalStateException("configure statementValueHandler error: ", e);
             }
         }
         log.info("Baki initialized (Transaction managed by Spring)");

@@ -2,6 +2,7 @@ package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelperProvider;
 import com.github.chengyuxing.sql.support.SqlInterceptor;
+import com.github.chengyuxing.sql.support.StatementValueHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -23,6 +24,10 @@ public class BakiProperties {
      * SQL interceptor.
      */
     private Class<? extends SqlInterceptor> sqlInterceptor;
+    /**
+     * Custom prepared sql statement parameter value handler.
+     */
+    private Class<? extends StatementValueHandler> statementValueHandler;
     /**
      * Batch size of batch execute.
      */
@@ -82,5 +87,13 @@ public class BakiProperties {
 
     public void setReloadXqlOnGet(boolean reloadXqlOnGet) {
         this.reloadXqlOnGet = reloadXqlOnGet;
+    }
+
+    public Class<? extends StatementValueHandler> getStatementValueHandler() {
+        return statementValueHandler;
+    }
+
+    public void setStatementValueHandler(Class<? extends StatementValueHandler> statementValueHandler) {
+        this.statementValueHandler = statementValueHandler;
     }
 }
