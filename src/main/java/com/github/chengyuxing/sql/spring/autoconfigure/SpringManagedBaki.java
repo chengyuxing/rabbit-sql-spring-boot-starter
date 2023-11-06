@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * spring管理事务的Baki
+ * Implementation of Baki for Spring, datasource and transaction managed by Spring.
  */
 public class SpringManagedBaki extends BakiDao {
     public SpringManagedBaki(DataSource dataSource) {
