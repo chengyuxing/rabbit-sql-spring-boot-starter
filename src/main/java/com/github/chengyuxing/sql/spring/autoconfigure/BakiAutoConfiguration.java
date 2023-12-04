@@ -5,6 +5,7 @@ import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
+import com.github.chengyuxing.sql.support.AfterParseDynamicSql;
 import com.github.chengyuxing.sql.support.SqlInterceptor;
 import com.github.chengyuxing.sql.support.StatementValueHandler;
 import org.slf4j.Logger;
@@ -147,6 +148,15 @@ public class BakiAutoConfiguration {
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
                 throw new IllegalStateException("configure statementValueHandler error: ", e);
+            }
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getAfterParseDynamicSql())) {
+            try {
+                AfterParseDynamicSql afterParseDynamicSql = ReflectUtil.getInstance(bakiProperties.getAfterParseDynamicSql());
+                baki.setAfterParseDynamicSql(afterParseDynamicSql);
+            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new IllegalStateException("configure afterParseDynamicSql error: ", e);
             }
         }
         log.info("Baki initialized (Transaction managed by Spring)");

@@ -1,6 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelperProvider;
+import com.github.chengyuxing.sql.support.AfterParseDynamicSql;
 import com.github.chengyuxing.sql.support.SqlInterceptor;
 import com.github.chengyuxing.sql.support.StatementValueHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,6 +29,10 @@ public class BakiProperties {
      * Custom prepared sql statement parameter value handler.
      */
     private Class<? extends StatementValueHandler> statementValueHandler;
+    /**
+     * Do something after parse dynamic sql.
+     */
+    private Class<? extends AfterParseDynamicSql> afterParseDynamicSql;
     /**
      * Batch size of batch execute.
      */
@@ -95,5 +100,13 @@ public class BakiProperties {
 
     public void setStatementValueHandler(Class<? extends StatementValueHandler> statementValueHandler) {
         this.statementValueHandler = statementValueHandler;
+    }
+
+    public Class<? extends AfterParseDynamicSql> getAfterParseDynamicSql() {
+        return afterParseDynamicSql;
+    }
+
+    public void setAfterParseDynamicSql(Class<? extends AfterParseDynamicSql> afterParseDynamicSql) {
+        this.afterParseDynamicSql = afterParseDynamicSql;
     }
 }
