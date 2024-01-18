@@ -99,6 +99,9 @@ public class BakiAutoConfiguration {
             if (StringUtils.hasLength(properties.getDelimiter())) {
                 xqlFileManager.setDelimiter(properties.getDelimiter());
             }
+            if (StringUtils.hasText(properties.getDatabaseId())) {
+                xqlFileManager.setDatabaseId(properties.getDatabaseId());
+            }
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
             }

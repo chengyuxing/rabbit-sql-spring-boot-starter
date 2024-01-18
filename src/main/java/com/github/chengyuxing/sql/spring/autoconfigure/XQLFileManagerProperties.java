@@ -46,6 +46,12 @@ public class XQLFileManagerProperties {
      * more than one sql statement which ends with {@code ;}, for correct set to other is necessary, like {@code ;;} .
      */
     private String delimiter = ";";
+    /**
+     * Current database id.<br>
+     * Init value for support <a href="https://plugins.jetbrains.com/plugin/21403-rabbit-sql">rabbit-sql-plugin</a> dynamic sql test parameter
+     * and assigned in runtime automatically.
+     */
+    private String databaseId;
 
     public Map<String, String> getFiles() {
         return files;
@@ -95,5 +101,13 @@ public class XQLFileManagerProperties {
 
     public void setConfigLocation(String configLocation) {
         this.configLocation = configLocation;
+    }
+
+    public String getDatabaseId() {
+        return databaseId;
+    }
+
+    public void setDatabaseId(String databaseId) {
+        this.databaseId = databaseId;
     }
 }
