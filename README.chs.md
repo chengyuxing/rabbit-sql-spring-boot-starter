@@ -37,7 +37,7 @@ Maven 中央仓库
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.8.12</version>
+    <version>2.8.13</version>
 </dependency>
 ```
 
