@@ -24,10 +24,17 @@ public class XQLFileManagerProperties {
     /**
      * Set constants map.<br>
      * Example：
+     * <p>constants: </p>
      * <blockquote>
-     * <pre>constants: {db: "test"}</pre>
-     * <pre>sql: {@code select ${db}.user from table;}</pre>
-     * <pre>result: select test.user from table.</pre>
+     * <pre>{db: "test"}</pre>
+     * </blockquote>
+     * <p>sql statement:</p>
+     * <blockquote>
+     * <pre>select ${db}.user from table</pre>
+     * </blockquote>
+     * <p>result: </p>
+     * <blockquote>
+     * <pre>select test.user from table</pre>
      * </blockquote>
      */
     private Map<String, Object> constants = new HashMap<>();
@@ -48,7 +55,7 @@ public class XQLFileManagerProperties {
     private String delimiter = ";";
     /**
      * Current database id.<br>
-     * Init value for support <a href="https://plugins.jetbrains.com/plugin/21403-rabbit-sql">rabbit-sql-plugin</a> dynamic sql test parameter
+     * Init value for support <a href="https://plugins.jetbrains.com/plugin/21403-rabbit-sql">Rabbit-sql-plugin</a> dynamic sql test parameter
      * and assigned in runtime automatically.
      */
     private String databaseId;
