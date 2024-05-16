@@ -126,6 +126,7 @@ public class BakiAutoConfiguration {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
         baki.setReloadXqlOnGet(bakiProperties.isReloadXqlOnGet());
+        baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {
                 PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());

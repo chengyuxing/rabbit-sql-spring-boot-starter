@@ -45,6 +45,11 @@ public class BakiProperties {
      * If XQL file changed, XQL file reloaded when execute sql always.
      */
     private boolean reloadXqlOnGet = false;
+    /**
+     * Load {@code xql-file-manager-}{@link SpringManagedBaki#databaseId() databaseId}{@code .yml} first if exists,
+     * otherwise {@code xql-file-manager.yml}
+     */
+    private boolean autoXFMConfig = true;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -108,5 +113,13 @@ public class BakiProperties {
 
     public void setAfterParseDynamicSql(Class<? extends AfterParseDynamicSql> afterParseDynamicSql) {
         this.afterParseDynamicSql = afterParseDynamicSql;
+    }
+
+    public boolean isAutoXFMConfig() {
+        return autoXFMConfig;
+    }
+
+    public void setAutoXFMConfig(boolean autoXFMConfig) {
+        this.autoXFMConfig = autoXFMConfig;
     }
 }
