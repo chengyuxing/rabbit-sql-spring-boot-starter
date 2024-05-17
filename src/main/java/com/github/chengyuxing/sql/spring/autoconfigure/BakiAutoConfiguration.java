@@ -117,16 +117,14 @@ public class BakiAutoConfiguration {
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
         }
-        XQLFileManager xqlFileManager = xqlFileManager();
-        xqlFileManager.setDatabaseId(baki.databaseId());
-        baki.setXqlFileManager(xqlFileManager);
-
         baki.setBatchSize(bakiProperties.getBatchSize());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
         baki.setReloadXqlOnGet(bakiProperties.isReloadXqlOnGet());
         baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
+        XQLFileManager xqlFileManager = xqlFileManager();
+        baki.setXqlFileManager(xqlFileManager);
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {
                 PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());
