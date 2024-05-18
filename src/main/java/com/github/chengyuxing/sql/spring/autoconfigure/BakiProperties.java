@@ -49,7 +49,7 @@ public class BakiProperties {
      * Load {@code xql-file-manager-}{@link SpringManagedBaki#databaseId() databaseId}{@code .yml} first if exists,
      * otherwise {@code xql-file-manager.yml}
      */
-    private boolean autoXFMConfig = true;
+    private boolean autoXFMConfig = false;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
