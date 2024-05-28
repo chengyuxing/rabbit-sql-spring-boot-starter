@@ -29,6 +29,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -105,6 +107,15 @@ public class BakiAutoConfiguration {
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
             }
+            if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
+                try {
+                    BiFunction<Object, Boolean, String> templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
+                    xqlFileManager.setTemplateFormatter(templateFormatter);
+                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                         IllegalAccessException e) {
+                    throw new RuntimeException("configure templateFormatter error.", e);
+                }
+            }
         }
         xqlFileManager.init();
         return xqlFileManager;
@@ -124,7 +135,6 @@ public class BakiAutoConfiguration {
         baki.setReloadXqlOnGet(bakiProperties.isReloadXqlOnGet());
         baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
         XQLFileManager xqlFileManager = xqlFileManager();
-        baki.setXqlFileManager(xqlFileManager);
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {
                 PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());
@@ -149,7 +159,7 @@ public class BakiAutoConfiguration {
                 baki.setStatementValueHandler(statementValueHandler);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
-                throw new IllegalStateException("configure statementValueHandler error: ", e);
+                throw new IllegalStateException("configure statementValueHandler error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getAfterParseDynamicSql())) {
@@ -158,9 +168,28 @@ public class BakiAutoConfiguration {
                 baki.setAfterParseDynamicSql(afterParseDynamicSql);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
-                throw new IllegalStateException("configure afterParseDynamicSql error: ", e);
+                throw new IllegalStateException("configure afterParseDynamicSql error.", e);
             }
         }
+        if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
+            try {
+                BiFunction<Object, Boolean, String> templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
+                baki.setTemplateFormatter(templateFormatter);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new RuntimeException("configure templateFormatter error.", e);
+            }
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getNamedParamFormatter())) {
+            try {
+                Function<Object, String> namedParamFormatter = ReflectUtil.getInstance(bakiProperties.getNamedParamFormatter());
+                baki.setNamedParamFormatter(namedParamFormatter);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new RuntimeException("configure namedParamFormatter error.", e);
+            }
+        }
+        baki.setXqlFileManager(xqlFileManager);
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;
     }

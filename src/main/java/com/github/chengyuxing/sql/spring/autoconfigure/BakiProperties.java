@@ -4,7 +4,11 @@ import com.github.chengyuxing.sql.page.PageHelperProvider;
 import com.github.chengyuxing.sql.support.AfterParseDynamicSql;
 import com.github.chengyuxing.sql.support.SqlInterceptor;
 import com.github.chengyuxing.sql.support.StatementValueHandler;
+import com.github.chengyuxing.sql.utils.SqlUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Baki configuration properties.
@@ -50,6 +54,16 @@ public class BakiProperties {
      * otherwise {@code xql-file-manager.yml}
      */
     private boolean autoXFMConfig = false;
+    /**
+     * Non-prepared Sql template ({@code ${key}}) formatter.
+     * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, boolean)}
+     */
+    private Class<? extends BiFunction<Object, Boolean, String>> templateFormatter;
+    /**
+     * Non-prepared Sql named parameter value formatter.
+     * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, true)}
+     */
+    private Class<? extends Function<Object, String>> namedParamFormatter;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -121,5 +135,21 @@ public class BakiProperties {
 
     public void setAutoXFMConfig(boolean autoXFMConfig) {
         this.autoXFMConfig = autoXFMConfig;
+    }
+
+    public Class<? extends BiFunction<Object, Boolean, String>> getTemplateFormatter() {
+        return templateFormatter;
+    }
+
+    public void setTemplateFormatter(Class<? extends BiFunction<Object, Boolean, String>> templateFormatter) {
+        this.templateFormatter = templateFormatter;
+    }
+
+    public Class<? extends Function<Object, String>> getNamedParamFormatter() {
+        return namedParamFormatter;
+    }
+
+    public void setNamedParamFormatter(Class<? extends Function<Object, String>> namedParamFormatter) {
+        this.namedParamFormatter = namedParamFormatter;
     }
 }
