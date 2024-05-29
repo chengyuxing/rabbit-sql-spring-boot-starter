@@ -1,13 +1,13 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.BakiDao;
+import com.github.chengyuxing.sql.support.NamedParamFormatter;
+import com.github.chengyuxing.sql.support.TemplateFormatter;
 import com.github.chengyuxing.sql.utils.SqlGenerator;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Implementation of Baki for Spring, datasource and transaction managed by Spring.
@@ -27,12 +27,12 @@ public class SpringManagedBaki extends BakiDao {
         DataSourceUtils.releaseConnection(connection, dataSource);
     }
 
-    public void setTemplateFormatter(BiFunction<Object, Boolean, String> templateFormatter) {
+    public void setTemplateFormatter(TemplateFormatter templateFormatter) {
         SqlGenerator sqlGenerator = sqlGenerator();
         sqlGenerator.setTemplateFormatter(templateFormatter);
     }
 
-    public void setNamedParamFormatter(Function<Object, String> namedParamFormatter) {
+    public void setNamedParamFormatter(NamedParamFormatter namedParamFormatter) {
         SqlGenerator sqlGenerator = sqlGenerator();
         sqlGenerator.setNamedParamFormatter(namedParamFormatter);
     }

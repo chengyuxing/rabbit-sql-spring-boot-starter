@@ -1,14 +1,9 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelperProvider;
-import com.github.chengyuxing.sql.support.AfterParseDynamicSql;
-import com.github.chengyuxing.sql.support.SqlInterceptor;
-import com.github.chengyuxing.sql.support.StatementValueHandler;
+import com.github.chengyuxing.sql.support.*;
 import com.github.chengyuxing.sql.utils.SqlUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Baki configuration properties.
@@ -58,12 +53,12 @@ public class BakiProperties {
      * Non-prepared Sql template ({@code ${key}}) formatter.
      * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, boolean)}
      */
-    private Class<? extends BiFunction<Object, Boolean, String>> templateFormatter;
+    private Class<? extends TemplateFormatter> templateFormatter;
     /**
      * Non-prepared Sql named parameter value formatter.
      * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, true)}
      */
-    private Class<? extends Function<Object, String>> namedParamFormatter;
+    private Class<? extends NamedParamFormatter> namedParamFormatter;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -137,19 +132,19 @@ public class BakiProperties {
         this.autoXFMConfig = autoXFMConfig;
     }
 
-    public Class<? extends BiFunction<Object, Boolean, String>> getTemplateFormatter() {
+    public Class<? extends TemplateFormatter> getTemplateFormatter() {
         return templateFormatter;
     }
 
-    public void setTemplateFormatter(Class<? extends BiFunction<Object, Boolean, String>> templateFormatter) {
+    public void setTemplateFormatter(Class<? extends TemplateFormatter> templateFormatter) {
         this.templateFormatter = templateFormatter;
     }
 
-    public Class<? extends Function<Object, String>> getNamedParamFormatter() {
+    public Class<? extends NamedParamFormatter> getNamedParamFormatter() {
         return namedParamFormatter;
     }
 
-    public void setNamedParamFormatter(Class<? extends Function<Object, String>> namedParamFormatter) {
+    public void setNamedParamFormatter(Class<? extends NamedParamFormatter> namedParamFormatter) {
         this.namedParamFormatter = namedParamFormatter;
     }
 }

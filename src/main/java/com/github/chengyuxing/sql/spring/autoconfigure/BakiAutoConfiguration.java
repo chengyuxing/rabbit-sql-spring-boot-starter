@@ -5,9 +5,7 @@ import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.page.PageHelperProvider;
-import com.github.chengyuxing.sql.support.AfterParseDynamicSql;
-import com.github.chengyuxing.sql.support.SqlInterceptor;
-import com.github.chengyuxing.sql.support.StatementValueHandler;
+import com.github.chengyuxing.sql.support.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -109,7 +105,7 @@ public class BakiAutoConfiguration {
             }
             if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
                 try {
-                    BiFunction<Object, Boolean, String> templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
+                    TemplateFormatter templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
                     xqlFileManager.setTemplateFormatter(templateFormatter);
                 } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                          IllegalAccessException e) {
@@ -173,7 +169,7 @@ public class BakiAutoConfiguration {
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
             try {
-                BiFunction<Object, Boolean, String> templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
+                TemplateFormatter templateFormatter = ReflectUtil.getInstance(bakiProperties.getTemplateFormatter());
                 baki.setTemplateFormatter(templateFormatter);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
@@ -182,7 +178,7 @@ public class BakiAutoConfiguration {
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getNamedParamFormatter())) {
             try {
-                Function<Object, String> namedParamFormatter = ReflectUtil.getInstance(bakiProperties.getNamedParamFormatter());
+                NamedParamFormatter namedParamFormatter = ReflectUtil.getInstance(bakiProperties.getNamedParamFormatter());
                 baki.setNamedParamFormatter(namedParamFormatter);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
