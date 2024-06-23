@@ -1,6 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
-import com.github.chengyuxing.common.script.IPipe;
+import com.github.chengyuxing.common.script.expression.IPipe;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
