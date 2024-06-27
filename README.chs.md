@@ -10,10 +10,6 @@
 
 **没有任何一个框架能独立漂亮解决任何问题**，配合才是最好的解决方案，这不是用来替换ORM等任何jdbc框架，而是作为辅助，与ORM框架相互配合，复杂sql交给rabbit-sql来进行管理。
 
-### 再次声明
-
-**这不是用来替换ORM等任何jdbc框架**，和ORM框架完全不冲突，这只是一个工具，一个库！！！
-
 ## 介绍
 
 基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
@@ -37,7 +33,7 @@ Maven 中央仓库
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.10.2</version>
+    <version>2.10.3</version>
 </dependency>
 ```
 
