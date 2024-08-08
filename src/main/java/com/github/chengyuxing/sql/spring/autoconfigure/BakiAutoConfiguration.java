@@ -8,7 +8,6 @@ import com.github.chengyuxing.sql.page.PageHelperProvider;
 import com.github.chengyuxing.sql.support.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -18,7 +17,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -38,13 +36,11 @@ public class BakiAutoConfiguration {
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
     private final DataSource dataSource;
     private final BakiProperties bakiProperties;
-    private final PlatformTransactionManager transactionManager;
     private final ApplicationArguments applicationArguments;
 
-    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties, @Autowired(required = false) PlatformTransactionManager transactionManager, ApplicationArguments applicationArguments) {
+    public BakiAutoConfiguration(DataSource dataSource, BakiProperties bakiProperties, ApplicationArguments applicationArguments) {
         this.dataSource = dataSource;
         this.bakiProperties = bakiProperties;
-        this.transactionManager = transactionManager;
         this.applicationArguments = applicationArguments;
     }
 
@@ -188,11 +184,5 @@ public class BakiAutoConfiguration {
         baki.setXqlFileManager(xqlFileManager);
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public Tx tx() {
-        return new Tx(transactionManager);
     }
 }

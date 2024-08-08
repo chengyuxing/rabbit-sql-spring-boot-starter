@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.chengyuxing.sql.spring.autoconfigure.BakiAutoConfiguration
+com.github.chengyuxing.sql.spring.autoconfigure.BakiAutoConfiguration,\
+com.github.chengyuxing.sql.spring.autoconfigure.TransactionAutoConfiguration
