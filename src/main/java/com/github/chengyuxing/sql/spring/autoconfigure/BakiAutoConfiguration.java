@@ -115,7 +115,7 @@ public class BakiAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public SpringManagedBaki baki() throws RuntimeException {
+    public Baki baki() throws RuntimeException {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
