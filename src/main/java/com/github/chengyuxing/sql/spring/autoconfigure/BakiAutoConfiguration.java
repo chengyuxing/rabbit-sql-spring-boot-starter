@@ -181,6 +181,8 @@ public class BakiAutoConfiguration {
                 throw new RuntimeException("configure namedParamFormatter error.", e);
             }
         }
+        baki.setPageKey(bakiProperties.getPageKey());
+        baki.setSizeKey(bakiProperties.getSizeKey());
         baki.setXqlFileManager(xqlFileManager);
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;

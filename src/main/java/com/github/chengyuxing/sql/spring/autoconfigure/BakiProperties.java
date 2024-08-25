@@ -59,6 +59,14 @@ public class BakiProperties {
      * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, true)}
      */
     private Class<? extends NamedParamFormatter> namedParamFormatter;
+    /**
+     * Page query page number argument key.
+     */
+    private String pageKey = "page";
+    /**
+     * Page query page size argument key.
+     */
+    private String sizeKey = "size";
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -146,5 +154,21 @@ public class BakiProperties {
 
     public void setNamedParamFormatter(Class<? extends NamedParamFormatter> namedParamFormatter) {
         this.namedParamFormatter = namedParamFormatter;
+    }
+
+    public String getPageKey() {
+        return pageKey;
+    }
+
+    public void setPageKey(String pageKey) {
+        this.pageKey = pageKey;
+    }
+
+    public String getSizeKey() {
+        return sizeKey;
+    }
+
+    public void setSizeKey(String sizeKey) {
+        this.sizeKey = sizeKey;
     }
 }
