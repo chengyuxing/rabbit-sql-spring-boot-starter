@@ -181,6 +181,15 @@ public class BakiAutoConfiguration {
                 throw new RuntimeException("configure namedParamFormatter error.", e);
             }
         }
+        if (!ObjectUtils.isEmpty(bakiProperties.getSqlWatcher())) {
+            try {
+                SqlWatcher sqlWatcher = ReflectUtil.getInstance(bakiProperties.getSqlWatcher());
+                baki.setSqlWatcher(sqlWatcher);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new RuntimeException("configure sqlWatcher error.", e);
+            }
+        }
         baki.setPageKey(bakiProperties.getPageKey());
         baki.setSizeKey(bakiProperties.getSizeKey());
         baki.setXqlFileManager(xqlFileManager);

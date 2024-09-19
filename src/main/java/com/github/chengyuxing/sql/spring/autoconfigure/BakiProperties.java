@@ -67,6 +67,10 @@ public class BakiProperties {
      * Page query page size argument key.
      */
     private String sizeKey = "size";
+    /**
+     * Sql watcher.
+     */
+    private Class<? extends SqlWatcher> sqlWatcher;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -170,5 +174,13 @@ public class BakiProperties {
 
     public void setSizeKey(String sizeKey) {
         this.sizeKey = sizeKey;
+    }
+
+    public Class<? extends SqlWatcher> getSqlWatcher() {
+        return sqlWatcher;
+    }
+
+    public void setSqlWatcher(Class<? extends SqlWatcher> sqlWatcher) {
+        this.sqlWatcher = sqlWatcher;
     }
 }
