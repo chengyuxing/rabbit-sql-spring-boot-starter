@@ -192,6 +192,7 @@ public class BakiAutoConfiguration {
         }
         baki.setPageKey(bakiProperties.getPageKey());
         baki.setSizeKey(bakiProperties.getSizeKey());
+        baki.setQueryTimeout(bakiProperties.getQueryTimeout());
         baki.setXqlFileManager(xqlFileManager);
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;

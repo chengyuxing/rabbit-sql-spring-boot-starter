@@ -68,6 +68,10 @@ public class BakiProperties {
      */
     private String sizeKey = "size";
     /**
+     * Jdbc execute sql timeout.
+     */
+    private int queryTimeout = 0;
+    /**
      * Sql watcher.
      */
     private Class<? extends SqlWatcher> sqlWatcher;
@@ -182,5 +186,13 @@ public class BakiProperties {
 
     public void setSqlWatcher(Class<? extends SqlWatcher> sqlWatcher) {
         this.sqlWatcher = sqlWatcher;
+    }
+
+    public int getQueryTimeout() {
+        return queryTimeout;
+    }
+
+    public void setQueryTimeout(int queryTimeout) {
+        this.queryTimeout = queryTimeout;
     }
 }
