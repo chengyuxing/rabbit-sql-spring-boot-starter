@@ -190,9 +190,17 @@ public class BakiAutoConfiguration {
                 throw new RuntimeException("configure sqlWatcher error.", e);
             }
         }
+        if (!ObjectUtils.isEmpty(bakiProperties.getQueryTimeoutHandler())) {
+            try {
+                QueryTimeoutHandler queryTimeoutHandler = ReflectUtil.getInstance(bakiProperties.getQueryTimeoutHandler());
+                baki.setQueryTimeoutHandler(queryTimeoutHandler);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new RuntimeException("configure queryTimeoutHandler error.", e);
+            }
+        }
         baki.setPageKey(bakiProperties.getPageKey());
         baki.setSizeKey(bakiProperties.getSizeKey());
-        baki.setQueryTimeout(bakiProperties.getQueryTimeout());
         baki.setXqlFileManager(xqlFileManager);
         log.info("Baki initialized (Transaction managed by Spring)");
         return baki;

@@ -70,7 +70,7 @@ public class BakiProperties {
     /**
      * Jdbc execute sql timeout.
      */
-    private int queryTimeout = 0;
+    private Class<? extends QueryTimeoutHandler> queryTimeoutHandler;
     /**
      * Sql watcher.
      */
@@ -188,11 +188,11 @@ public class BakiProperties {
         this.sqlWatcher = sqlWatcher;
     }
 
-    public int getQueryTimeout() {
-        return queryTimeout;
+    public Class<? extends QueryTimeoutHandler> getQueryTimeoutHandler() {
+        return queryTimeoutHandler;
     }
 
-    public void setQueryTimeout(int queryTimeout) {
-        this.queryTimeout = queryTimeout;
+    public void setQueryTimeoutHandler(Class<? extends QueryTimeoutHandler> queryTimeoutHandler) {
+        this.queryTimeoutHandler = queryTimeoutHandler;
     }
 }
