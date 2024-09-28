@@ -35,7 +35,7 @@ public class XQLMapperScannerRegistrar implements ImportBeanDefinitionRegistrar,
     }
 
     private String getDefaultBasePackage(AnnotationMetadata importingClassMetadata) {
-        // 获取启动类所在的包
+        // startup main class package
         String className = importingClassMetadata.getClassName();
         int lastDotIndex = className.lastIndexOf('.');
         return (lastDotIndex != -1) ? className.substring(0, lastDotIndex) : "";
