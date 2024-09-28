@@ -16,6 +16,8 @@ import java.lang.annotation.*;
 public @interface XQLMapperScan {
     /**
      * Base packages to scan.
+     *
+     * @return base packages
      */
     String[] basePackages() default {};
 }

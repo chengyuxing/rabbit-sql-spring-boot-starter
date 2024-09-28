@@ -15,6 +15,8 @@ import java.lang.annotation.*;
 public @interface Baki {
     /**
      * Baki bean name in {@link org.springframework.context.ApplicationContext application context}
+     *
+     * @return bean name
      */
     String value();
 }
