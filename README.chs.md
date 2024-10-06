@@ -85,7 +85,7 @@ baki:
 支持两种方式，可根据需求自由选择：
 
 - 注入核心接口`Baki`；
-- Springboot启动类添加注解 `@XQLMapperScan` ，编写 **xql** 映射接口，[注入接口](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#接口映射)，例如 `ExampleMapper.java`；
+- Springboot启动类添加注解 `@XQLMapperScan` ，编写 **xql** [映射接口](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#接口映射)，注入接口，例如 `ExampleMapper.java`；
 
 ```java
 @SpringBootApplication
