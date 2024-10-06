@@ -80,8 +80,14 @@ baki:
 
 ### simple usage
 
+Here is two way to use:
+
+- Inject core interface `Baki` ;
+- Springboot application startup class annotated with `@XQLMapperScan`,  create [interface mappring](https://github.com/chengyuxing/rabbit-sql#interface-mapping) to xql file, inject interface e.g `ExampleMapper.java`
+
 ```java
 @SpringBootApplication
+@XQLMapperScan
 public class Startup implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(Startup.class, args);
@@ -90,6 +96,9 @@ public class Startup implements CommandLineRunner {
     @Autowired
     Baki baki;
 
+  	@Autowired
+  	ExampleMapper exampleMapper;
+  
     @Override
     public void run(String... args) throws Exception {
         try (Stream<DataRow> s = baki.query("&a.region").arg("id", 5).stream()) {

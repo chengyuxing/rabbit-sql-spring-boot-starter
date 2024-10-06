@@ -82,8 +82,14 @@ baki:
 
 ### 简单使用
 
+支持两种方式，可根据需求自由选择：
+
+- 注入核心接口`Baki`；
+- Springboot启动类添加注解 `@XQLMapperScan` ，编写 **xql** 映射接口，[注入接口](https://github.com/chengyuxing/rabbit-sql/blob/master/README.chs.md#接口映射)，例如 `ExampleMapper.java`；
+
 ```java
 @SpringBootApplication
+@XQLMapperScan
 public class Startup implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(Startup.class, args);
@@ -91,6 +97,9 @@ public class Startup implements CommandLineRunner {
 
     @Autowired
     Baki baki;
+  
+  	@Autowired
+  	ExampleMapper exampleMapper;
 
     @Override
     public void run(String... args) throws Exception {
@@ -101,7 +110,7 @@ public class Startup implements CommandLineRunner {
 }
 ```
 
-**基于spring管理的事务**：
+**spring注解管理的事务**：
 
 ```java
 
