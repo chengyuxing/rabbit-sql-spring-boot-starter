@@ -4,15 +4,14 @@
 [![Maven][badge:maven]][maven-repository]
 [![Version][badge:version]][versions]
 
+<img src="imgs/pluginIcon.svg" style="width:180px;" />
+
 Language: English | [简体中文](README.chs.md)
 
 ## Introducing
 
-**It's not instead of any ORM framework**, no conflict with ORM framework, just a lib.
-
 Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `com.github.chengyuxing.sql.spring.autoconfigure.Tx` (simple wrapper for spring transaction) to use transaction.
 
-- support `application.yml` auto complete;
 - compatible with spring jdbc transaction;
 - compatible with mybatis, spring-data-jpa and so on to use transaction together;
 
@@ -23,11 +22,10 @@ Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed tr
 
 get more usage about **rabbit-sql** from [document](https://github.com/chengyuxing/rabbit-sql)。
 
-## Maven dependency (jdk1.8)
-
-Maven central
+## Maven dependency (jdk1.8+)
 
 ```xml
+<!-- Maven central -->
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
@@ -36,6 +34,14 @@ Maven central
 ```
 
 ## IDEA plugin support
+
+Dynamic sql test:
+
+![](imgs/execute-dynamic-sql.png)
+
+Xql interface mapper generate:
+
+![](imgs/xql-mapper-generate.png)
 
 Plugin marketplace: [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) and [documentation](https://github.com/chengyuxing/rabbit-sql-plugin#readme).
 
@@ -72,6 +78,8 @@ baki:
 ```
 
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
+
+![](imgs/new-xql-file-manager.png)
 
 1. Remove the `xql-file-manager` property from `application.yml` ;
 2. Sql file extension must rename to `xql` ;
@@ -118,11 +126,19 @@ public class MyService {
     @Autowired
     Baki baki;
 
+    // com.github.chengyuxing.sql.spring.autoconfigure.Tx
+    @Autowired;
+    Tx tx;
+  
     @Transactional
     public void some() {
-        baki.insert("test.tx").save(Args.of("a", 1));
-        int i = 1 / 0;    // will be rollback
-        baki.insert("test.tx").save(Args.of("a", 2));
+        ...
+    }
+  
+    public void b(){
+      tx.using(()->{
+        ...
+      })
     }
 }
 ```

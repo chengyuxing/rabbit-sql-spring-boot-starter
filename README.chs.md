@@ -4,17 +4,14 @@
 [![Maven][badge:maven]][maven-repository]
 [![Version][badge:version]][versions]
 
+<img src="imgs/pluginIcon.svg" style="width:180px;" />
+
 语言: [English](README.md) | 简体中文
-
-## 前言
-
-**没有任何一个框架能独立漂亮解决任何问题**，配合才是最好的解决方案，这不是用来替换ORM等任何jdbc框架，而是作为辅助，与ORM框架相互配合，复杂sql交给rabbit-sql来进行管理。
 
 ## 介绍
 
 基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
 
-- 支持application.yml配置项自动完成提示；
 - 兼容spring jdbc事务；
 - 兼容mybatis、spring-data-jpa等同时进行事务处理；
 
@@ -25,11 +22,10 @@
 
 关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql)。
 
-## maven dependency (jdk1.8)
-
-Maven 中央仓库
+## maven dependency (jdk1.8+)
 
 ```xml
+<!-- Maven 中央仓库 -->
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
@@ -38,6 +34,14 @@ Maven 中央仓库
 ```
 
 ## IDEA 插件支持
+
+动态sql测试：
+
+![](imgs/execute-dynamic-sql.png)
+
+xql接口代码生成：
+
+![](imgs/xql-mapper-generate.png)
 
 插件商店搜索 [Rabbit sql](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)，帮助文档：[Rabbit sql plugin](https://github.com/chengyuxing/rabbit-sql-plugin/blob/main/README.chs.md)。
 
@@ -74,6 +78,8 @@ baki:
 ```
 
 ### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作
+
+![](imgs/new-xql-file-manager.png)
 
 1. 移除 `application.yml` 中的属性 `xql-file-manager`；
 2. 将原有的 sql 文件后缀改为 `.xql`；
@@ -119,12 +125,20 @@ public class MyService {
 
     @Autowired
     Baki baki;
+  	
+    // com.github.chengyuxing.sql.spring.autoconfigure.Tx
+  	@Autowired;
+  	Tx tx;
 
     @Transactional
-    public void some() {
-        baki.insert("test.tx").save(Args.of("a", 1));
-        int i = 1 / 0;    // 抛出异常回滚
-        baki.insert("test.tx").save(Args.of("a", 2));
+    public void a() {
+        ...
+    }
+  
+  	public void b(){
+      tx.using(()->{
+        ...
+      })
     }
 }
 ```
