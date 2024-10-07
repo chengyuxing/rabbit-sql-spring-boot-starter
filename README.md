@@ -104,8 +104,8 @@ public class Startup implements CommandLineRunner {
     @Autowired
     Baki baki;
 
-  	@Autowired
-  	ExampleMapper exampleMapper;
+    @Autowired
+    ExampleMapper exampleMapper;
   
     @Override
     public void run(String... args) throws Exception {
