@@ -4,7 +4,7 @@
 [![Maven][badge:maven]][maven-repository]
 [![Version][badge:version]][versions]
 
-<img src="imgs/pluginIcon.svg" style="width:180px;" />
+<img src="imgs/pluginIcon.svg" style="width:220px;" />
 
 语言: [English](README.md) | 简体中文
 
