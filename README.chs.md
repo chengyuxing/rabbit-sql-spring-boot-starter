@@ -6,9 +6,11 @@
 
 <img src="imgs/pluginIcon.svg" style="width:220px;" />
 
-语言: [English](README.md) | 简体中文
+语言: [English](https://github.com/chengyuxing/rabbit-sql-spring-boot-starter) | 简体中文
 
 ## 介绍
+
+查看[最佳实践](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.chs.md)来快速开始。
 
 基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
 

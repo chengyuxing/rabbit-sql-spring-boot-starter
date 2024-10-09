@@ -6,9 +6,11 @@
 
 <img src="imgs/pluginIcon.svg" style="width:220px;" />
 
-Language: English | [简体中文](README.chs.md)
+Language: English | [简体中文](https://github.com/chengyuxing/rabbit-sql-spring-boot-starter/blob/main/README.chs.md)
 
 ## Introducing
+
+Get [Best practice](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.md) to quick start.
 
 Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `com.github.chengyuxing.sql.spring.autoconfigure.Tx` (simple wrapper for spring transaction) to use transaction.
 
