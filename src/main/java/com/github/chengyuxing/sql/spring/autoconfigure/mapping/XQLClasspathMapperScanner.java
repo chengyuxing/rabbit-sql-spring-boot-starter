@@ -1,6 +1,8 @@
 package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 
 import com.github.chengyuxing.sql.annotation.XQLMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -13,6 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class XQLClasspathMapperScanner extends ClassPathBeanDefinitionScanner {
+    private static final Logger log = LoggerFactory.getLogger(XQLClasspathMapperScanner.class);
+
     public XQLClasspathMapperScanner(BeanDefinitionRegistry registry) {
         super(registry, false);
         addIncludeFilter(new AnnotationTypeFilter(XQLMapper.class));
@@ -43,6 +47,8 @@ public class XQLClasspathMapperScanner extends ClassPathBeanDefinitionScanner {
             definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName);
 
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
+
+            log.debug("Scan and register XQL mapper: {}.", beanClassName);
         }
     }
 }

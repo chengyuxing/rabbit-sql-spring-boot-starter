@@ -3,6 +3,8 @@ package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 import com.github.chengyuxing.sql.BakiDao;
 import com.github.chengyuxing.sql.XQLInvocationHandler;
 import com.github.chengyuxing.sql.utils.XQLMapperUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +13,8 @@ import org.springframework.context.ApplicationContextAware;
 import java.util.Map;
 
 public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationContextAware {
+    private static final Logger log = LoggerFactory.getLogger(XQLMapperFactoryBean.class);
+
     private final Class<T> mapperInterface;
     private ApplicationContext applicationContext;
 
@@ -41,9 +45,11 @@ public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationConte
     private BakiDao getTargetBaki() {
         Map<String, BakiDao> map = applicationContext.getBeansOfType(BakiDao.class);
         if (map.size() == 1) {
+            log.debug("Unique Baki detected and injected.");
             return map.values().iterator().next();
         }
         String defaultName = getBakiNameRelatedMapper();
+        log.debug("Multiple Baki detected and inject by name '{}'.", defaultName);
         return map.get(defaultName);
     }
 
