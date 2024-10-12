@@ -31,7 +31,7 @@ get more usage about **rabbit-sql** from [document](https://github.com/chengyuxi
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>2.11.3</version>
+    <version>2.11.4</version>
 </dependency>
 ```
 
