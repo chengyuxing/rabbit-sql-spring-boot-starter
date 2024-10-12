@@ -75,6 +75,10 @@ public class BakiProperties {
      * Sql watcher.
      */
     private Class<? extends SqlWatcher> sqlWatcher;
+    /**
+     * Query cache manager.
+     */
+    private Class<? extends QueryCacheManager> queryCacheManager;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -194,5 +198,13 @@ public class BakiProperties {
 
     public void setQueryTimeoutHandler(Class<? extends QueryTimeoutHandler> queryTimeoutHandler) {
         this.queryTimeoutHandler = queryTimeoutHandler;
+    }
+
+    public Class<? extends QueryCacheManager> getQueryCacheManager() {
+        return queryCacheManager;
+    }
+
+    public void setQueryCacheManager(Class<? extends QueryCacheManager> queryCacheManager) {
+        this.queryCacheManager = queryCacheManager;
     }
 }

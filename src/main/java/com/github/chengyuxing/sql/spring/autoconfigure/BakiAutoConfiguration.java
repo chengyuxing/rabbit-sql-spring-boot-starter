@@ -199,6 +199,15 @@ public class BakiAutoConfiguration {
                 throw new RuntimeException("configure queryTimeoutHandler error.", e);
             }
         }
+        if (!ObjectUtils.isEmpty(bakiProperties.getQueryCacheManager())) {
+            try {
+                QueryCacheManager queryCacheManager = ReflectUtil.getInstance(bakiProperties.getQueryCacheManager());
+                baki.setQueryCacheManager(queryCacheManager);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
+                throw new RuntimeException("configure queryCacheManager error.", e);
+            }
+        }
         baki.setPageKey(bakiProperties.getPageKey());
         baki.setSizeKey(bakiProperties.getSizeKey());
         baki.setXqlFileManager(xqlFileManager);

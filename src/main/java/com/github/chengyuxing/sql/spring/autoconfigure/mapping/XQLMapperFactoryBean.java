@@ -46,7 +46,7 @@ public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationConte
         Map<String, BakiDao> map = applicationContext.getBeansOfType(BakiDao.class);
         if (map.size() == 1) {
             log.debug("Unique Baki detected and injected.");
-            return map.values().iterator().next();
+            return applicationContext.getBean(BakiDao.class);
         }
         String defaultName = getBakiNameRelatedMapper();
         log.debug("Multiple Baki detected and inject by name '{}'.", defaultName);
