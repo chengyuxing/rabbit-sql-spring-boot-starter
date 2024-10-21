@@ -41,10 +41,6 @@ public class BakiProperties {
      */
     private char namedParamPrefix = ':';
     /**
-     * If XQL file changed, XQL file reloaded when execute sql always.
-     */
-    private boolean reloadXqlOnGet = false;
-    /**
      * Load {@code xql-file-manager-}{@link SpringManagedBaki#databaseId() databaseId}{@code .yml} first if exists,
      * otherwise {@code xql-file-manager.yml}
      */
@@ -118,14 +114,6 @@ public class BakiProperties {
 
     public void setBatchSize(int batchSize) {
         this.batchSize = batchSize;
-    }
-
-    public boolean isReloadXqlOnGet() {
-        return reloadXqlOnGet;
-    }
-
-    public void setReloadXqlOnGet(boolean reloadXqlOnGet) {
-        this.reloadXqlOnGet = reloadXqlOnGet;
     }
 
     public Class<? extends StatementValueHandler> getStatementValueHandler() {

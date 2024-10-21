@@ -49,7 +49,7 @@ public class BakiAutoConfiguration {
     public XQLFileManager xqlFileManager() {
         XQLFileManager xqlFileManager;
         // support custom xql-file-manager.properties location by command-line
-        // e.g:
+        // e.g.
         // local file system
         // file:/usr/local/xql.config.oracle.yml
         // classpath
@@ -124,7 +124,6 @@ public class BakiAutoConfiguration {
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
-        baki.setReloadXqlOnGet(bakiProperties.isReloadXqlOnGet());
         baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
         XQLFileManager xqlFileManager = xqlFileManager();
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
