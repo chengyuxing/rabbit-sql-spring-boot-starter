@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
+import com.github.chengyuxing.common.io.ClassPathResource;
 import com.github.chengyuxing.common.script.expression.IPipe;
 import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.sql.Baki;
@@ -25,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -47,27 +49,38 @@ public class BakiAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
-        XQLFileManager xqlFileManager;
-        // support custom xql-file-manager.properties location by command-line
+        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+        String configLocation;
+        // Priority 1
+        // support custom xql-file-manager.yml location by command-line
         // e.g.
         // local file system
         // file:/usr/local/xql.config.oracle.yml
         // classpath
         // some/xql.config.oracle.yml
         if (applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
-            xqlFileManager = new XQLFileManager(applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0));
-            xqlFileManager.init();
-            return xqlFileManager;
+            configLocation = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0);
+            log.info("Load {} by {}", configLocation, XQL_CONFIG_LOCATION_NAME);
+            // Priority 2
+            // baki#xql-file-manager#configLocation
+        } else if (!ObjectUtils.isEmpty(properties) && !ObjectUtils.isEmpty(properties.getConfigLocation())) {
+            configLocation = properties.getConfigLocation();
+            log.info("Load {} by baki.xql-file-manager.configLocation", configLocation);
+            // Priority 3
+            // classpath xql-file-manager.yml
+        } else if (new ClassPathResource(XQLFileManager.YML).exists()) {
+            configLocation = XQLFileManager.YML;
+            log.info("Load classpath default {}", configLocation);
+        } else {
+            configLocation = null;
         }
 
-        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        // init read the default xql-file-manager.yml if exists.
-        xqlFileManager = new XQLFileManager();
-        // override default setting if application.yml 'baki.xql-file-manager' configured.
+        XQLFileManager xqlFileManager = Objects.nonNull(configLocation) ?
+                new XQLFileManager(configLocation) : new XQLFileManager();
+
         if (!ObjectUtils.isEmpty(properties)) {
-            // override default xql-file-manager.yml if custom location configured.
-            if (!ObjectUtils.isEmpty(properties.getConfigLocation())) {
-                xqlFileManager = new XQLFileManager(properties.getConfigLocation());
+            if (Objects.nonNull(configLocation)) {
+                log.info("Copy baki.xql-file-manager properties to {}", configLocation);
             }
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
@@ -105,7 +118,7 @@ public class BakiAutoConfiguration {
                     xqlFileManager.setTemplateFormatter(templateFormatter);
                 } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                          IllegalAccessException e) {
-                    throw new RuntimeException("configure templateFormatter error.", e);
+                    throw new IllegalStateException("configure templateFormatter error.", e);
                 }
             }
         }
@@ -120,12 +133,14 @@ public class BakiAutoConfiguration {
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
         }
-        baki.setBatchSize(bakiProperties.getBatchSize());
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
+        baki.setBatchSize(bakiProperties.getBatchSize());
+        baki.setPageKey(bakiProperties.getPageKey());
+        baki.setSizeKey(bakiProperties.getSizeKey());
         baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
-        XQLFileManager xqlFileManager = xqlFileManager();
+        baki.setXqlFileManager(xqlFileManager());
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {
                 PageHelperProvider pageHelperProvider = ReflectUtil.getInstance(bakiProperties.getGlobalPageHelperProvider());
@@ -168,7 +183,7 @@ public class BakiAutoConfiguration {
                 baki.setTemplateFormatter(templateFormatter);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
-                throw new RuntimeException("configure templateFormatter error.", e);
+                throw new IllegalStateException("configure templateFormatter error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getNamedParamFormatter())) {
@@ -177,7 +192,7 @@ public class BakiAutoConfiguration {
                 baki.setNamedParamFormatter(namedParamFormatter);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
-                throw new RuntimeException("configure namedParamFormatter error.", e);
+                throw new IllegalStateException("configure namedParamFormatter error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getSqlWatcher())) {
@@ -186,7 +201,7 @@ public class BakiAutoConfiguration {
                 baki.setSqlWatcher(sqlWatcher);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
-                throw new RuntimeException("configure sqlWatcher error.", e);
+                throw new IllegalStateException("configure sqlWatcher error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getQueryTimeoutHandler())) {
@@ -195,7 +210,7 @@ public class BakiAutoConfiguration {
                 baki.setQueryTimeoutHandler(queryTimeoutHandler);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
-                throw new RuntimeException("configure queryTimeoutHandler error.", e);
+                throw new IllegalStateException("configure queryTimeoutHandler error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getQueryCacheManager())) {
@@ -204,13 +219,10 @@ public class BakiAutoConfiguration {
                 baki.setQueryCacheManager(queryCacheManager);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                      IllegalAccessException e) {
-                throw new RuntimeException("configure queryCacheManager error.", e);
+                throw new IllegalStateException("configure queryCacheManager error.", e);
             }
         }
-        baki.setPageKey(bakiProperties.getPageKey());
-        baki.setSizeKey(bakiProperties.getSizeKey());
-        baki.setXqlFileManager(xqlFileManager);
-        log.info("Baki initialized (Transaction managed by Spring)");
+        log.info("Baki({}) initialized (Transaction managed by Spring)", SpringManagedBaki.class.getName());
         return baki;
     }
 }
