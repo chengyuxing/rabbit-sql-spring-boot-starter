@@ -1,8 +1,8 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.BakiDao;
-import com.github.chengyuxing.sql.support.NamedParamFormatter;
-import com.github.chengyuxing.sql.support.TemplateFormatter;
+import com.github.chengyuxing.sql.plugins.NamedParamFormatter;
+import com.github.chengyuxing.sql.plugins.TemplateFormatter;
 import com.github.chengyuxing.sql.utils.SqlGenerator;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 

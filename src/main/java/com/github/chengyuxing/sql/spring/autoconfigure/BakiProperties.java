@@ -1,7 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.page.PageHelperProvider;
-import com.github.chengyuxing.sql.support.*;
+import com.github.chengyuxing.sql.plugins.*;
 import com.github.chengyuxing.sql.utils.SqlUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
