@@ -129,7 +129,7 @@ public class MyService {
     Baki baki;
 
     // com.github.chengyuxing.sql.spring.autoconfigure.Tx
-    @Autowired;
+    @Autowired
     Tx tx;
   
     @Transactional
@@ -140,7 +140,7 @@ public class MyService {
     public void b(){
       tx.using(()->{
         ...
-      })
+      });
     }
 }
 ```
