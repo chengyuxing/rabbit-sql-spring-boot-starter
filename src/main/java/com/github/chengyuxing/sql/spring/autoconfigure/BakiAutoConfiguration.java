@@ -168,13 +168,13 @@ public class BakiAutoConfiguration {
                 throw new IllegalStateException("configure statementValueHandler error.", e);
             }
         }
-        if (!ObjectUtils.isEmpty(bakiProperties.getAfterParseDynamicSql())) {
+        if (!ObjectUtils.isEmpty(bakiProperties.getSqlParseChecker())) {
             try {
-                AfterParseDynamicSql afterParseDynamicSql = ReflectUtil.getInstance(bakiProperties.getAfterParseDynamicSql());
-                baki.setAfterParseDynamicSql(afterParseDynamicSql);
+                SqlParseChecker sqlParseChecker = ReflectUtil.getInstance(bakiProperties.getSqlParseChecker());
+                baki.setSqlParseChecker(sqlParseChecker);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
-                throw new IllegalStateException("configure afterParseDynamicSql error.", e);
+                throw new IllegalStateException("configure sqlParseChecker error.", e);
             }
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {

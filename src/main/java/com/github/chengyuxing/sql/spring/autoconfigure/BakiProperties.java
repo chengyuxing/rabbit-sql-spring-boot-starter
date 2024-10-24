@@ -31,7 +31,7 @@ public class BakiProperties {
     /**
      * Do something after parse dynamic sql.
      */
-    private Class<? extends AfterParseDynamicSql> afterParseDynamicSql;
+    private Class<? extends SqlParseChecker> sqlParseChecker;
     /**
      * Batch size of batch execute.
      */
@@ -124,14 +124,6 @@ public class BakiProperties {
         this.statementValueHandler = statementValueHandler;
     }
 
-    public Class<? extends AfterParseDynamicSql> getAfterParseDynamicSql() {
-        return afterParseDynamicSql;
-    }
-
-    public void setAfterParseDynamicSql(Class<? extends AfterParseDynamicSql> afterParseDynamicSql) {
-        this.afterParseDynamicSql = afterParseDynamicSql;
-    }
-
     public boolean isAutoXFMConfig() {
         return autoXFMConfig;
     }
@@ -194,5 +186,13 @@ public class BakiProperties {
 
     public void setQueryCacheManager(Class<? extends QueryCacheManager> queryCacheManager) {
         this.queryCacheManager = queryCacheManager;
+    }
+
+    public Class<? extends SqlParseChecker> getSqlParseChecker() {
+        return sqlParseChecker;
+    }
+
+    public void setSqlParseChecker(Class<? extends SqlParseChecker> sqlParseChecker) {
+        this.sqlParseChecker = sqlParseChecker;
     }
 }
