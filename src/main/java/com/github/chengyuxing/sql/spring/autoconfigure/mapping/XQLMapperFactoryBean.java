@@ -3,6 +3,7 @@ package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 import com.github.chengyuxing.sql.BakiDao;
 import com.github.chengyuxing.sql.XQLInvocationHandler;
 import com.github.chengyuxing.sql.utils.XQLMapperUtil;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -26,7 +27,7 @@ public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationConte
     public T getObject() throws Exception {
         return XQLMapperUtil.getProxyInstance(mapperInterface, new XQLInvocationHandler() {
             @Override
-            protected BakiDao baki() {
+            protected @NotNull BakiDao baki() {
                 return getTargetBaki();
             }
         });
@@ -38,7 +39,7 @@ public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationConte
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 

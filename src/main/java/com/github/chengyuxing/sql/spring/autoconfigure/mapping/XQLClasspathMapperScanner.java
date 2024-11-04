@@ -1,6 +1,7 @@
 package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 
 import com.github.chengyuxing.sql.annotation.XQLMapper;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -23,12 +24,12 @@ public class XQLClasspathMapperScanner extends ClassPathBeanDefinitionScanner {
     }
 
     @Override
-    protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
+    protected boolean isCandidateComponent(@NotNull AnnotatedBeanDefinition beanDefinition) {
         return true;
     }
 
     @Override
-    protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
+    protected @NotNull Set<BeanDefinitionHolder> doScan(String @NotNull ... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
         if (!beanDefinitions.isEmpty()) {
             processBeanDefinitions(beanDefinitions);

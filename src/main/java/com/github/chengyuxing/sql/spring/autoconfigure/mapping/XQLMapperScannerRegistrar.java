@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -21,7 +22,7 @@ public class XQLMapperScannerRegistrar implements ImportBeanDefinitionRegistrar,
     private Environment environment;
 
     @Override
-    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, @NotNull BeanDefinitionRegistry registry) {
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(
                 importingClassMetadata.getAnnotationAttributes(XQLMapperScan.class.getName())
         );
@@ -47,12 +48,12 @@ public class XQLMapperScannerRegistrar implements ImportBeanDefinitionRegistrar,
     }
 
     @Override
-    public void setEnvironment(Environment environment) {
+    public void setEnvironment(@NotNull Environment environment) {
         this.environment = environment;
     }
 
     @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
+    public void setResourceLoader(@NotNull ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 }
