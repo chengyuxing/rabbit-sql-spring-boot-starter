@@ -4,6 +4,7 @@ import com.github.chengyuxing.sql.BakiDao;
 import com.github.chengyuxing.sql.plugins.NamedParamFormatter;
 import com.github.chengyuxing.sql.plugins.TemplateFormatter;
 import com.github.chengyuxing.sql.utils.SqlGenerator;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -18,7 +19,7 @@ public class SpringManagedBaki extends BakiDao {
     }
 
     @Override
-    protected Connection getConnection() {
+    protected @NotNull Connection getConnection() {
         return DataSourceUtils.getConnection(getDataSource());
     }
 
