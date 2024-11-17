@@ -24,14 +24,25 @@
 
 关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql)。
 
-## maven dependency (jdk1.8+)
+## maven dependency
+
+_java 17+_
 
 ```xml
-<!-- Maven 中央仓库 -->
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>3.1.3-jdk8</version>
+    <version>4.0.0</version>
+</dependency>
+```
+
+_java 8_
+
+```xml
+<dependency>
+    <groupId>com.github.chengyuxing</groupId>
+    <artifactId>rabbit-sql-spring-boot-starter</artifactId>
+    <version>3.1.3</version>
 </dependency>
 ```
 
