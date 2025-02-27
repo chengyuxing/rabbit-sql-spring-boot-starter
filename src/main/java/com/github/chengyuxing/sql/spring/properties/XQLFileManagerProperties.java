@@ -1,4 +1,4 @@
-package com.github.chengyuxing.sql.spring.autoconfigure;
+package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.common.script.expression.IPipe;
 import org.springframework.boot.context.properties.ConfigurationProperties;

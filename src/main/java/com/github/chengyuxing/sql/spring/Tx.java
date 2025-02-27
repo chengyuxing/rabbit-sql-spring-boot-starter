@@ -1,4 +1,4 @@
-package com.github.chengyuxing.sql.spring.autoconfigure;
+package com.github.chengyuxing.sql.spring;
 
 import com.github.chengyuxing.sql.exceptions.TransactionException;
 import org.springframework.transaction.PlatformTransactionManager;

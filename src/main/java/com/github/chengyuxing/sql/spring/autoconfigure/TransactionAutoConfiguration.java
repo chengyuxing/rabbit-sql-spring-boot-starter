@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
+import com.github.chengyuxing.sql.spring.Tx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

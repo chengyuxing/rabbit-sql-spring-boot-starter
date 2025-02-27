@@ -1,16 +1,17 @@
-package com.github.chengyuxing.sql.spring.autoconfigure;
+package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.sql.plugins.*;
+import com.github.chengyuxing.sql.spring.SpringManagedBaki;
 import com.github.chengyuxing.sql.utils.SqlUtil;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Baki configuration properties.
- *
- * @see SpringManagedBaki
  */
-@ConfigurationProperties(prefix = "baki")
 public class BakiProperties {
+    /**
+     * Manual datasource properties.
+     */
+    private BakiDatasourceProperties datasource;
     /**
      * XQLFileManager properties.
      */
@@ -193,5 +194,13 @@ public class BakiProperties {
 
     public void setSqlParseChecker(Class<? extends SqlParseChecker> sqlParseChecker) {
         this.sqlParseChecker = sqlParseChecker;
+    }
+
+    public BakiDatasourceProperties getDatasource() {
+        return datasource;
+    }
+
+    public void setDatasource(BakiDatasourceProperties datasource) {
+        this.datasource = datasource;
     }
 }
