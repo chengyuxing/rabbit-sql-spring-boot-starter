@@ -2,10 +2,7 @@ package com.github.chengyuxing.sql.spring.autoconfigure;
 
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
-import com.github.chengyuxing.sql.spring.properties.BakiDatasourceProperties;
-import com.github.chengyuxing.sql.spring.properties.BakiProperties;
-import com.github.chengyuxing.sql.spring.properties.PrimaryBakiProperties;
-import com.github.chengyuxing.sql.spring.properties.XQLFileManagerProperties;
+import com.github.chengyuxing.sql.spring.properties.*;
 import com.github.chengyuxing.sql.spring.utils.BeanUtil;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -29,19 +26,21 @@ import java.util.Map;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
-@EnableConfigurationProperties({PrimaryBakiProperties.class, XQLFileManagerProperties.class, BakiDatasourceProperties.class})
+@EnableConfigurationProperties({SpringSecondaryDatasourceProperties.class, PrimaryBakiProperties.class, XQLFileManagerProperties.class})
 @AutoConfiguration
 public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
     private final DataSource dataSource;
     private final PrimaryBakiProperties bakiProperties;
+    private final SpringSecondaryDatasourceProperties secondaryDatasourceProperties;
     private final ApplicationArguments applicationArguments;
     private final ConfigurableApplicationContext applicationContext;
 
-    public BakiAutoConfiguration(@Autowired(required = false) DataSource dataSource, PrimaryBakiProperties bakiProperties, ApplicationArguments applicationArguments, ConfigurableApplicationContext applicationContext) {
+    public BakiAutoConfiguration(@Autowired(required = false) DataSource dataSource, PrimaryBakiProperties bakiProperties, SpringSecondaryDatasourceProperties secondaryDatasourceProperties, ApplicationArguments applicationArguments, ConfigurableApplicationContext applicationContext) {
         this.dataSource = dataSource;
         this.bakiProperties = bakiProperties;
+        this.secondaryDatasourceProperties = secondaryDatasourceProperties;
         this.applicationArguments = applicationArguments;
         this.applicationContext = applicationContext;
     }
@@ -70,35 +69,43 @@ public class BakiAutoConfiguration {
     @ConditionalOnMissingBean
     public Baki baki() throws RuntimeException {
         DataSource myDataSource = dataSource;
-        BakiDatasourceProperties bdp = bakiProperties.getDatasource();
-        if (!ObjectUtils.isEmpty(bdp)) {
-            try {
-                myDataSource = BeanUtil.createDataSource(bdp.getClassName(), bdp.getProperties());
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException | IntrospectionException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+        String datasourceName = bakiProperties.getDatasource();
+        if (!ObjectUtils.isEmpty(datasourceName)) {
+            myDataSource = applicationContext.getBean(datasourceName, DataSource.class);
         }
         return BeanUtil.createBaki(bakiProperties, myDataSource, xqlFileManager());
     }
 
     @PostConstruct
     public void initialize() {
-        Map<String, BakiProperties> secondary = bakiProperties.getSecondary();
-        if (!ObjectUtils.isEmpty(secondary)) {
-            for (Map.Entry<String, BakiProperties> entry : secondary.entrySet()) {
-                String key = entry.getKey();
-                BakiProperties sbp = entry.getValue();
-                BakiDatasourceProperties bdp = sbp.getDatasource();
+        // init secondary datasource
+        Map<String, BakiDatasourceProperties> secondariesDs = secondaryDatasourceProperties.getSecondaries();
+        if (!ObjectUtils.isEmpty(secondariesDs)) {
+            for (Map.Entry<String, BakiDatasourceProperties> entry : secondariesDs.entrySet()) {
+                String name = entry.getKey();
+                BakiDatasourceProperties p = entry.getValue();
                 try {
-                    DataSource secondaryDs = BeanUtil.createDataSource(bdp.getClassName(), bdp.getProperties());
-                    XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, sbp);
-                    Baki secondaryBaki = BeanUtil.createBaki(sbp, secondaryDs, secondaryXqlFileManager);
-                    applicationContext.getBeanFactory().registerSingleton(key, secondaryBaki);
+                    DataSource secondaryDatasource = BeanUtil.createDataSource(p.getClassName(), p.getProperties());
+                    applicationContext.getBeanFactory().registerSingleton(name, secondaryDatasource);
                 } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                          IllegalAccessException | IntrospectionException | ClassNotFoundException e) {
-                    throw new RuntimeException("Create secondary baki error.", e);
+                    throw new RuntimeException("Create secondary datasource error.", e);
                 }
+            }
+        }
+        // init secondary baki
+        Map<String, BakiProperties> secondariesBaki = bakiProperties.getSecondaries();
+        if (!ObjectUtils.isEmpty(secondariesBaki)) {
+            for (Map.Entry<String, BakiProperties> entry : secondariesBaki.entrySet()) {
+                String key = entry.getKey();
+                BakiProperties p = entry.getValue();
+                String datasourceName = p.getDatasource();
+
+                DataSource dataSource = applicationContext.getBean(datasourceName, DataSource.class);
+                XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, p);
+                Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager);
+
+                applicationContext.getBeanFactory().registerSingleton(key, secondaryBaki);
             }
         }
     }

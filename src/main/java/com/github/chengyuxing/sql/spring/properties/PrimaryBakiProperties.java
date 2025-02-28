@@ -16,14 +16,13 @@ public class PrimaryBakiProperties extends BakiProperties {
     /**
      * Configure multiple secondary baki instances.
      */
-    private Map<String, BakiProperties> secondary = new HashMap<>();
+    private Map<String, BakiProperties> secondaries = new HashMap<>();
 
-
-    public Map<String, BakiProperties> getSecondary() {
-        return secondary;
+    public Map<String, BakiProperties> getSecondaries() {
+        return secondaries;
     }
 
-    public void setSecondary(Map<String, BakiProperties> secondary) {
-        this.secondary = secondary;
+    public void setSecondaries(Map<String, BakiProperties> secondaries) {
+        this.secondaries = secondaries;
     }
 }
