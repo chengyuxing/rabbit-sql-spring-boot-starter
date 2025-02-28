@@ -32,7 +32,7 @@ _java 17+_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>4.0.2</version>
+    <version>4.0.3</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>3.1.5</version>
+    <version>3.1.6</version>
 </dependency>
 ```
 

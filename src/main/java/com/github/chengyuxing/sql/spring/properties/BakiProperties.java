@@ -9,9 +9,9 @@ import com.github.chengyuxing.sql.utils.SqlUtil;
  */
 public class BakiProperties {
     /**
-     * Manual datasource properties.
+     * Datasource bean name (secondary datasource will be injected by name to secondary baki).
      */
-    private BakiDatasourceProperties datasource;
+    private String datasource;
     /**
      * XQLFileManager properties.
      */
@@ -196,11 +196,11 @@ public class BakiProperties {
         this.sqlParseChecker = sqlParseChecker;
     }
 
-    public BakiDatasourceProperties getDatasource() {
+    public String getDatasource() {
         return datasource;
     }
 
-    public void setDatasource(BakiDatasourceProperties datasource) {
+    public void setDatasource(String datasource) {
         this.datasource = datasource;
     }
 }

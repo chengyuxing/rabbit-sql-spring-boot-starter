@@ -1,14 +1,11 @@
 package com.github.chengyuxing.sql.spring.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import javax.sql.DataSource;
 import java.util.Map;
 
 /**
  * Baki datasource properties.
  */
-@ConfigurationProperties(prefix = "baki.datasource")
 public class BakiDatasourceProperties {
     /**
      * Datasource class name e.g. <code>com.zaxxer.hikari.HikariDataSource</code> .
