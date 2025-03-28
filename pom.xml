@@ -13,8 +13,8 @@
     <description>A rabbit-sql for spring boot framework starter.</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <spring.boot.version>3.0.13</spring.boot.version>
         <rabbit.sql.version>9.0.4</rabbit.sql.version>
     </properties>
