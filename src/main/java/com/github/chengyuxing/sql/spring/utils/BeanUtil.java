@@ -151,16 +151,11 @@ public final class BeanUtil {
                 xqlFileManager.setConstants(properties.getConstants());
             }
             if (!ObjectUtils.isEmpty(properties.getPipes())) {
-                Map<String, IPipe<?>> pipeInstances = new HashMap<>();
-                try {
-                    for (@SuppressWarnings("rawtypes") Map.Entry<String, Class<? extends IPipe>> e : properties.getPipes().entrySet()) {
-                        pipeInstances.put(e.getKey(), ReflectUtil.getInstance(e.getValue()));
-                    }
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                         NoSuchMethodException e) {
-                    throw new IllegalStateException("create pipe instance error: ", e);
+                Map<String, String> pipes = new HashMap<>();
+                for (@SuppressWarnings("rawtypes") Map.Entry<String, Class<? extends IPipe>> e : properties.getPipes().entrySet()) {
+                    pipes.put(e.getKey(), e.getValue().getName());
                 }
-                xqlFileManager.setPipeInstances(pipeInstances);
+                xqlFileManager.setPipes(pipes);
             }
             if (StringUtils.hasText(properties.getCharset())) {
                 xqlFileManager.setCharset(Charset.forName(properties.getCharset()));

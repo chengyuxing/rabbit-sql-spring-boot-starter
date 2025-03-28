@@ -1,6 +1,7 @@
 package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.common.script.expression.IPipe;
+import com.github.chengyuxing.sql.XQLFileManagerConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class XQLFileManagerProperties {
     /**
      * Named sql file [alias, file name].
      */
-    private Map<String, String> files = new HashMap<>();
+    private XQLFileManagerConfig.FileMap files = new XQLFileManagerConfig.FileMap();
     /**
      * Set constants map.<br>
      * Example：
@@ -60,11 +61,11 @@ public class XQLFileManagerProperties {
      */
     private String databaseId;
 
-    public Map<String, String> getFiles() {
+    public XQLFileManagerConfig.FileMap getFiles() {
         return files;
     }
 
-    public void setFiles(Map<String, String> files) {
+    public void setFiles(XQLFileManagerConfig.FileMap files) {
         this.files = files;
     }
 
