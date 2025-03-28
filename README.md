@@ -26,7 +26,7 @@ get more usage about **rabbit-sql** from [document](https://github.com/chengyuxi
 
 ## Maven dependency
 
-_java 17+_
+_java 11+_
 
 ```xml
 <dependency>
