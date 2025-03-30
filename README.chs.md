@@ -26,7 +26,7 @@
 
 ## maven dependency
 
-_java 11+_
+_java 17+_
 
 ```xml
 <dependency>
