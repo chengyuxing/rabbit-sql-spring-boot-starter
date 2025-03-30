@@ -90,6 +90,16 @@ baki:
       b: mydir/two.sql
 ```
 
+### 多数据源配置
+
+![](imgs/multiple-baki.png)
+
+```java
+@Autowired
+@Qualifier("slaveBaki")
+Baki slaveBaki;
+```
+
 ### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作
 
 ![](imgs/new-xql-file-manager.png)

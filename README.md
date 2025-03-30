@@ -90,6 +90,16 @@ baki:
       b: mydir/two.sql
 ```
 
+### Multiple datasource configuration
+
+![](imgs/multiple-baki.png)
+
+```java
+@Autowired
+@Qualifier("slaveBaki")
+Baki slaveBaki;
+```
+
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
 
 ![](imgs/new-xql-file-manager.png)
