@@ -7,7 +7,7 @@
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
     <name>rabbit-sql-spring-boot-starter</name>
-    <version>3.1.8</version>
+    <version>3.1.9</version>
     <packaging>jar</packaging>
     <url>https://github.com/chengyuxing/rabbit-sql-spring-boot-starter</url>
     <description>A rabbit-sql for spring boot framework starter.</description>
