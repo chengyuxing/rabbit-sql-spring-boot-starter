@@ -9,11 +9,11 @@ import jakarta.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ import java.util.Map;
 @Configuration
 @ConditionalOnClass(Baki.class)
 @EnableConfigurationProperties({SpringSecondaryDatasourceProperties.class, PrimaryBakiProperties.class, XQLFileManagerProperties.class})
-@AutoConfiguration
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
@@ -39,7 +39,7 @@ public class BakiAutoConfiguration {
     private final ApplicationArguments applicationArguments;
     private final ConfigurableApplicationContext applicationContext;
 
-    public BakiAutoConfiguration(@Autowired(required = false) DataSource dataSource, PrimaryBakiProperties bakiProperties, SpringSecondaryDatasourceProperties secondaryDatasourceProperties, ApplicationArguments applicationArguments, ConfigurableApplicationContext applicationContext) {
+    public BakiAutoConfiguration(DataSource dataSource, PrimaryBakiProperties bakiProperties, SpringSecondaryDatasourceProperties secondaryDatasourceProperties, ApplicationArguments applicationArguments, ConfigurableApplicationContext applicationContext) {
         this.dataSource = dataSource;
         this.bakiProperties = bakiProperties;
         this.secondaryDatasourceProperties = secondaryDatasourceProperties;
