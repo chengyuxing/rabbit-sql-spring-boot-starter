@@ -29,12 +29,12 @@ public class SpringManagedBaki extends BakiDao {
     }
 
     public void setTemplateFormatter(TemplateFormatter templateFormatter) {
-        SqlGenerator sqlGenerator = sqlGenerator();
+        SqlGenerator sqlGenerator = getSqlGenerator();
         sqlGenerator.setTemplateFormatter(templateFormatter);
     }
 
     public void setNamedParamFormatter(NamedParamFormatter namedParamFormatter) {
-        SqlGenerator sqlGenerator = sqlGenerator();
+        SqlGenerator sqlGenerator = getSqlGenerator();
         sqlGenerator.setNamedParamFormatter(namedParamFormatter);
     }
 }
