@@ -37,7 +37,6 @@ public final class BeanUtil {
         baki.setBatchSize(bakiProperties.getBatchSize());
         baki.setPageKey(bakiProperties.getPageKey());
         baki.setSizeKey(bakiProperties.getSizeKey());
-        baki.setAutoXFMConfig(bakiProperties.isAutoXFMConfig());
         baki.setXqlFileManager(xqlFileManager);
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             try {

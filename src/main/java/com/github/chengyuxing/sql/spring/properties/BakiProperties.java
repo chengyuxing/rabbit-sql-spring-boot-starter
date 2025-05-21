@@ -1,7 +1,6 @@
 package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.sql.plugins.*;
-import com.github.chengyuxing.sql.spring.SpringManagedBaki;
 import com.github.chengyuxing.sql.utils.SqlUtil;
 
 /**
@@ -40,11 +39,6 @@ public class BakiProperties {
      * Named parameter prefix.
      */
     private char namedParamPrefix = ':';
-    /**
-     * Load {@code xql-file-manager-}{@link SpringManagedBaki#databaseId() databaseId}{@code .yml} first if exists,
-     * otherwise {@code xql-file-manager.yml}
-     */
-    private boolean autoXFMConfig = false;
     /**
      * Non-prepared Sql template ({@code ${key}}) formatter.
      * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, boolean)}
@@ -122,14 +116,6 @@ public class BakiProperties {
 
     public void setStatementValueHandler(Class<? extends StatementValueHandler> statementValueHandler) {
         this.statementValueHandler = statementValueHandler;
-    }
-
-    public boolean isAutoXFMConfig() {
-        return autoXFMConfig;
-    }
-
-    public void setAutoXFMConfig(boolean autoXFMConfig) {
-        this.autoXFMConfig = autoXFMConfig;
     }
 
     public Class<? extends TemplateFormatter> getTemplateFormatter() {
