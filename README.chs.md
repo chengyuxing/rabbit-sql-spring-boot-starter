@@ -12,7 +12,7 @@
 
 查看[最佳实践](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.chs.md)来快速开始。
 
-基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.Tx` （对spring事务的简易封装）来使用事务。
+基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
 
 - 兼容spring jdbc事务；
 - 兼容mybatis、spring-data-jpa等同时进行事务处理；
@@ -20,7 +20,7 @@
 :warning: 请勿使用**rabbit-sql**内置的`Tx`事务，事务已完全由spring全局事务替代。
 
 - ~~com.github.chengyuxing.sql.transaction.Tx~~ ❌
-- com.github.chengyuxing.sql.spring.Tx ✅
+- com.github.chengyuxing.sql.spring.autoconfigure.Tx ✅
 
 关于rabbit-sql的使用方法可以具体看[文档](https://github.com/chengyuxing/rabbit-sql)。
 
@@ -149,7 +149,7 @@ public class MyService {
     @Autowired
     Baki baki;
   	
-    // com.github.chengyuxing.sql.spring.Tx
+    // com.github.chengyuxing.sql.spring.autoconfigure.Tx
   	@Autowired
   	Tx tx;
 
