@@ -75,7 +75,7 @@ public class BakiAutoConfiguration {
         if (!ObjectUtils.isEmpty(datasourceName)) {
             myDataSource = applicationContext.getBean(datasourceName, DataSource.class);
         }
-        return BeanUtil.createBaki(bakiProperties, myDataSource, xqlFileManager());
+        return BeanUtil.createBaki(bakiProperties, myDataSource, xqlFileManager(), applicationContext);
     }
 
     @PostConstruct
@@ -105,7 +105,7 @@ public class BakiAutoConfiguration {
 
                 DataSource dataSource = applicationContext.getBean(datasourceName, DataSource.class);
                 XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, p);
-                Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager);
+                Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager, applicationContext);
 
                 applicationContext.getBeanFactory().registerSingleton(key, secondaryBaki);
             }
