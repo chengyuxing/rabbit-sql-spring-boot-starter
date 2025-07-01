@@ -63,7 +63,7 @@ public class BakiAutoConfiguration {
             configLocation = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0);
             log.info("Load {} by {}", configLocation, XQL_CONFIG_LOCATION_NAME);
         }
-        return BeanUtil.createXQLFileManager(configLocation, bakiProperties);
+        return BeanUtil.createXQLFileManager(configLocation, bakiProperties, applicationContext);
     }
 
     @Bean
@@ -75,7 +75,7 @@ public class BakiAutoConfiguration {
         if (!ObjectUtils.isEmpty(datasourceName)) {
             myDataSource = applicationContext.getBean(datasourceName, DataSource.class);
         }
-        return BeanUtil.createBaki(bakiProperties, myDataSource, xqlFileManager());
+        return BeanUtil.createBaki(bakiProperties, myDataSource, xqlFileManager(), applicationContext);
     }
 
     @PostConstruct
@@ -104,8 +104,8 @@ public class BakiAutoConfiguration {
                 String datasourceName = p.getDatasource();
 
                 DataSource dataSource = applicationContext.getBean(datasourceName, DataSource.class);
-                XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, p);
-                Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager);
+                XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, p, applicationContext);
+                Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager, applicationContext);
 
                 applicationContext.getBeanFactory().registerSingleton(key, secondaryBaki);
             }

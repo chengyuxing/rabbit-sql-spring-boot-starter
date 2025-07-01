@@ -12,7 +12,7 @@ Language: English | [简体中文](https://github.com/chengyuxing/rabbit-sql-spr
 
 Get [Best practice](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.md) to quick start.
 
-Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `com.github.chengyuxing.sql.spring.Tx` (simple wrapper for spring transaction) to use transaction.
+Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed transaction as default, use `@Transactional` annotation or inject `com.github.chengyuxing.sql.spring.autoconfigure.Tx` (simple wrapper for spring transaction) to use transaction.
 
 - compatible with spring jdbc transaction;
 - compatible with mybatis, spring-data-jpa and so on to use transaction together;
@@ -20,7 +20,7 @@ Spring-boot autoconfigure starter based on **rabbit-sql**, use spring managed tr
 :warning: don't use **rabbit-sql's** built-in `Tx`, use spring transaction instead.
 
 - ~~com.github.chengyuxing.sql.transaction.Tx~~ ❌
-- com.github.chengyuxing.sql.spring.Tx ✅
+- com.github.chengyuxing.sql.spring.autoconfigure.Tx ✅
 
 get more usage about **rabbit-sql** from [document](https://github.com/chengyuxing/rabbit-sql)。
 
@@ -42,7 +42,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>3.2.8</version>
+    <version>3.2.9</version>
 </dependency>
 ```
 
@@ -149,7 +149,7 @@ public class MyService {
     @Autowired
     Baki baki;
 
-    // com.github.chengyuxing.sql.spring.Tx
+    // com.github.chengyuxing.sql.spring.autoconfigure.Tx
     @Autowired
     Tx tx;
   
