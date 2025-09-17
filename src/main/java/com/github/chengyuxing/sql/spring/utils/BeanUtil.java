@@ -26,7 +26,7 @@ import java.util.*;
 public final class BeanUtil {
     private final static Logger log = LoggerFactory.getLogger(BeanUtil.class);
 
-    public static SpringManagedBaki createBaki(BakiProperties bakiProperties, DataSource dataSource, XQLFileManager xqlFileManager, ApplicationContext context) {
+    public static SpringManagedBaki createBaki(BakiProperties bakiProperties, DataSource dataSource, XQLFileManager xqlFileManager, ApplicationContext context) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         if (ObjectUtils.isEmpty(bakiProperties)) {
             return baki;
@@ -39,91 +39,54 @@ public final class BeanUtil {
         baki.setSizeKey(bakiProperties.getSizeKey());
         baki.setXqlFileManager(xqlFileManager);
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
-            try {
-                PageHelperProvider pageHelperProvider = getInstanceWithContext(bakiProperties.getGlobalPageHelperProvider(), context);
-                baki.setGlobalPageHelperProvider(pageHelperProvider);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure globalPageHelperProvider error: ", e);
-            }
+            PageHelperProvider pageHelperProvider = getInstanceIfContext(bakiProperties.getGlobalPageHelperProvider(), context);
+            baki.setGlobalPageHelperProvider(pageHelperProvider);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getSqlInterceptor())) {
-            try {
-                SqlInterceptor sqlInterceptor = getInstanceWithContext(bakiProperties.getSqlInterceptor(), context);
-                baki.setSqlInterceptor(sqlInterceptor);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure sqlInterceptor error: ", e);
-            }
+            SqlInterceptor sqlInterceptor = getInstanceIfContext(bakiProperties.getSqlInterceptor(), context);
+            baki.setSqlInterceptor(sqlInterceptor);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getStatementValueHandler())) {
-            try {
-                StatementValueHandler statementValueHandler = getInstanceWithContext(bakiProperties.getStatementValueHandler(), context);
-                baki.setStatementValueHandler(statementValueHandler);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure statementValueHandler error.", e);
-            }
+            StatementValueHandler statementValueHandler = getInstanceIfContext(bakiProperties.getStatementValueHandler(), context);
+            baki.setStatementValueHandler(statementValueHandler);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getSqlParseChecker())) {
-            try {
-                SqlParseChecker sqlParseChecker = getInstanceWithContext(bakiProperties.getSqlParseChecker(), context);
-                baki.setSqlParseChecker(sqlParseChecker);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure sqlParseChecker error.", e);
-            }
+            SqlParseChecker sqlParseChecker = getInstanceIfContext(bakiProperties.getSqlParseChecker(), context);
+            baki.setSqlParseChecker(sqlParseChecker);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
-            try {
-                TemplateFormatter templateFormatter = getInstanceWithContext(bakiProperties.getTemplateFormatter(), context);
-                baki.setTemplateFormatter(templateFormatter);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure templateFormatter error.", e);
-            }
+            TemplateFormatter templateFormatter = getInstanceIfContext(bakiProperties.getTemplateFormatter(), context);
+            baki.setTemplateFormatter(templateFormatter);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getNamedParamFormatter())) {
-            try {
-                NamedParamFormatter namedParamFormatter = getInstanceWithContext(bakiProperties.getNamedParamFormatter(), context);
-                baki.setNamedParamFormatter(namedParamFormatter);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure namedParamFormatter error.", e);
-            }
+            NamedParamFormatter namedParamFormatter = getInstanceIfContext(bakiProperties.getNamedParamFormatter(), context);
+            baki.setNamedParamFormatter(namedParamFormatter);
         }
-        if (!ObjectUtils.isEmpty(bakiProperties.getSqlWatcher())) {
-            try {
-                SqlWatcher sqlWatcher = getInstanceWithContext(bakiProperties.getSqlWatcher(), context);
-                baki.setSqlWatcher(sqlWatcher);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure sqlWatcher error.", e);
-            }
+        if (!ObjectUtils.isEmpty(bakiProperties.getExecutionWatcher())) {
+            ExecutionWatcher sqlWatcher = getInstanceIfContext(bakiProperties.getExecutionWatcher(), context);
+            baki.setExecutionWatcher(sqlWatcher);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getQueryTimeoutHandler())) {
-            try {
-                QueryTimeoutHandler queryTimeoutHandler = getInstanceWithContext(bakiProperties.getQueryTimeoutHandler(), context);
-                baki.setQueryTimeoutHandler(queryTimeoutHandler);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure queryTimeoutHandler error.", e);
-            }
+            QueryTimeoutHandler queryTimeoutHandler = getInstanceIfContext(bakiProperties.getQueryTimeoutHandler(), context);
+            baki.setQueryTimeoutHandler(queryTimeoutHandler);
         }
         if (!ObjectUtils.isEmpty(bakiProperties.getQueryCacheManager())) {
-            try {
-                QueryCacheManager queryCacheManager = getInstanceWithContext(bakiProperties.getQueryCacheManager(), context);
-                baki.setQueryCacheManager(queryCacheManager);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
-                throw new IllegalStateException("configure queryCacheManager error.", e);
-            }
+            QueryCacheManager queryCacheManager = getInstanceIfContext(bakiProperties.getQueryCacheManager(), context);
+            baki.setQueryCacheManager(queryCacheManager);
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getEntityFieldMapper())) {
+            EntityFieldMapper entityFieldMapper = getInstanceIfContext(bakiProperties.getEntityFieldMapper(), context);
+            baki.setEntityFieldMapper(entityFieldMapper);
+        }
+        if (!ObjectUtils.isEmpty(bakiProperties.getEntityValueMapper())) {
+            EntityValueMapper entityValueMapper = getInstanceIfContext(bakiProperties.getEntityValueMapper(), context);
+            baki.setEntityValueMapper(entityValueMapper);
         }
         log.info("Baki({}) initialized (Transaction managed by Spring)", SpringManagedBaki.class.getName());
         return baki;
     }
 
-    public static XQLFileManager createXQLFileManager(String configLocation, BakiProperties bakiProperties, ApplicationContext context) {
+    public static XQLFileManager createXQLFileManager(String configLocation, BakiProperties bakiProperties, ApplicationContext context) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
         String myConfigLocation = configLocation;
         if (!ObjectUtils.isEmpty(properties) && !ObjectUtils.isEmpty(properties.getConfigLocation())) {
@@ -169,13 +132,8 @@ public final class BeanUtil {
                 xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
             }
             if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
-                try {
-                    TemplateFormatter templateFormatter = getInstanceWithContext(bakiProperties.getTemplateFormatter(), context);
-                    xqlFileManager.setTemplateFormatter(templateFormatter);
-                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                         IllegalAccessException e) {
-                    throw new IllegalStateException("configure templateFormatter error.", e);
-                }
+                TemplateFormatter templateFormatter = getInstanceIfContext(bakiProperties.getTemplateFormatter(), context);
+                xqlFileManager.setTemplateFormatter(templateFormatter);
             }
         }
         xqlFileManager.init();
@@ -198,7 +156,7 @@ public final class BeanUtil {
         return dataSource;
     }
 
-    public static <T> T getInstanceWithContext(Class<T> clazz, ApplicationContext context) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public static <T> T getInstanceIfContext(Class<T> clazz, ApplicationContext context) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         @SuppressWarnings("unchecked") Constructor<T>[] constructors = (Constructor<T>[]) clazz.getDeclaredConstructors();
         Optional<Constructor<T>> ctxConstructor = Arrays.stream(constructors)
                 .filter(constructor -> constructor.getParameterCount() == 1 && ApplicationContext.class.isAssignableFrom(constructor.getParameterTypes()[0]))

@@ -64,11 +64,19 @@ public class BakiProperties {
     /**
      * Sql watcher.
      */
-    private Class<? extends SqlWatcher> sqlWatcher;
+    private Class<? extends ExecutionWatcher> executionWatcher;
     /**
      * Query cache manager.
      */
     private Class<? extends QueryCacheManager> queryCacheManager;
+    /**
+     * Default Map to Entity field mapper support.
+     */
+    private Class<? extends EntityFieldMapper> entityFieldMapper;
+    /**
+     * Default Map to Entity value mapper support.
+     */
+    private Class<? extends EntityValueMapper> entityValueMapper;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -150,14 +158,6 @@ public class BakiProperties {
         this.sizeKey = sizeKey;
     }
 
-    public Class<? extends SqlWatcher> getSqlWatcher() {
-        return sqlWatcher;
-    }
-
-    public void setSqlWatcher(Class<? extends SqlWatcher> sqlWatcher) {
-        this.sqlWatcher = sqlWatcher;
-    }
-
     public Class<? extends QueryTimeoutHandler> getQueryTimeoutHandler() {
         return queryTimeoutHandler;
     }
@@ -188,5 +188,29 @@ public class BakiProperties {
 
     public void setDatasource(String datasource) {
         this.datasource = datasource;
+    }
+
+    public Class<? extends ExecutionWatcher> getExecutionWatcher() {
+        return executionWatcher;
+    }
+
+    public void setExecutionWatcher(Class<? extends ExecutionWatcher> executionWatcher) {
+        this.executionWatcher = executionWatcher;
+    }
+
+    public Class<? extends EntityFieldMapper> getEntityFieldMapper() {
+        return entityFieldMapper;
+    }
+
+    public void setEntityFieldMapper(Class<? extends EntityFieldMapper> entityFieldMapper) {
+        this.entityFieldMapper = entityFieldMapper;
+    }
+
+    public Class<? extends EntityValueMapper> getEntityValueMapper() {
+        return entityValueMapper;
+    }
+
+    public void setEntityValueMapper(Class<? extends EntityValueMapper> entityValueMapper) {
+        this.entityValueMapper = entityValueMapper;
     }
 }
