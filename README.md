@@ -26,23 +26,13 @@ get more usage about **rabbit-sql** from [document](https://github.com/chengyuxi
 
 ## Maven dependency
 
-_java 17+_
-
-```xml
-<dependency>
-    <groupId>com.github.chengyuxing</groupId>
-    <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>4.0.18</version>
-</dependency>
-```
-
 _java 8_
 
 ```xml
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>3.2.12</version>
+    <version>5.0.0</version>
 </dependency>
 ```
 
