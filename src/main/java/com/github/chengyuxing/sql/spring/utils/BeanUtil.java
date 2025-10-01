@@ -34,10 +34,6 @@ public final class BeanUtil {
         if (bakiProperties.getNamedParamPrefix() != ' ') {
             baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
         }
-        baki.setBatchSize(bakiProperties.getBatchSize());
-        baki.setPageKey(bakiProperties.getPageKey());
-        baki.setSizeKey(bakiProperties.getSizeKey());
-        baki.setXqlFileManager(xqlFileManager);
         if (!ObjectUtils.isEmpty(bakiProperties.getGlobalPageHelperProvider())) {
             PageHelperProvider pageHelperProvider = getInstanceIfContext(bakiProperties.getGlobalPageHelperProvider(), context);
             baki.setGlobalPageHelperProvider(pageHelperProvider);
@@ -82,6 +78,10 @@ public final class BeanUtil {
             EntityValueMapper entityValueMapper = getInstanceIfContext(bakiProperties.getEntityValueMapper(), context);
             baki.setEntityValueMapper(entityValueMapper);
         }
+        baki.setBatchSize(bakiProperties.getBatchSize());
+        baki.setPageKey(bakiProperties.getPageKey());
+        baki.setSizeKey(bakiProperties.getSizeKey());
+        baki.setXqlFileManager(xqlFileManager);
         log.info("Baki({}) initialized (Transaction managed by Spring)", SpringManagedBaki.class.getName());
         return baki;
     }
@@ -130,10 +130,6 @@ public final class BeanUtil {
             }
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
-            }
-            if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
-                TemplateFormatter templateFormatter = getInstanceIfContext(bakiProperties.getTemplateFormatter(), context);
-                xqlFileManager.setTemplateFormatter(templateFormatter);
             }
         }
         xqlFileManager.init();

@@ -32,7 +32,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
 </dependency>
 ```
 
@@ -79,6 +79,46 @@ baki:
       a: mydir/one.sql
       b: mydir/two.sql
 ```
+
+There are some types of interfaces in Baki (including the secondary `baki` under the `secondaries` node) that can be injected into the Spring context. If a parameter and parameter types exist in the implementation class for `org.springframework.context.ApplicationContext` constructor, then this constructor will be instantiated by default, access to all of the beans in the Spring context.
+
+For example `com.chengyuxing.sql.plugins.QueryCacheManager` implementation class `RedisCache`, can easily access from the context to Redis Bean, Thereby achieving query cache management based on Redis:
+
+```java
+public class RedisCache implements QueryCacheManager {
+    final ApplicationContext context;
+    final RedisClient redisClient;
+  
+    public RedisCache(ApplicationContext context) {
+        this.context = context;
+      	this.redisClient = this.context.getBean(RedisClient.class);
+    }
+  
+    @Override
+    public Stream<DataRow> get(String key, , Map<String, ?> args) {
+       ...
+    }
+
+    @Override
+    public void put(@NotNull String key, List<DataRow> value) {
+        ...
+    }
+```
+
+The property interfaces that support injecting the Spring context are:
+
+- `global-page-helper-provider`；
+- `sql-interceptor`；
+- `statement-value-handler`；
+- `sql-parse-checker`；
+- `template-formatter`；
+- `named-param-formatter`；
+- `sql-watcher`；
+- `query-timeout-handler`；
+- `query-cache-manager`；
+- `execution-watcher`;
+- `entity-field-mapper`;
+- `entity-value-mapper`;
 
 ### Multiple datasource configuration
 

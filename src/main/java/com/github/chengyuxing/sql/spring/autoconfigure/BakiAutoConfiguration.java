@@ -111,11 +111,9 @@ public class BakiAutoConfiguration implements InitializingBean {
                 String key = entry.getKey();
                 BakiProperties p = entry.getValue();
                 String datasourceName = p.getDatasource();
-
                 DataSource dataSource = applicationContext.getBean(datasourceName, DataSource.class);
                 XQLFileManager secondaryXqlFileManager = BeanUtil.createXQLFileManager(null, p, applicationContext);
                 Baki secondaryBaki = BeanUtil.createBaki(p, dataSource, secondaryXqlFileManager, applicationContext);
-
                 applicationContext.getBeanFactory().registerSingleton(key, secondaryBaki);
             }
         }

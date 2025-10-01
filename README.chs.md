@@ -32,7 +32,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
 </dependency>
 ```
 
@@ -79,6 +79,46 @@ baki:
       a: mydir/one.sql
       b: mydir/two.sql
 ```
+
+Baki （包括 `secondaries` 节点下的副 `baki`） 中有一些属性为接口的类型可以注入 Spring 上下文，如果实现类中存在一个参数并且参数类型为 `org.springframework.context.ApplicationContext` 的构造函数，则此构造函数默认将被实例化，可以获取 Spring 上下文中的所有 Bean。
+
+例如 `com.github.chengyuxing.sql.plugins.QueryCacheManager` 的实现类 `RedisCache` 中，可以从上下文中轻松的获取到 Redis 的 Bean，从而实现基于 Redis 的查询缓存管理：
+
+```java
+public class RedisCache implements QueryCacheManager {
+    final ApplicationContext context;
+    final RedisClient redisClient;
+  
+    public RedisCache(ApplicationContext context) {
+        this.context = context;
+      	this.redisClient = this.context.getBean(RedisClient.class);
+    }
+  
+    @Override
+    public Stream<DataRow> get(String key, , Map<String, ?> args) {
+       ...
+    }
+
+    @Override
+    public void put(@NotNull String key, List<DataRow> value) {
+        ...
+    }
+```
+
+支持注入 Spring 上下文的属性接口有：
+
+- `global-page-helper-provider`；
+- `sql-interceptor`；
+- `statement-value-handler`；
+- `sql-parse-checker`；
+- `template-formatter`；
+- `named-param-formatter`；
+- `sql-watcher`；
+- `query-timeout-handler`；
+- `query-cache-manager`；
+- `execution-watcher`;
+- `entity-field-mapper`;
+- `entity-value-mapper`;
 
 ### 多数据源配置
 
