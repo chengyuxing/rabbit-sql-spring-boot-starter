@@ -1,6 +1,6 @@
 package com.github.chengyuxing.sql.spring.properties;
 
-import com.github.chengyuxing.common.script.expression.IPipe;
+import com.github.chengyuxing.common.script.pipe.IPipe;
 import com.github.chengyuxing.sql.XQLFileManagerConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

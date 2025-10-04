@@ -1,7 +1,7 @@
 package com.github.chengyuxing.sql.spring.utils;
 
 import com.github.chengyuxing.common.io.ClassPathResource;
-import com.github.chengyuxing.common.script.expression.IPipe;
+import com.github.chengyuxing.common.script.pipe.IPipe;
 import com.github.chengyuxing.common.utils.ReflectUtil;
 import com.github.chengyuxing.common.utils.StringUtil;
 import com.github.chengyuxing.sql.XQLFileManager;
