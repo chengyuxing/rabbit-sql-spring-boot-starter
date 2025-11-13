@@ -50,14 +50,6 @@ public final class BeanUtil {
             SqlParseChecker sqlParseChecker = getInstanceIfContext(bakiProperties.getSqlParseChecker(), context);
             baki.setSqlParseChecker(sqlParseChecker);
         }
-        if (!ObjectUtils.isEmpty(bakiProperties.getTemplateFormatter())) {
-            TemplateFormatter templateFormatter = getInstanceIfContext(bakiProperties.getTemplateFormatter(), context);
-            baki.setTemplateFormatter(templateFormatter);
-        }
-        if (!ObjectUtils.isEmpty(bakiProperties.getNamedParamFormatter())) {
-            NamedParamFormatter namedParamFormatter = getInstanceIfContext(bakiProperties.getNamedParamFormatter(), context);
-            baki.setNamedParamFormatter(namedParamFormatter);
-        }
         if (!ObjectUtils.isEmpty(bakiProperties.getExecutionWatcher())) {
             ExecutionWatcher sqlWatcher = getInstanceIfContext(bakiProperties.getExecutionWatcher(), context);
             baki.setExecutionWatcher(sqlWatcher);
@@ -121,9 +113,6 @@ public final class BeanUtil {
             }
             if (StringUtils.hasText(properties.getCharset())) {
                 xqlFileManager.setCharset(Charset.forName(properties.getCharset()));
-            }
-            if (StringUtils.hasLength(properties.getDelimiter())) {
-                xqlFileManager.setDelimiter(properties.getDelimiter());
             }
             if (StringUtils.hasText(properties.getDatabaseId())) {
                 xqlFileManager.setDatabaseId(properties.getDatabaseId());

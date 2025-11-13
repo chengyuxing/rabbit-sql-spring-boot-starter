@@ -1,9 +1,6 @@
 package com.github.chengyuxing.sql.spring;
 
 import com.github.chengyuxing.sql.BakiDao;
-import com.github.chengyuxing.sql.plugins.NamedParamFormatter;
-import com.github.chengyuxing.sql.plugins.TemplateFormatter;
-import com.github.chengyuxing.sql.utils.SqlGenerator;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
@@ -26,15 +23,5 @@ public class SpringManagedBaki extends BakiDao {
     @Override
     protected void releaseConnection(Connection connection, DataSource dataSource) {
         DataSourceUtils.releaseConnection(connection, dataSource);
-    }
-
-    public void setTemplateFormatter(TemplateFormatter templateFormatter) {
-        SqlGenerator sqlGenerator = getSqlGenerator();
-        sqlGenerator.setTemplateFormatter(templateFormatter);
-    }
-
-    public void setNamedParamFormatter(NamedParamFormatter namedParamFormatter) {
-        SqlGenerator sqlGenerator = getSqlGenerator();
-        sqlGenerator.setNamedParamFormatter(namedParamFormatter);
     }
 }

@@ -1,7 +1,6 @@
 package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.sql.plugins.*;
-import com.github.chengyuxing.sql.utils.SqlUtil;
 
 /**
  * Baki configuration properties.
@@ -39,16 +38,6 @@ public class BakiProperties {
      * Named parameter prefix.
      */
     private char namedParamPrefix = ':';
-    /**
-     * Non-prepared Sql template ({@code ${key}}) formatter.
-     * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, boolean)}
-     */
-    private Class<? extends TemplateFormatter> templateFormatter;
-    /**
-     * Non-prepared Sql named parameter value formatter.
-     * Default implementation: {@link SqlUtil#parseValue(Object, boolean) parseValue(value, true)}
-     */
-    private Class<? extends NamedParamFormatter> namedParamFormatter;
     /**
      * Page query page number argument key.
      */
@@ -124,22 +113,6 @@ public class BakiProperties {
 
     public void setStatementValueHandler(Class<? extends StatementValueHandler> statementValueHandler) {
         this.statementValueHandler = statementValueHandler;
-    }
-
-    public Class<? extends TemplateFormatter> getTemplateFormatter() {
-        return templateFormatter;
-    }
-
-    public void setTemplateFormatter(Class<? extends TemplateFormatter> templateFormatter) {
-        this.templateFormatter = templateFormatter;
-    }
-
-    public Class<? extends NamedParamFormatter> getNamedParamFormatter() {
-        return namedParamFormatter;
-    }
-
-    public void setNamedParamFormatter(Class<? extends NamedParamFormatter> namedParamFormatter) {
-        this.namedParamFormatter = namedParamFormatter;
     }
 
     public String getPageKey() {

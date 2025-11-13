@@ -24,7 +24,7 @@ public class Tx {
             return result;
         } catch (Exception e) {
             rollback(status);
-            throw new TransactionException("transaction is rollback.", e);
+            throw new TransactionException("Transaction is rollback.", e);
         }
     }
 

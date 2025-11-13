@@ -32,7 +32,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.0.2</version>
+    <version>5.0.3</version>
 </dependency>
 ```
 
@@ -111,8 +111,6 @@ public class RedisCache implements QueryCacheManager {
 - `sql-interceptor`；
 - `statement-value-handler`；
 - `sql-parse-checker`；
-- `template-formatter`；
-- `named-param-formatter`；
 - `sql-watcher`；
 - `query-timeout-handler`；
 - `query-cache-manager`；

@@ -48,12 +48,7 @@ public class XQLFileManagerProperties {
      * Set sql file parsing charset, UTF-8 is default.
      */
     private String charset = "UTF-8";
-    /**
-     * Set delimiter of multi sql fragment/template, symbol ({@code ;}) is default.<br>
-     * Sometimes default delimiter is not enough, such as one procedure body or plsql maybe contains
-     * more than one sql statement which ends with {@code ;}, for correct set to other is necessary, like {@code ;;} .
-     */
-    private String delimiter = ";";
+
     /**
      * Current database id.<br>
      * Init value for support <a href="https://plugins.jetbrains.com/plugin/21403-rabbit-sql">Rabbit-sql-plugin</a> dynamic sql test parameter
@@ -83,14 +78,6 @@ public class XQLFileManagerProperties {
 
     public void setCharset(String charset) {
         this.charset = charset;
-    }
-
-    public String getDelimiter() {
-        return delimiter;
-    }
-
-    public void setDelimiter(String delimiter) {
-        this.delimiter = delimiter;
     }
 
     @SuppressWarnings("rawtypes")
