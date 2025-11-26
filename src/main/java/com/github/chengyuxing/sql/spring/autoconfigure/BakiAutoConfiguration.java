@@ -12,7 +12,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +22,16 @@ import org.springframework.util.ObjectUtils;
 import javax.sql.DataSource;
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
 @EnableConfigurationProperties({SpringSecondaryDatasourceProperties.class, PrimaryBakiProperties.class, XQLFileManagerProperties.class})
-@AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@AutoConfigureAfter(name = {
+        "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration",
+        "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration"
+})
 public class BakiAutoConfiguration implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
@@ -59,7 +62,10 @@ public class BakiAutoConfiguration implements InitializingBean {
         // some/xql.config.oracle.yml
         String configLocation = null;
         if (applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
-            configLocation = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME).get(0);
+            List<String> values = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME);
+            if (values != null && !values.isEmpty()) {
+                configLocation = values.get(0);
+            }
             log.info("Load {} by {}", configLocation, XQL_CONFIG_LOCATION_NAME);
         }
         try {
