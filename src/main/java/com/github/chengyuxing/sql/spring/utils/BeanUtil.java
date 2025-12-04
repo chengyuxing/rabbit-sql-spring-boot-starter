@@ -46,10 +46,6 @@ public final class BeanUtil {
             StatementValueHandler statementValueHandler = getInstanceIfContext(bakiProperties.getStatementValueHandler(), context);
             baki.setStatementValueHandler(statementValueHandler);
         }
-        if (!ObjectUtils.isEmpty(bakiProperties.getSqlParseChecker())) {
-            SqlParseChecker sqlParseChecker = getInstanceIfContext(bakiProperties.getSqlParseChecker(), context);
-            baki.setSqlParseChecker(sqlParseChecker);
-        }
         if (!ObjectUtils.isEmpty(bakiProperties.getExecutionWatcher())) {
             ExecutionWatcher sqlWatcher = getInstanceIfContext(bakiProperties.getExecutionWatcher(), context);
             baki.setExecutionWatcher(sqlWatcher);

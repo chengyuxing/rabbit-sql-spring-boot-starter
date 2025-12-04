@@ -27,10 +27,6 @@ public class BakiProperties {
      */
     private Class<? extends StatementValueHandler> statementValueHandler;
     /**
-     * Do something after parse dynamic sql.
-     */
-    private Class<? extends SqlParseChecker> sqlParseChecker;
-    /**
      * Batch size of batch execute.
      */
     private int batchSize = 1000;
@@ -145,14 +141,6 @@ public class BakiProperties {
 
     public void setQueryCacheManager(Class<? extends QueryCacheManager> queryCacheManager) {
         this.queryCacheManager = queryCacheManager;
-    }
-
-    public Class<? extends SqlParseChecker> getSqlParseChecker() {
-        return sqlParseChecker;
-    }
-
-    public void setSqlParseChecker(Class<? extends SqlParseChecker> sqlParseChecker) {
-        this.sqlParseChecker = sqlParseChecker;
     }
 
     public String getDatasource() {
