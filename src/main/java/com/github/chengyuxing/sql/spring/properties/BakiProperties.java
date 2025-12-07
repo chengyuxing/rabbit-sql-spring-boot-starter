@@ -1,31 +1,16 @@
 package com.github.chengyuxing.sql.spring.properties;
 
-import com.github.chengyuxing.sql.plugins.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Baki configuration properties.
  */
+@ConfigurationProperties(prefix = "baki")
 public class BakiProperties {
-    /**
-     * Datasource bean name (secondary datasource will be injected by name to secondary baki).
-     */
-    private String datasource;
     /**
      * XQLFileManager properties.
      */
     private XQLFileManagerProperties xqlFileManager;
-    /**
-     * Global page helper provider.
-     */
-    private Class<? extends PageHelperProvider> globalPageHelperProvider;
-    /**
-     * SQL interceptor.
-     */
-    private Class<? extends SqlInterceptor> sqlInterceptor;
-    /**
-     * Custom prepared sql statement parameter value handler.
-     */
-    private Class<? extends StatementValueHandler> statementValueHandler;
     /**
      * Batch size of batch execute.
      */
@@ -42,26 +27,6 @@ public class BakiProperties {
      * Page query page size argument key.
      */
     private String sizeKey = "size";
-    /**
-     * Jdbc execute sql timeout.
-     */
-    private Class<? extends QueryTimeoutHandler> queryTimeoutHandler;
-    /**
-     * Sql watcher.
-     */
-    private Class<? extends ExecutionWatcher> executionWatcher;
-    /**
-     * Query cache manager.
-     */
-    private Class<? extends QueryCacheManager> queryCacheManager;
-    /**
-     * Default Map to Entity field mapper support.
-     */
-    private Class<? extends EntityFieldMapper> entityFieldMapper;
-    /**
-     * Default Map to Entity value mapper support.
-     */
-    private Class<? extends EntityValueMapper> entityValueMapper;
 
     public XQLFileManagerProperties getXqlFileManager() {
         return xqlFileManager;
@@ -79,36 +44,12 @@ public class BakiProperties {
         this.namedParamPrefix = namedParamPrefix;
     }
 
-    public Class<? extends PageHelperProvider> getGlobalPageHelperProvider() {
-        return globalPageHelperProvider;
-    }
-
-    public void setGlobalPageHelperProvider(Class<? extends PageHelperProvider> globalPageHelperProvider) {
-        this.globalPageHelperProvider = globalPageHelperProvider;
-    }
-
-    public Class<? extends SqlInterceptor> getSqlInterceptor() {
-        return sqlInterceptor;
-    }
-
-    public void setSqlInterceptor(Class<? extends SqlInterceptor> sqlInterceptor) {
-        this.sqlInterceptor = sqlInterceptor;
-    }
-
     public int getBatchSize() {
         return batchSize;
     }
 
     public void setBatchSize(int batchSize) {
         this.batchSize = batchSize;
-    }
-
-    public Class<? extends StatementValueHandler> getStatementValueHandler() {
-        return statementValueHandler;
-    }
-
-    public void setStatementValueHandler(Class<? extends StatementValueHandler> statementValueHandler) {
-        this.statementValueHandler = statementValueHandler;
     }
 
     public String getPageKey() {
@@ -125,53 +66,5 @@ public class BakiProperties {
 
     public void setSizeKey(String sizeKey) {
         this.sizeKey = sizeKey;
-    }
-
-    public Class<? extends QueryTimeoutHandler> getQueryTimeoutHandler() {
-        return queryTimeoutHandler;
-    }
-
-    public void setQueryTimeoutHandler(Class<? extends QueryTimeoutHandler> queryTimeoutHandler) {
-        this.queryTimeoutHandler = queryTimeoutHandler;
-    }
-
-    public Class<? extends QueryCacheManager> getQueryCacheManager() {
-        return queryCacheManager;
-    }
-
-    public void setQueryCacheManager(Class<? extends QueryCacheManager> queryCacheManager) {
-        this.queryCacheManager = queryCacheManager;
-    }
-
-    public String getDatasource() {
-        return datasource;
-    }
-
-    public void setDatasource(String datasource) {
-        this.datasource = datasource;
-    }
-
-    public Class<? extends ExecutionWatcher> getExecutionWatcher() {
-        return executionWatcher;
-    }
-
-    public void setExecutionWatcher(Class<? extends ExecutionWatcher> executionWatcher) {
-        this.executionWatcher = executionWatcher;
-    }
-
-    public Class<? extends EntityFieldMapper> getEntityFieldMapper() {
-        return entityFieldMapper;
-    }
-
-    public void setEntityFieldMapper(Class<? extends EntityFieldMapper> entityFieldMapper) {
-        this.entityFieldMapper = entityFieldMapper;
-    }
-
-    public Class<? extends EntityValueMapper> getEntityValueMapper() {
-        return entityValueMapper;
-    }
-
-    public void setEntityValueMapper(Class<? extends EntityValueMapper> entityValueMapper) {
-        this.entityValueMapper = entityValueMapper;
     }
 }
