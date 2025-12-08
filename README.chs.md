@@ -12,7 +12,7 @@
 
 查看[最佳实践](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.chs.md)来快速开始。
 
-基于 **rabbit-sql** 制作的**spring-boot**自动装配**starter**，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
+基于 **rabbit-sql** 制作的 **spring-boot** 自动装配 **starter** ，默认使用spring的事务管理，方法头上可通过注解 `@Transactional` 生效或者手动注入 `com.github.chengyuxing.sql.spring.autoconfigure.Tx` （对spring事务的简易封装）来使用事务。
 
 - 兼容spring jdbc事务；
 - 兼容mybatis、spring-data-jpa等同时进行事务处理；
@@ -32,7 +32,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.0.7</version>
+    <version>5.0.8</version>
 </dependency>
 ```
 
@@ -80,51 +80,21 @@ baki:
       b: mydir/two.sql
 ```
 
-Baki （包括 `secondaries` 节点下的副 `baki`） 中有一些属性为接口的类型可以注入 Spring 上下文，如果实现类中存在一个参数并且参数类型为 `org.springframework.context.ApplicationContext` 的构造函数，则此构造函数默认将被实例化，可以获取 Spring 上下文中的所有 Bean。
-
-例如 `com.github.chengyuxing.sql.plugins.QueryCacheManager` 的实现类 `RedisCache` 中，可以从上下文中轻松的获取到 Redis 的 Bean，从而实现基于 Redis 的查询缓存管理：
+通过实现 `BakiDao` 中的接口属性来自动注入到到 `BakiDao` 中，可以使用 `@Component` 或 `@Bean` 的方式来替代 starter 的默认值，如下：
 
 ```java
-public class RedisCache implements QueryCacheManager {
-    final ApplicationContext context;
-    final RedisClient redisClient;
+@Component
+public class RedisCacheManager implements QueryCacheManager {
+    final RedisTemplate<Object, Object> redisTemplate;
   
-    public RedisCache(ApplicationContext context) {
-        this.context = context;
-      	this.redisClient = this.context.getBean(RedisClient.class);
+    public RedisCache(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
   
     @Override
-    public Stream<DataRow> get(String key, , Map<String, ?> args) {
+    public @NotNull Stream<DataRow> get(@NotNull String sql, Map<String, ?> args, @NotNull RawQueryProvider provider) {
        ...
     }
-
-    @Override
-    public void put(@NotNull String key, List<DataRow> value) {
-        ...
-    }
-```
-
-支持注入 Spring 上下文的属性接口有：
-
-- `global-page-helper-provider`；
-- `sql-interceptor`；
-- `statement-value-handler`；
-- `sql-watcher`；
-- `query-timeout-handler`；
-- `query-cache-manager`；
-- `execution-watcher`;
-- `entity-field-mapper`;
-- `entity-value-mapper`;
-
-### 多数据源配置
-
-![](imgs/multiple-baki.png)
-
-```java
-@Autowired
-@Qualifier("slaveBaki")
-Baki slaveBaki;
 ```
 
 ### 配合[插件](https://plugins.jetbrains.com/plugin/21403-rabbit-sql)工作

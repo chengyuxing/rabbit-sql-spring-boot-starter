@@ -1,20 +1,13 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
-import com.github.chengyuxing.common.DataRow;
-import com.github.chengyuxing.common.TiFunction;
 import com.github.chengyuxing.common.io.ClassPathResource;
 import com.github.chengyuxing.common.script.pipe.IPipe;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.XQLFileManager;
-import com.github.chengyuxing.sql.annotation.SqlStatementType;
 import com.github.chengyuxing.sql.plugins.*;
 import com.github.chengyuxing.sql.spring.SpringManagedBaki;
 import com.github.chengyuxing.sql.spring.properties.*;
 
-import com.github.chengyuxing.sql.types.Execution;
-import com.github.chengyuxing.sql.utils.JdbcUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +22,11 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -123,101 +113,29 @@ public class BakiAutoConfiguration {
 
     }
 
-    @Bean("rabbitQueryCacheManager")
-    @ConditionalOnMissingBean(QueryCacheManager.class)
-    public QueryCacheManager queryCacheManager() {
-        return new QueryCacheManager() {
-            @Override
-            public @NotNull Stream<DataRow> get(@NotNull String sql, Map<String, ?> args, @NotNull RawQueryProvider provider) {
-                return Stream.empty();
-            }
-
-            @Override
-            public boolean isAvailable(@NotNull String sql, Map<String, ?> args) {
-                return false;
-            }
-        };
-    }
-
-    @Bean("rabbitSqlInterceptor")
-    @ConditionalOnMissingBean(SqlInterceptor.class)
-    public SqlInterceptor sqlInterceptor() {
-        return (rawSql, parsedSql, args, metaData) -> parsedSql;
-    }
-
-    @Bean("rabbitPageHelperProvider")
-    @ConditionalOnMissingBean(PageHelperProvider.class)
-    public PageHelperProvider pageHelperProvider() {
-        return (databaseMetaData, dbName, namedParamPrefix) -> null;
-    }
-
-    @Bean("rabbitStatementValueHandler")
-    @ConditionalOnMissingBean(StatementValueHandler.class)
-    public StatementValueHandler statementValueHandler() {
-        return (ps, index, value, metaData) -> JdbcUtil.setStatementValue(ps, index, value);
-    }
-
-    @Bean("rabbitExecutionWatcher")
-    @ConditionalOnMissingBean(ExecutionWatcher.class)
-    public ExecutionWatcher executionWatcher() {
-        return new ExecutionWatcher() {
-            @Override
-            public void onStart(Execution execution) {
-            }
-
-            @Override
-            public void onStop(Execution execution, @Nullable Object result, @Nullable Throwable throwable) {
-            }
-        };
-    }
-
-    @Bean("rabbitQueryTimeoutHandler")
-    @ConditionalOnMissingBean(QueryTimeoutHandler.class)
-    public QueryTimeoutHandler queryTimeoutHandler() {
-        return (sql, args) -> 0;
-    }
-
-    @Bean("rabbitEntityFieldMapper")
-    @ConditionalOnMissingBean(EntityFieldMapper.class)
-    public EntityFieldMapper entityFieldMapper() {
-        return Field::getName;
-    }
-
-    @Bean("rabbitEntityValueMapper")
-    @ConditionalOnMissingBean(EntityValueMapper.class)
-    public EntityValueMapper entityValueMapper() {
-        return (valueType, entityFieldType, value) -> null;
-    }
-
-    @Bean("rabbitSqlInvokeHandler")
-    @ConditionalOnMissingBean(SqlInvokeHandler.class)
-    public SqlInvokeHandler sqlInvokeHandler() {
-        return type -> null;
-    }
-
     @Bean("rabbitBaki")
     @ConditionalOnMissingBean(Baki.class)
-    public Baki baki(QueryCacheManager queryCacheManager,
-                     XQLFileManager xqlFileManager,
-                     SqlInterceptor sqlInterceptor,
-                     PageHelperProvider pageHelperProvider,
-                     StatementValueHandler statementValueHandler,
-                     ExecutionWatcher executionWatcher,
-                     QueryTimeoutHandler queryTimeoutHandler,
-                     EntityFieldMapper entityFieldMapper,
-                     EntityValueMapper entityValueMapper,
-                     SqlInvokeHandler sqlInvokeHandler) {
+    public Baki baki(@Autowired(required = false) QueryCacheManager queryCacheManager,
+                     @Autowired(required = false) XQLFileManager xqlFileManager,
+                     @Autowired(required = false) SqlInterceptor sqlInterceptor,
+                     @Autowired(required = false) PageHelperProvider pageHelperProvider,
+                     @Autowired(required = false) StatementValueHandler statementValueHandler,
+                     @Autowired(required = false) ExecutionWatcher executionWatcher,
+                     @Autowired(required = false) QueryTimeoutHandler queryTimeoutHandler,
+                     @Autowired(required = false) EntityFieldMapper entityFieldMapper,
+                     @Autowired(required = false) EntityValueMapper entityValueMapper,
+                     @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler) {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
-        baki.setXqlFileManager(xqlFileManager);
-        baki.setQueryCacheManager(queryCacheManager);
-        baki.setSqlInterceptor(sqlInterceptor);
-        baki.setGlobalPageHelperProvider(pageHelperProvider);
-        baki.setStatementValueHandler(statementValueHandler);
-        baki.setExecutionWatcher(executionWatcher);
-        baki.setQueryTimeoutHandler(queryTimeoutHandler);
-        baki.setEntityFieldMapper(entityFieldMapper);
-        baki.setEntityValueMapper(entityValueMapper);
-        baki.setSqlInvokeHandler(sqlInvokeHandler);
+        if (xqlFileManager != null) baki.setXqlFileManager(xqlFileManager);
+        if (queryCacheManager != null) baki.setQueryCacheManager(queryCacheManager);
+        if (sqlInterceptor != null) baki.setSqlInterceptor(sqlInterceptor);
+        if (pageHelperProvider != null) baki.setGlobalPageHelperProvider(pageHelperProvider);
+        if (statementValueHandler != null) baki.setStatementValueHandler(statementValueHandler);
+        if (executionWatcher != null) baki.setExecutionWatcher(executionWatcher);
+        if (queryTimeoutHandler != null) baki.setQueryTimeoutHandler(queryTimeoutHandler);
+        if (entityFieldMapper != null) baki.setEntityFieldMapper(entityFieldMapper);
+        if (entityValueMapper != null) baki.setEntityValueMapper(entityValueMapper);
+        if (sqlInvokeHandler != null) baki.setSqlInvokeHandler(sqlInvokeHandler);
         if (!ObjectUtils.isEmpty(bakiProperties)) {
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());

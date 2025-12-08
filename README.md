@@ -32,7 +32,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.0.7</version>
+    <version>5.0.8</version>
 </dependency>
 ```
 
@@ -80,51 +80,21 @@ baki:
       b: mydir/two.sql
 ```
 
-There are some types of interfaces in Baki (including the secondary `baki` under the `secondaries` node) that can be injected into the Spring context. If a parameter and parameter types exist in the implementation class for `org.springframework.context.ApplicationContext` constructor, then this constructor will be instantiated by default, access to all of the beans in the Spring context.
-
-For example `com.chengyuxing.sql.plugins.QueryCacheManager` implementation class `RedisCache`, can easily access from the context to Redis Bean, Thereby achieving query cache management based on Redis:
+By implements the property interface of `BakiDao` which annotation `@Component` or `@Bean` defined in `@Configuration` to autowire.
 
 ```java
-public class RedisCache implements QueryCacheManager {
-    final ApplicationContext context;
-    final RedisClient redisClient;
+@Component
+public class RedisCacheManager implements QueryCacheManager {
+    final RedisTemplate<Object, Object> redisTemplate;
   
-    public RedisCache(ApplicationContext context) {
-        this.context = context;
-      	this.redisClient = this.context.getBean(RedisClient.class);
+    public RedisCache(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
   
     @Override
-    public Stream<DataRow> get(String key, , Map<String, ?> args) {
+    public @NotNull Stream<DataRow> get(@NotNull String sql, Map<String, ?> args, @NotNull RawQueryProvider provider) {
        ...
     }
-
-    @Override
-    public void put(@NotNull String key, List<DataRow> value) {
-        ...
-    }
-```
-
-The property interfaces that support injecting the Spring context are:
-
-- `global-page-helper-provider`；
-- `sql-interceptor`；
-- `statement-value-handler`；
-- `sql-watcher`；
-- `query-timeout-handler`；
-- `query-cache-manager`；
-- `execution-watcher`;
-- `entity-field-mapper`;
-- `entity-value-mapper`;
-
-### Multiple datasource configuration
-
-![](imgs/multiple-baki.png)
-
-```java
-@Autowired
-@Qualifier("slaveBaki")
-Baki slaveBaki;
 ```
 
 ### Working with [Rabbit sql plugin](https://plugins.jetbrains.com/plugin/21403-rabbit-sql) 
