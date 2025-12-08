@@ -126,16 +126,46 @@ public class BakiAutoConfiguration {
                      @Autowired(required = false) EntityValueMapper entityValueMapper,
                      @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler) {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
-        if (xqlFileManager != null) baki.setXqlFileManager(xqlFileManager);
-        if (queryCacheManager != null) baki.setQueryCacheManager(queryCacheManager);
-        if (sqlInterceptor != null) baki.setSqlInterceptor(sqlInterceptor);
-        if (pageHelperProvider != null) baki.setGlobalPageHelperProvider(pageHelperProvider);
-        if (statementValueHandler != null) baki.setStatementValueHandler(statementValueHandler);
-        if (executionWatcher != null) baki.setExecutionWatcher(executionWatcher);
-        if (queryTimeoutHandler != null) baki.setQueryTimeoutHandler(queryTimeoutHandler);
-        if (entityFieldMapper != null) baki.setEntityFieldMapper(entityFieldMapper);
-        if (entityValueMapper != null) baki.setEntityValueMapper(entityValueMapper);
-        if (sqlInvokeHandler != null) baki.setSqlInvokeHandler(sqlInvokeHandler);
+        if (xqlFileManager != null) {
+            baki.setXqlFileManager(xqlFileManager);
+            log.info("Baki XQLFileManager enabled: {}", xqlFileManager.getClass().getName());
+        }
+        if (queryCacheManager != null) {
+            baki.setQueryCacheManager(queryCacheManager);
+            log.info("Baki QueryCacheManager enabled: {}", queryCacheManager.getClass().getName());
+        }
+        if (sqlInterceptor != null) {
+            baki.setSqlInterceptor(sqlInterceptor);
+            log.info("Baki SqlInterceptor enabled: {}", sqlInterceptor.getClass().getName());
+        }
+        if (pageHelperProvider != null) {
+            baki.setGlobalPageHelperProvider(pageHelperProvider);
+            log.info("Baki GlobalPageHelperProvider enabled: {}", pageHelperProvider.getClass().getName());
+        }
+        if (statementValueHandler != null) {
+            baki.setStatementValueHandler(statementValueHandler);
+            log.info("Baki StatementValueHandler enabled: {}", statementValueHandler.getClass().getName());
+        }
+        if (executionWatcher != null) {
+            baki.setExecutionWatcher(executionWatcher);
+            log.info("Baki ExecutionWatcher enabled: {}", executionWatcher.getClass().getName());
+        }
+        if (queryTimeoutHandler != null) {
+            baki.setQueryTimeoutHandler(queryTimeoutHandler);
+            log.info("Baki QueryTimeoutHandler enabled: {}", queryTimeoutHandler.getClass().getName());
+        }
+        if (entityFieldMapper != null) {
+            baki.setEntityFieldMapper(entityFieldMapper);
+            log.info("Baki EntityFieldMapper enabled: {}", entityFieldMapper.getClass().getName());
+        }
+        if (entityValueMapper != null) {
+            baki.setEntityValueMapper(entityValueMapper);
+            log.info("Baki EntityValueMapper enabled: {}", entityValueMapper.getClass().getName());
+        }
+        if (sqlInvokeHandler != null) {
+            baki.setSqlInvokeHandler(sqlInvokeHandler);
+            log.info("Baki SqlInvokeHandler enabled: {}", sqlInvokeHandler.getClass().getName());
+        }
         if (!ObjectUtils.isEmpty(bakiProperties)) {
             if (bakiProperties.getNamedParamPrefix() != ' ') {
                 baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
