@@ -3,6 +3,7 @@ package com.github.chengyuxing.sql.spring.autoconfigure;
 import com.github.chengyuxing.common.io.ClassPathResource;
 import com.github.chengyuxing.common.script.pipe.IPipe;
 import com.github.chengyuxing.sql.Baki;
+import com.github.chengyuxing.sql.EntityManager;
 import com.github.chengyuxing.sql.XQLFileManager;
 import com.github.chengyuxing.sql.plugins.*;
 import com.github.chengyuxing.sql.spring.SpringManagedBaki;
@@ -122,8 +123,7 @@ public class BakiAutoConfiguration {
                      @Autowired(required = false) StatementValueHandler statementValueHandler,
                      @Autowired(required = false) ExecutionWatcher executionWatcher,
                      @Autowired(required = false) QueryTimeoutHandler queryTimeoutHandler,
-                     @Autowired(required = false) EntityFieldMapper entityFieldMapper,
-                     @Autowired(required = false) EntityValueMapper entityValueMapper,
+                     @Autowired(required = false) EntityManager.EntityMetaProvider entityMetaProvider,
                      @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler) {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         if (xqlFileManager != null) {
@@ -154,13 +154,9 @@ public class BakiAutoConfiguration {
             baki.setQueryTimeoutHandler(queryTimeoutHandler);
             log.info("Baki QueryTimeoutHandler enabled: {}", queryTimeoutHandler.getClass().getName());
         }
-        if (entityFieldMapper != null) {
-            baki.setEntityFieldMapper(entityFieldMapper);
-            log.info("Baki EntityFieldMapper enabled: {}", entityFieldMapper.getClass().getName());
-        }
-        if (entityValueMapper != null) {
-            baki.setEntityValueMapper(entityValueMapper);
-            log.info("Baki EntityValueMapper enabled: {}", entityValueMapper.getClass().getName());
+        if (entityMetaProvider != null) {
+            baki.setEntityMetaProvider(entityMetaProvider);
+            log.info("Baki EntityMetaProvider enabled: {}", entityMetaProvider.getClass().getName());
         }
         if (sqlInvokeHandler != null) {
             baki.setSqlInvokeHandler(sqlInvokeHandler);
