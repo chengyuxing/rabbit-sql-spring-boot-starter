@@ -33,7 +33,7 @@ public class Tx {
             result = supplier.get();
             commit(status);
             return result;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             rollback(status);
             throw e;
         }
