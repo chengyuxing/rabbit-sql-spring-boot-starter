@@ -12,7 +12,6 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import java.util.Objects;
 import java.util.Set;
 
 public class XQLClasspathMapperScanner extends ClassPathBeanDefinitionScanner {
@@ -41,7 +40,7 @@ public class XQLClasspathMapperScanner extends ClassPathBeanDefinitionScanner {
         for (BeanDefinitionHolder holder : beanDefinitions) {
             GenericBeanDefinition definition = (GenericBeanDefinition) holder.getBeanDefinition();
             String beanClassName = definition.getBeanClassName();
-            if (Objects.isNull(beanClassName)) {
+            if (beanClassName == null) {
                 continue;
             }
             definition.setBeanClass(XQLMapperFactoryBean.class);

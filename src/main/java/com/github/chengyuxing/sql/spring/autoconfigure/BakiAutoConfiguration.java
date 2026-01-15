@@ -27,7 +27,6 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Configuration
 @ConditionalOnClass(Baki.class)
@@ -60,7 +59,7 @@ public class BakiAutoConfiguration {
         // classpath
         // some/xql.config.oracle.yml
         String configLocation = null;
-        if (Objects.nonNull(applicationArguments) && applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
+        if (applicationArguments != null && applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
             List<String> values = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME);
             if (values != null && !values.isEmpty()) {
                 configLocation = values.get(0);
@@ -79,11 +78,12 @@ public class BakiAutoConfiguration {
             log.info("Load classpath default {}", myConfigLocation);
         }
 
-        XQLFileManager xqlFileManager = Objects.nonNull(myConfigLocation) ?
-                new XQLFileManager(myConfigLocation) : new XQLFileManager();
+        XQLFileManager xqlFileManager = myConfigLocation != null
+                ? new XQLFileManager(myConfigLocation)
+                : new XQLFileManager();
 
         if (!ObjectUtils.isEmpty(properties)) {
-            if (Objects.nonNull(myConfigLocation)) {
+            if (myConfigLocation != null) {
                 log.info("Copy baki.xql-file-manager properties to {}", myConfigLocation);
             }
             if (!ObjectUtils.isEmpty(properties.getFiles())) {

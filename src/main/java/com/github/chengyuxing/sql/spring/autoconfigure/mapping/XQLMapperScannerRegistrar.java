@@ -13,7 +13,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class XQLMapperScannerRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, EnvironmentAware {
     private static final Logger log = LoggerFactory.getLogger(XQLMapperScannerRegistrar.class);
@@ -26,7 +25,7 @@ public class XQLMapperScannerRegistrar implements ImportBeanDefinitionRegistrar,
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(
                 importingClassMetadata.getAnnotationAttributes(XQLMapperScan.class.getName())
         );
-        if (Objects.isNull(attributes)) {
+        if (attributes == null) {
             return;
         }
         String[] basePackages = attributes.getStringArray("basePackages");
