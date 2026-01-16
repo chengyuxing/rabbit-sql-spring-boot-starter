@@ -2,7 +2,7 @@ package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 
 import com.github.chengyuxing.sql.BakiDao;
 import com.github.chengyuxing.sql.XQLInvocationHandler;
-import com.github.chengyuxing.sql.utils.XQLMapperUtils;
+import com.github.chengyuxing.sql.util.XQLMapperUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
