@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure.mapping;
 
+import com.github.chengyuxing.common.util.StringUtils;
 import com.github.chengyuxing.sql.BakiDao;
 import com.github.chengyuxing.sql.XQLInvocationHandler;
 import com.github.chengyuxing.sql.util.XQLMapperUtils;
@@ -57,7 +58,7 @@ public class XQLMapperFactoryBean<T> implements FactoryBean<T>, ApplicationConte
     private String getBakiNameRelatedMapper() {
         if (mapperInterface.isAnnotationPresent(Baki.class)) {
             String value = mapperInterface.getDeclaredAnnotation(Baki.class).value();
-            if (!value.trim().isEmpty()) {
+            if (!StringUtils.isBlank(value)) {
                 return value;
             }
         }
