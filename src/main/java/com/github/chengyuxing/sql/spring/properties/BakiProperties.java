@@ -16,10 +16,6 @@ public class BakiProperties {
      */
     private int batchSize = 1000;
     /**
-     * Named parameter prefix.
-     */
-    private char namedParamPrefix = ':';
-    /**
      * Page query page number argument key.
      */
     private String pageKey = "page";
@@ -34,14 +30,6 @@ public class BakiProperties {
 
     public void setXqlFileManager(XQLFileManagerProperties xqlFileManager) {
         this.xqlFileManager = xqlFileManager;
-    }
-
-    public char getNamedParamPrefix() {
-        return namedParamPrefix;
-    }
-
-    public void setNamedParamPrefix(char namedParamPrefix) {
-        this.namedParamPrefix = namedParamPrefix;
     }
 
     public int getBatchSize() {

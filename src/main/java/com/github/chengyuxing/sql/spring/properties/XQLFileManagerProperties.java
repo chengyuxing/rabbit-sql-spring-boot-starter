@@ -1,10 +1,10 @@
 package com.github.chengyuxing.sql.spring.properties;
 
 import com.github.chengyuxing.common.script.pipe.IPipe;
-import com.github.chengyuxing.sql.XQLFileManagerConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +21,7 @@ public class XQLFileManagerProperties {
     /**
      * Named sql file [alias, file name].
      */
-    private XQLFileManagerConfig.FileMap files = new XQLFileManagerConfig.FileMap();
+    private Map<String, String> files = new LinkedHashMap<>();
     /**
      * Set constants map.<br>
      * Example：
@@ -48,19 +48,16 @@ public class XQLFileManagerProperties {
      * Set sql file parsing charset, UTF-8 is default.
      */
     private String charset = "UTF-8";
-
     /**
-     * Current database id.<br>
-     * Init value for support <a href="https://plugins.jetbrains.com/plugin/21403-rabbit-sql">Rabbit-sql-plugin</a> dynamic sql test parameter
-     * and assigned in runtime automatically.
+     * Set named param prefix for prepared SQL.
      */
-    private String databaseId;
+    private char namedParamPrefix = ':';
 
-    public XQLFileManagerConfig.FileMap getFiles() {
+    public Map<String, String> getFiles() {
         return files;
     }
 
-    public void setFiles(XQLFileManagerConfig.FileMap files) {
+    public void setFiles(Map<String, String> files) {
         this.files = files;
     }
 
@@ -98,11 +95,11 @@ public class XQLFileManagerProperties {
         this.configLocation = configLocation;
     }
 
-    public String getDatabaseId() {
-        return databaseId;
+    public char getNamedParamPrefix() {
+        return namedParamPrefix;
     }
 
-    public void setDatabaseId(String databaseId) {
-        this.databaseId = databaseId;
+    public void setNamedParamPrefix(char namedParamPrefix) {
+        this.namedParamPrefix = namedParamPrefix;
     }
 }

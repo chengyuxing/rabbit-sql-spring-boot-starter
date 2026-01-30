@@ -71,7 +71,7 @@ public class BakiAutoConfiguration {
         if (!ObjectUtils.isEmpty(properties) && !ObjectUtils.isEmpty(properties.getConfigLocation())) {
             myConfigLocation = properties.getConfigLocation();
             log.info("Load {} by baki.xql-file-manager.configLocation", myConfigLocation);
-            // Priority 3
+            // Priority 2
             // classpath xql-file-manager.yml
         } else if (new ClassPathResource(XQLFileManager.YML).exists()) {
             myConfigLocation = XQLFileManager.YML;
@@ -102,11 +102,8 @@ public class BakiAutoConfiguration {
             if (StringUtils.hasText(properties.getCharset())) {
                 xqlFileManager.setCharset(Charset.forName(properties.getCharset()));
             }
-            if (StringUtils.hasText(properties.getDatabaseId())) {
-                xqlFileManager.setDatabaseId(properties.getDatabaseId());
-            }
-            if (bakiProperties.getNamedParamPrefix() != ' ') {
-                xqlFileManager.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
+            if (properties.getNamedParamPrefix() != ' ') {
+                xqlFileManager.setNamedParamPrefix(properties.getNamedParamPrefix());
             }
         }
         xqlFileManager.init();
@@ -163,9 +160,6 @@ public class BakiAutoConfiguration {
             log.info("Baki SqlInvokeHandler enabled: {}", sqlInvokeHandler.getClass().getName());
         }
         if (!ObjectUtils.isEmpty(bakiProperties)) {
-            if (bakiProperties.getNamedParamPrefix() != ' ') {
-                baki.setNamedParamPrefix(bakiProperties.getNamedParamPrefix());
-            }
             baki.setBatchSize(bakiProperties.getBatchSize());
             baki.setPageKey(bakiProperties.getPageKey());
             baki.setSizeKey(bakiProperties.getSizeKey());
