@@ -36,7 +36,7 @@ public class SpringManagedBaki extends BakiDao {
     @Override
     protected @NotNull RuntimeException wrappedDataAccessException(@Nullable String sql, @NotNull Throwable throwable) {
         SQLException sqlEx = findSqlException(throwable);
-        if (sqlEx != null) {
+        if (sqlExceptionTranslator != null && sqlEx != null) {
             //noinspection SqlSourceToSinkFlow
             DataAccessException dae = sqlExceptionTranslator.translate("Rabbit-SQL", sql, sqlEx);
             if (dae != null) {
