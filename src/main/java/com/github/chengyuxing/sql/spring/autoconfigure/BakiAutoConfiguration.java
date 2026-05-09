@@ -38,6 +38,7 @@ import java.util.Map;
 public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
+    public static final String XQL_CONFIG_CONSTANT_NAME = "xql.config.constants.";
     private final DataSource dataSource;
     private final ApplicationArguments applicationArguments;
     private final BakiProperties bakiProperties;
@@ -48,9 +49,7 @@ public class BakiAutoConfiguration {
         this.bakiProperties = bakiProperties;
     }
 
-    @Bean("rabbitXqlFileManager")
-    @ConditionalOnMissingBean(XQLFileManager.class)
-    public XQLFileManager xqlFileManager() {
+    private String findConfigFile() {
         // Priority 1
         // support custom xql-file-manager.yml location by command-line
         // e.g.
@@ -58,34 +57,65 @@ public class BakiAutoConfiguration {
         // file:/usr/local/xql.config.oracle.yml
         // classpath
         // some/xql.config.oracle.yml
-        String configLocation = null;
         if (applicationArguments != null && applicationArguments.containsOption(XQL_CONFIG_LOCATION_NAME)) {
             List<String> values = applicationArguments.getOptionValues(XQL_CONFIG_LOCATION_NAME);
             if (values != null && !values.isEmpty()) {
-                configLocation = values.get(0);
+                String config = values.get(0);
+                log.info("Load {} by {}", config, XQL_CONFIG_LOCATION_NAME);
+                return config;
             }
-            log.info("Load {} by {}", configLocation, XQL_CONFIG_LOCATION_NAME);
-        }
-        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
-        String myConfigLocation = configLocation;
-        if (!ObjectUtils.isEmpty(properties) && !ObjectUtils.isEmpty(properties.getConfigLocation())) {
-            myConfigLocation = properties.getConfigLocation();
-            log.info("Load {} by baki.xql-file-manager.configLocation", myConfigLocation);
-            // Priority 2
-            // classpath xql-file-manager.yml
-        } else if (new ClassPathResource(XQLFileManager.YML).exists()) {
-            myConfigLocation = XQLFileManager.YML;
-            log.info("Load classpath default {}", myConfigLocation);
         }
 
-        XQLFileManager xqlFileManager = myConfigLocation != null
-                ? new XQLFileManager(myConfigLocation)
+        // Priority 2
+        // baki.xql-file-manager.configLocation
+        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+        if (!ObjectUtils.isEmpty(properties) && !ObjectUtils.isEmpty(properties.getConfigLocation())) {
+            String config = properties.getConfigLocation();
+            log.info("Load {} by baki.xql-file-manager.configLocation", config);
+            return config;
+        }
+
+        // Priority 3
+        // classpath xql-file-manager.yml
+        if (new ClassPathResource(XQLFileManager.YML).exists()) {
+            log.info("Load classpath default {}", XQLFileManager.YML);
+            return XQLFileManager.YML;
+        }
+
+        return null;
+    }
+
+    private void updatePropertyByArguments(XQLFileManager xqlFileManager) {
+        if (applicationArguments != null) {
+            int constPrefixLen = XQL_CONFIG_CONSTANT_NAME.length();
+            applicationArguments.getOptionNames().forEach(name -> {
+                if (name.startsWith(XQL_CONFIG_CONSTANT_NAME) && name.length() > constPrefixLen) {
+                    List<String> values = applicationArguments.getOptionValues(name);
+                    if (values != null && !values.isEmpty()) {
+                        String constName = name.substring(constPrefixLen);
+                        String value = values.get(0);
+                        log.debug("Update XQLFileManager constant {}={}", constName, value);
+                        xqlFileManager.getConstants().put(constName, value);
+                    }
+                }
+            });
+        }
+    }
+
+    @Bean("rabbitXqlFileManager")
+    @ConditionalOnMissingBean(XQLFileManager.class)
+    public XQLFileManager xqlFileManager() {
+        String config = findConfigFile();
+
+        boolean hasConfig = config != null;
+
+        XQLFileManager xqlFileManager = hasConfig
+                ? new XQLFileManager(config)
                 : new XQLFileManager();
 
-        if (!ObjectUtils.isEmpty(properties)) {
-            if (myConfigLocation != null) {
-                log.info("Copy baki.xql-file-manager properties to {}", myConfigLocation);
-            }
+        XQLFileManagerProperties properties = bakiProperties.getXqlFileManager();
+
+        if (!hasConfig && !ObjectUtils.isEmpty(properties)) {
             if (!ObjectUtils.isEmpty(properties.getFiles())) {
                 xqlFileManager.setFiles(properties.getFiles());
             }
@@ -106,6 +136,9 @@ public class BakiAutoConfiguration {
                 xqlFileManager.setNamedParamPrefix(properties.getNamedParamPrefix());
             }
         }
+
+        updatePropertyByArguments(xqlFileManager);
+
         xqlFileManager.init();
         return xqlFileManager;
 
