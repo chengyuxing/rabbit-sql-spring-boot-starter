@@ -163,6 +163,30 @@ public class MyService {
 }
 ```
 
+## 入口参数
+
+通过入口参数来按需求动态调整配置：
+
+- **xql.config.location** ： 动态指定 `XQLFileManager` 的配置文件
+
+- **xql.config.constants.** ：设置或替换 `XQLFileManager` 中 `constants` 下面的属性值
+
+  `xql-file-manager.yml`
+
+  ```y
+  constants:
+    db: dev
+  ```
+
+  启动参数：
+
+  ```shell
+  --xql.config.constants.db=prod
+  ```
+
+
+
+
 [badge:maven]:https://img.shields.io/maven-central/v/com.github.chengyuxing/rabbit-sql-spring-boot-starter
 [badge:license]: https://img.shields.io/github/license/chengyuxing/rabbit-sql-spring-boot-starter
 [badge:version]:https://img.shields.io/jetbrains/plugin/v/21403

@@ -163,6 +163,29 @@ public class MyService {
 }
 ```
 
+## Command line arguments
+
+Dynamic configure the xql config by command line arguments:
+
+- **xql.config.location** ： dynamic specify the `XQLFileManager` config location
+
+- **xql.config.constants.** ：add or replace the `constants` 's property value which in `XQLFileManager` 
+
+  `xql-file-manager.yml`
+
+  ```y
+  constants:
+    db: dev
+  ```
+
+  command line argument:
+
+  ```shell
+  --xql.config.constants.db=prod
+  ```
+
+  
+
 [badge:maven]:https://img.shields.io/maven-central/v/com.github.chengyuxing/rabbit-sql-spring-boot-starter
 [badge:license]: https://img.shields.io/github/license/chengyuxing/rabbit-sql-spring-boot-starter
 [badge:version]:https://img.shields.io/jetbrains/plugin/v/21403
