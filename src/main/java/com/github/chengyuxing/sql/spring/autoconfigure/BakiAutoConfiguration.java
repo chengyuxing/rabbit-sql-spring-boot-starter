@@ -176,7 +176,8 @@ public class BakiAutoConfiguration {
                      @Autowired(required = false) ExecutionWatcher executionWatcher,
                      @Autowired(required = false) QueryTimeoutHandler queryTimeoutHandler,
                      @Autowired(required = false) EntityManager.EntityMetaProvider entityMetaProvider,
-                     @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler) {
+                     @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler,
+                     @Autowired(required = false) DatabaseInfoProvider databaseInfoProvider) {
         SpringManagedBaki baki = new SpringManagedBaki(dataSource);
         if (xqlFileManager != null) {
             baki.setXqlFileManager(xqlFileManager);
@@ -213,6 +214,10 @@ public class BakiAutoConfiguration {
         if (sqlInvokeHandler != null) {
             baki.setSqlInvokeHandler(sqlInvokeHandler);
             log.info("Baki SqlInvokeHandler enabled: {}", sqlInvokeHandler.getClass().getName());
+        }
+        if (databaseInfoProvider != null) {
+            baki.setDatabaseInfoProvider(databaseInfoProvider);
+            log.info("Baki DatabaseInfoProvider enabled: {}", databaseInfoProvider.getClass().getName());
         }
         if (!ObjectUtils.isEmpty(bakiProperties)) {
             baki.setBatchSize(bakiProperties.getBatchSize());
