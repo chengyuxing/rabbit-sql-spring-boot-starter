@@ -1,5 +1,6 @@
 package com.github.chengyuxing.sql.spring.autoconfigure;
 
+import com.github.chengyuxing.common.AroundExecutor;
 import com.github.chengyuxing.common.io.ClassPathResource;
 import com.github.chengyuxing.common.script.pipe.IPipe;
 import com.github.chengyuxing.common.util.ValueUtils;
@@ -10,11 +11,11 @@ import com.github.chengyuxing.sql.plugins.*;
 import com.github.chengyuxing.sql.spring.SpringManagedBaki;
 import com.github.chengyuxing.sql.spring.properties.*;
 
+import com.github.chengyuxing.sql.types.Execution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,20 +34,14 @@ import java.util.Map;
 @Configuration
 @ConditionalOnClass(Baki.class)
 @EnableConfigurationProperties({BakiProperties.class, XQLFileManagerProperties.class})
-@AutoConfigureAfter(name = {
-        "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration",
-        "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration"
-})
 public class BakiAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(BakiAutoConfiguration.class);
     public static final String XQL_CONFIG_LOCATION_NAME = "xql.config.location";
     public static final String XQL_CONFIG_CONSTANT_NAME = "xql.config.constants.";
-    private final DataSource dataSource;
     private final ApplicationArguments applicationArguments;
     private final BakiProperties bakiProperties;
 
-    public BakiAutoConfiguration(DataSource dataSource, @Autowired(required = false) ApplicationArguments applicationArguments, BakiProperties bakiProperties) {
-        this.dataSource = dataSource;
+    public BakiAutoConfiguration(@Autowired(required = false) ApplicationArguments applicationArguments, BakiProperties bakiProperties) {
         this.applicationArguments = applicationArguments;
         this.bakiProperties = bakiProperties;
     }
@@ -105,7 +100,7 @@ public class BakiAutoConfiguration {
     }
 
     @Bean("rabbitXqlFileManager")
-    @ConditionalOnMissingBean(XQLFileManager.class)
+    @ConditionalOnMissingBean
     public XQLFileManager xqlFileManager() {
         String config = findConfigFile();
 
@@ -146,7 +141,7 @@ public class BakiAutoConfiguration {
     }
 
     @Bean("rabbitEntityMetaProvider")
-    @ConditionalOnMissingBean(EntityManager.EntityMetaProvider.class)
+    @ConditionalOnMissingBean
     public EntityManager.EntityMetaProvider entityMetaProvider() {
         return new EntityManager.EntityMetaProvider() {
             @Override
@@ -167,13 +162,14 @@ public class BakiAutoConfiguration {
     }
 
     @Bean("rabbitBaki")
-    @ConditionalOnMissingBean(Baki.class)
-    public Baki baki(@Autowired(required = false) QueryCacheManager queryCacheManager,
+    @ConditionalOnMissingBean
+    public Baki baki(@Autowired DataSource dataSource,
+                     @Autowired(required = false) QueryCacheManager queryCacheManager,
                      @Autowired(required = false) XQLFileManager xqlFileManager,
                      @Autowired(required = false) SqlInterceptor sqlInterceptor,
                      @Autowired(required = false) PageHelperProvider pageHelperProvider,
                      @Autowired(required = false) StatementValueHandler statementValueHandler,
-                     @Autowired(required = false) ExecutionWatcher executionWatcher,
+                     @Autowired(required = false) AroundExecutor<Execution> executionWatcher,
                      @Autowired(required = false) QueryTimeoutHandler queryTimeoutHandler,
                      @Autowired(required = false) EntityManager.EntityMetaProvider entityMetaProvider,
                      @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler,
