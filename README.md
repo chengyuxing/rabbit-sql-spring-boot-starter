@@ -8,6 +8,8 @@
 
 Language: English | [简体中文](https://github.com/chengyuxing/rabbit-sql-spring-boot-starter/blob/main/README.chs.md)
 
+Official website: https://rabbit-sql.com
+
 ## Introducing
 
 Get [Best practice](https://github.com/chengyuxing/rabbit-sql/blob/master/BEST_PRACTICE.md) to quick start.
