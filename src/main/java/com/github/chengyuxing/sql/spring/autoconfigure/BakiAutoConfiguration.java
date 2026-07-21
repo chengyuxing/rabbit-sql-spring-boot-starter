@@ -11,7 +11,7 @@ import com.github.chengyuxing.sql.plugins.*;
 import com.github.chengyuxing.sql.spring.SpringManagedBaki;
 import com.github.chengyuxing.sql.spring.properties.*;
 
-import com.github.chengyuxing.sql.types.Execution;
+import com.github.chengyuxing.sql.types.ExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,7 +169,7 @@ public class BakiAutoConfiguration {
                      @Autowired(required = false) SqlInterceptor sqlInterceptor,
                      @Autowired(required = false) PageHelperProvider pageHelperProvider,
                      @Autowired(required = false) StatementValueHandler statementValueHandler,
-                     @Autowired(required = false) AroundExecutor<Execution> executionWatcher,
+                     @Autowired(required = false) AroundExecutor<ExecutionContext> executionWatcher,
                      @Autowired(required = false) QueryTimeoutHandler queryTimeoutHandler,
                      @Autowired(required = false) EntityManager.EntityMetaProvider entityMetaProvider,
                      @Autowired(required = false) SqlInvokeHandler sqlInvokeHandler,
