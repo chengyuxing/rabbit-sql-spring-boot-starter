@@ -3,7 +3,6 @@ package com.github.chengyuxing.sql.spring.autoconfigure;
 import com.github.chengyuxing.common.AroundExecutor;
 import com.github.chengyuxing.common.io.ClassPathResource;
 import com.github.chengyuxing.common.script.pipe.IPipe;
-import com.github.chengyuxing.common.util.ValueUtils;
 import com.github.chengyuxing.sql.Baki;
 import com.github.chengyuxing.sql.EntityManager;
 import com.github.chengyuxing.sql.XQLFileManager;
@@ -25,7 +24,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -138,27 +136,6 @@ public class BakiAutoConfiguration {
 
         xqlFileManager.init();
         return xqlFileManager;
-    }
-
-    @Bean("rabbitEntityMetaProvider")
-    @ConditionalOnMissingBean
-    public EntityManager.EntityMetaProvider entityMetaProvider() {
-        return new EntityManager.EntityMetaProvider() {
-            @Override
-            public String tableName(Class<?> clazz) {
-                return clazz.getSimpleName();
-            }
-
-            @Override
-            public EntityManager.ColumnMeta columnMeta(Field field) {
-                return new EntityManager.ColumnMeta(field.getName());
-            }
-
-            @Override
-            public Object columnValue(Field field, Object value) {
-                return ValueUtils.adaptValue(field.getType(), value);
-            }
-        };
     }
 
     @Bean("rabbitBaki")
