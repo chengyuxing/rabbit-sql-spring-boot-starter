@@ -34,7 +34,7 @@ _java 8_
 <dependency>
     <groupId>com.github.chengyuxing</groupId>
     <artifactId>rabbit-sql-spring-boot-starter</artifactId>
-    <version>5.3.18</version>
+    <version>5.3.19</version>
 </dependency>
 ```
 
